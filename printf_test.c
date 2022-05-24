@@ -8,18 +8,18 @@ union u_double
     char    data[sizeof(double)];
 };
 
-// static void dump_double(union u_double d)
-// {
-//     int exp;
-//     long long mant;
+static void dump_double(union u_double d)
+{
+	int exp;
+	long long mant;
 
-//     printf("64-bit float: sign: %d, ", (d.data[0] & 0x80) >> 7);
-//     exp = ((d.data[0] & 0x7F) << 4) | ((d.data[1] & 0xF0) >> 4);
-//     printf("expt: %4d (unbiassed %5d), ", exp, exp - 1023);
-//     mant = ((((d.data[1] & 0x0F) << 8) | (d.data[2] & 0xFF)) << 8) | (d.data[3] & 0xFF);
-//     mant = (mant << 32) | ((((((d.data[4] & 0xFF) << 8) | (d.data[5] & 0xFF)) << 8) | (d.data[6] & 0xFF)) << 8) | (d.data[7] & 0xFF);
-//     printf("mant: %16lld (0x%013llX)\n", mant, mant);
-// }
+	printf("64-bit float: sign: %d, ", (d.data[0] & 0x80) >> 7);
+	exp = ((d.data[0] & 0x7F) << 4) | ((d.data[1] & 0xF0) >> 4);
+	printf("expt: %4d (unbiassed %5d), ", exp, exp - 1023);
+	mant = ((((d.data[1] & 0x0F) << 8) | (d.data[2] & 0xFF)) << 8) | (d.data[3] & 0xFF);
+	mant = (mant << 32) | ((((((d.data[4] & 0xFF) << 8) | (d.data[5] & 0xFF)) << 8) | (d.data[6] & 0xFF)) << 8) | (d.data[7] & 0xFF);
+	printf("mant: %16lld (0x%013llX)\n", mant, mant);
+}
 
 static void raw_double(union u_double d)
 {
@@ -61,7 +61,7 @@ int	main()
 
 	union u_double d;
 	d.dbl = -0.01171875;
-	// dump_double(d);
+	dump_double(d);
 	raw_double(d);
 
 	return (0);
