@@ -3,6 +3,8 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <limits.h>
+#include <stdlib.h>
+#include <libft.h>
 
 // This creates a type "printer", which is a pointer to functions that return nothing and takes a void pointer.
 typedef void (*printer)(va_list data);
@@ -37,21 +39,33 @@ void ft_print_str(va_list data)
 	printf("%s",str);
 }
 
-void	ft_putchar(char c)
+char	*initialize_sequence(int size, int addition) //size + add bytes
 {
-	write(1,&c,1);
+
+	int		i;
+	char	*sequence;
+
+	if (addition < 0)
+		addition *= -1;
+	size += addition;
+	sequence = (char *)malloc(sizeof(char) * (size));
+	if (sequence)
+	{
+		ft_memset(sequence, 0, size);	
+		i = 0;
+		while (i < size - 1)
+			sequence[i++] = '0';
+		return (sequence);
+	}
+	return (0);
+	
 }
 
-void	ft_itoa(int a)
+float	to_pwr(int exp, int base)
 {
-	ft_putchar(a + 48);
-}
-
-float	to_pwr(int exp)
-{
-	float ret;
-	int i;
-	int	neg;
+	float	ret;
+	int		i;
+	int		neg;
 	
 	ret = 1.0;
 	i = 0;
@@ -63,60 +77,152 @@ float	to_pwr(int exp)
 		exp *= -1;
 		neg = 1;
 	}
-	while (i < exp)
-	{
-		ret *= 2.0; 
-		i++;
-	}
+	while (i++ < exp)
+		ret *= (float)base; 
+
 	if (neg)
 		return (1 / ret);
 	return (ret);
+}
+
+void	adder(char **addto, char *num)
+{
+	int	i;
+
+	i = 20;
+	while (i >= 0)
+	{
+		if (*(*addto + i) + (*(num + i) - 48) > '9')
+		{
+			*(*addto + i - 1) += 1;
+			*(*addto + i) += *(num + i) - 10 - 48;	
+		}
+		else
+			*(*addto + i) += *(num + i) - 48;	
+		i--;
+	}
+}
+
+void count_bit_value(int exp)
+{
+	char *seq;
+	int	i;
+	int c = 0;
+
+	if (exp < 0)
+		exp *= -1;
+
+	i = exp + 1;
+
+	seq = initialize_sequence(exp,2);
+	seq[exp+1] = '1';
+	
+	char memo = 48;
+	char digit;
+	char next = 0;
+	// printf("%s\n", seq);
+	while (c < exp)
+	{
+		i = exp + 1;
+		while (i >= 0)
+		{
+			digit = *(seq + i) - 48;
+			digit *= 5;
+			digit += next;
+			next = 0;
+			if (digit > 9)
+			{
+				next = digit / 10;
+				digit %= 10;
+				digit += 48;
+				*(seq + i) = digit;
+			}
+			else
+			{
+				digit += 48;
+				*(seq + i) = digit;
+			}
+			i--;
+		}
+		c++;
+	}
+	seq[1] = '.';
+	printf("%s", seq);
+	// return (seq);
+}
+
+int		ret_exp(float f)
+{
+	int	exp;
+	int	e;
+	int i;
+	int	*p;
+
+	p = (int *)&f;
+	i = 23;
+	exp = 0;
+	e = 0;
+	while (i < 31)
+		exp += ((*p >> i++) & 1) * to_pwr(e++,2);
+	
+	exp += -127;
+
+	return (exp);
 }
 
 void	ft_float_to_ascii(float f)
 {
 	int	*p;
 	int	i;
-	float newf;
+	int	c;
+	int sign;
 	int	exp;
+	int addition;
+	char *manchar;
+	char *sequence;
+	
+
+	exp = ret_exp(f);
+	printf("exp: %d\n", exp);
+	manchar = initialize_sequence(exp, 3); //[1][.][1][\0]
+	sequence = initialize_sequence(exp,3);
+
+
 
 	p = (int *)&f;
-	i = 0;
-	while (i < 32)
+	i = 22;
+	c = 1;
+	sequence[0] = '1';
+	printf("bit 23 value: ");
+	count_bit_value(exp);
+	while (i >= 0)
 	{
-		printf("%d", (*p >> i) & 1);
-		i++;
+		printf("\nbit %d value: ",i);
+		if((*p >> i) & 1) //jos bitti on 1, tee jotain.. eli laske
+		{
+			count_bit_value(exp - c); //save this value to some char* and then use adder...
+		}
+		c++;	
+		i--;
 	}
-	
-	newf = 0;
-	int e = -23;
-	i = 0;
-	while (i < 23)
-	{
-		newf += ((*p >> i++) & 1) * to_pwr(e++);
-		printf("bit: %d, e: %d, newf: %f\n",((*p >> (i - 1)) & 1), (e-1), newf); //remove this and curly braces
-	}
-	newf += 1.0;
-	printf("\nmantissa has value %f\n", newf);
-
-	exp = 0;
-	e = 0;
-	while (i < 31)
-	{
-		exp += ((*p >> i++) & 1) * to_pwr(e++);
-		printf("bit: %d, e: %d, exp: %d\n",((*p >> (i-1)) & 1), (e-1), exp); //remove this and curly braces
-	}
-	exp += -127;
-	printf("exponent has value of: %d\n", exp);
-
-	float sign;
+	i = 23;
 	sign = 1;
 	if (((*p >> 31) & 1))
 		sign = -1;
-	printf("Final result: %f", sign * (float)to_pwr(exp) * newf);
+
+	// i = 1;
+	// while (i < 23)
+	// {
+	// 	if (sequence[i] == '1')
+	// 	{
+	// 		printf("adding:%s\n", bit[i]);
+	// 		adder(&manchar, bit[i]);
+	// 	}
+	// 	i++;
+	// }
 }
 
-// This is a function that takes a function and and int as parameters.
+// This is a function that takes a function and int as parameters.
 // function pointer format: 
 // 		<return value> (*<name>)(<params>)
 
@@ -165,30 +271,12 @@ void	ft_printf(const char *str, ...)
 }
 
 
-
-
 int main()
 {
-	// array to contain required tags
-	
-	// int data1 = 123;
-	// char *data3 = "what ever";
-	// Here we call ft_print and give it a function as parameter.
-
-	// float f = -3.0/2.0;
-	float f = 0.760025024414;
-	ft_printf("This is some number %d, print it", 123);
-	printf("\n");
-	ft_printf("This is some text %s, print it", "String");
-	printf("\n");
-	printf("Double: %.1f\n", -3.0/2.0);
-	ft_itoa(8);
-	printf("\n");
-	// ft_float_to_ascii(f);
-	printf("max float: %f\n", __FLT_MAX__);
-	printf("min float: %f\n", __FLT_MIN__);
+	float f = 0.2421875;
 
 	ft_float_to_ascii(f);
+	// printf("%.126f\n",f);
 
 	return (0);
 }
