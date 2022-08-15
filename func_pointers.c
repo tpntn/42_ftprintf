@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <libft.h>
 
+// gcc func_pointers.c -I Libft/ -L libft -lft
+
 // This creates a type "printer", which is a pointer to functions that return nothing and takes a void pointer.
 typedef void (*printer)(va_list data);
 
@@ -15,7 +17,6 @@ struct tag
 	printer func;
 };
 
-// This is a function that takes nothing and return nothing.
 void ft_foo(va_list data)
 {
 	int a = va_arg(data, int);
@@ -24,7 +25,6 @@ void ft_foo(va_list data)
 
 // void	ft_print_float(void *data)
 // {
-	
 // }
 
 void ft_bar(void *data)
@@ -88,26 +88,48 @@ float	to_pwr(int exp, int base)
 void	adder(char **addto, char *num)
 {
 	int	i;
+	int c;
 
-	i = 20;
-	while (i >= 0)
+	i = 0;
+	c = 0;
+	while (*(*addto + i) && *(num + c))
 	{
-		if (*(*addto + i) + (*(num + i) - 48) > '9')
+		i++;
+		c++;
+	}
+		
+	while (*(*addto + i) != '.' || *(num + c) != '.')
+	{
+		if (*(*addto + i) + (*(num + c) - 48) > '9')
 		{
 			*(*addto + i - 1) += 1;
-			*(*addto + i) += *(num + i) - 10 - 48;	
+			*(*addto + i) += *(num + c) - 10 - 48;	
 		}
 		else
-			*(*addto + i) += *(num + i) - 48;	
+			*(*addto + i) += *(num + c) - 48;	
 		i--;
+		c--;
 	}
 }
 
-void count_bit_value(int exp)
+void	multiplyer(char **s, int multiplyer)
+{
+
+}
+
+char *count_fraction(int exp)
 {
 	char *seq;
+	char *result;
 	int	i;
 	int c = 0;
+
+	if (exp == 0)
+	{
+		printf("1.0");
+		return ("1.0");
+	}
+		
 
 	if (exp < 0)
 		exp *= -1;
@@ -120,7 +142,6 @@ void count_bit_value(int exp)
 	char memo = 48;
 	char digit;
 	char next = 0;
-	// printf("%s\n", seq);
 	while (c < exp)
 	{
 		i = exp + 1;
@@ -148,7 +169,7 @@ void count_bit_value(int exp)
 	}
 	seq[1] = '.';
 	printf("%s", seq);
-	// return (seq);
+	return (seq);
 }
 
 int		ret_exp(float f)
@@ -170,6 +191,19 @@ int		ret_exp(float f)
 	return (exp);
 }
 
+void	count_integer(int exp)
+{
+	int		i;
+	char	*result;
+
+	result = initialize_sequence(40,0);
+	result[39] = '1';
+	i = 0;
+	
+	while (i < exp)
+
+}
+
 void	ft_float_to_ascii(float f)
 {
 	int	*p;
@@ -177,30 +211,28 @@ void	ft_float_to_ascii(float f)
 	int	c;
 	int sign;
 	int	exp;
-	int addition;
 	char *manchar;
-	char *sequence;
+	char *result;
 	
-
 	exp = ret_exp(f);
-	printf("exp: %d\n", exp);
-	manchar = initialize_sequence(exp, 3); //[1][.][1][\0]
-	sequence = initialize_sequence(exp,3);
-
-
+	result = initialize_sequence(1000,0);
 
 	p = (int *)&f;
 	i = 22;
 	c = 1;
-	sequence[0] = '1';
-	printf("bit 23 value: ");
-	count_bit_value(exp);
+	printf("hidden bit value:\t");
+	count_fraction(exp);
 	while (i >= 0)
 	{
-		printf("\nbit %d value: ",i);
-		if((*p >> i) & 1) //jos bitti on 1, tee jotain.. eli laske
+		printf("\nbit %d value:\t\t",i+1);
+		if((*p >> i) & 1)
 		{
-			count_bit_value(exp - c); //save this value to some char* and then use adder...
+			if (exp - c < 0)
+				manchar = count_fraction(exp - c);
+			else
+				manchar = count_integer(exp - c);
+			// adder(&result,manchar);
+			// free(manchar);
 		}
 		c++;	
 		i--;
@@ -209,17 +241,6 @@ void	ft_float_to_ascii(float f)
 	sign = 1;
 	if (((*p >> 31) & 1))
 		sign = -1;
-
-	// i = 1;
-	// while (i < 23)
-	// {
-	// 	if (sequence[i] == '1')
-	// 	{
-	// 		printf("adding:%s\n", bit[i]);
-	// 		adder(&manchar, bit[i]);
-	// 	}
-	// 	i++;
-	// }
 }
 
 // This is a function that takes a function and int as parameters.
@@ -273,10 +294,14 @@ void	ft_printf(const char *str, ...)
 
 int main()
 {
-	float f = 0.2421875;
+	float f = 0.1;
+	// float f = 1.17549435082e-38;
+	// float f = 0.15625;
 
 	ft_float_to_ascii(f);
 	// printf("%.126f\n",f);
+
+	count_fraction(0);
 
 	return (0);
 }
