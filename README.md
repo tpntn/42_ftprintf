@@ -9,7 +9,7 @@ ft_float_to_ascii
 
 `ft_float_to_ascii(char *s)`
 
-#Alternative Heading#
+# Alternative Heading #
 
 
 
