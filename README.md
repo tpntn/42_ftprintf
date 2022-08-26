@@ -9,7 +9,8 @@ ft_float_to_ascii
 
 `ft_float_to_ascii(char *s)`
 
-# Alternative Heading #
-
+# To-do´s #
+1. Remove unnecessary files
+2. Check that Libft passes norm 
 
 
