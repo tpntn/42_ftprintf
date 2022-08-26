@@ -7,3 +7,18 @@
 
 
 </code>
+
+Heading
+=======
+
+Sub-heading
+-----------
+
+#Alternative Heading#
+
+_This text is in italic_  
+**This text is bold**
+
+`Some code`.
+
+
