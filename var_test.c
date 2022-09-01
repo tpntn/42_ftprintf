@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-void
-myfunc(void *ptr, ...)
+//this functions prints out function pointer addresses
+void myfunc(void *ptr, ...)
 {
     va_list va;
     void *p;
@@ -18,8 +18,7 @@ myfunc(void *ptr, ...)
     va_end(va);
 }
 
-int
-main() {
+int main() {
     myfunc(main, myfunc, printf, NULL);
     return 0;
 }

@@ -8,36 +8,7 @@
 
 // gcc func_pointers.c -I Libft/ -L libft -lft
 
-// This creates a type "printer", which is a pointer to functions that return nothing and takes a void pointer.
-typedef void (*printer)(va_list data);
-
-struct tag
-{
-	char	id;
-	printer func;
-};
-
-void ft_foo(va_list data)
-{
-	int a = va_arg(data, int);
-	printf("%d", a);
-}
-
-// void	ft_print_float(void *data)
-// {
-// }
-
-void ft_bar(void *data)
-{
-	int a = *(int *)data;
-	printf("This is a function bar %d", a);
-}
-
-void ft_print_str(va_list data)
-{
-	char *str = va_arg(data, void*);
-	printf("%s",str);
-}
+void	ft_printf(const char *str, ...);
 
 char	*initialize_sequence(int size, int addition) //size + add bytes
 {
@@ -301,38 +272,98 @@ void ft_print(void (*f)(void), int i)
 }
 */
 
-static struct tag flags[] = {
+void ft_foo(va_list data)
+{
+	int a = va_arg(data, int);
+	ft_putnbr(a);
+}
+
+void ft_print_str(va_list data)
+{
+	char *str = va_arg(data, char*);
+	ft_putstr(str);
+}
+
+// This creates a type "printer", which is a pointer to functions that takes a va_list and returns nothing.
+typedef void (*printer)(va_list data);
+
+typedef struct s_type
+{
+	char	id;
+	printer func;
+} t_type;
+
+static t_type types[] = {
 			{'d', ft_foo},
 			{'s', ft_print_str}
 	};
 
+int	is_type_specifier(char str)
+{
+	char *types = "csdioxXuFfeEaAgGnp";
+	while (*types)
+	{
+		if (*types == str)
+			return (1);
+		types++;
+	}
+	return (0);
+}
+
+void parse_params(const char *str)
+{
+	// str++;
+	// while(ft_isdigit(*str))
+	// {
+		printf("ok");
+	// 	str++;
+	// }
+}
+
 void	ft_printf(const char *str, ...)
 {
-	int		i;
 	int		c;
 	va_list	data;
+	int		STATE;
 	
+	STATE = 0;
 	va_start(data, str);
-	i = 0;
-	while (*(str + i))
+	while (*str)
 	{
-		if (*(str + i) == '%' )
+		if (*str == '%')
 		{
-			c = 0;
-			while (c < 10)
+			STATE = 1;
+			str++;
+			while (!is_type_specifier(*str) && STATE != 0)
 			{
-				if (flags[c].id == *(str + i + 1))
+				if (*str == '%')
 				{
-					flags[c].func(data);
-					i++;
+					ft_putchar(*str);
 					break;
 				}
-				c++;
+				if (*str == '$')
+					printf("ok");
+					// parse_params(str); //increment str++ after calling the function?
+				// if (is_flag(str))
+				// 	parse_flags(str);
+				str++;
 			}
+			if (STATE != 0)
+			{
+				c = 0;
+				while (c < 10)
+				{
+					if (types[c].id == *str)
+						types[c].func(data);
+					c++;
+				}
+			}
+			
+			
 		}
 		else 
-			putchar(*(str + i));
-		i++;
+			ft_putchar(*(str));
+		str++;
 	}
 	va_end(data);
 }
@@ -347,12 +378,14 @@ int main()
 	// float f = 1.5e-37; //tämä on viimeinen joka toimii.... -38 ei toimi enää
 	float f = -1.0e-37;
 
-	printf("%.146f\n",f);
-	ft_float_to_ascii(f);
-
-
-	// printf("%s",count_integer(0));
-	// printf("%s",count_fraction(-2));
+	// printf("%.146f\n",f);
+	// ft_float_to_ascii(f);
+	// ft_printf("\n");
+	ft_printf("%s %s %d\n","hello world", "again", 1);
+	ft_printf("%d\n",123);
+	ft_printf("%%\n");
+	ft_printf("%$2\n");
+	
 
 	return (0);
 }
