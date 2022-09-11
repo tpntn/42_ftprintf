@@ -320,49 +320,141 @@ void parse_params(const char *str)
 	// }
 }
 
+typedef struct s_params
+{
+	char 	flags;
+	int		width;
+	int		precision;
+	int		length;
+	char	*conversion;
+
+} t_params; 
+
+#define STATE_NORMAL		0
+#define STATE_FLAGS			1
+#define STATE_WIDTH			2
+#define STATE_PRECISION		3
+#define	STATE_LENGTH		4
+#define	STATE_CONVERSION	5
+
+int		is_flag(char c)
+{
+	const char flags[] = "-+ #0";
+	int i;
+
+	i = 0;
+	while (flags[i])
+	{
+		if (flags[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	flags_handler(char c, int *state, t_params *params)
+{
+	if (is_flag(c))
+		params->flags = c;
+	*state = STATE_WIDTH;
+}
+
+
+
+void	width_handler(char c, int *state, t_params *params)
+{
+	//this handles the width and set the state to next state
+	*state = STATE_PRECISION;
+}
+
+void	precision_handler(char c, int *state, t_params *params)
+{
+	//this handles the precision and set the state to next state
+	*state = STATE_LENGTH;
+}
+
+void	length_handler(char c, int *state, t_params *params)
+{
+	//this handles the length and set the state to next state
+	*state = STATE_CONVERSION;
+}
+
+void	conversion_handler(char c, int *state, t_params *params)
+{
+	//this handles the length and set the state to next state
+	*state = STATE_CONVERSION;
+}
+
+void	initialize_params(int *state, t_params *params)
+{
+	//when state == STATE_NORMAL, set start values
+	//if state = STATE_CONVERSION clear all values (free etc)
+}
+
 void	ft_printf(const char *str, ...)
 {
-	int		c;
-	va_list	data;
-	int		STATE;
+	va_list		data;
+	int			state;
+	t_params	params;
+
+	state = STATE_NORMAL;
 	
-	STATE = 0;
 	va_start(data, str);
 	while (*str)
 	{
-		if (*str == '%')
+		if (state == STATE_NORMAL)
 		{
-			STATE = 1;
-			str++;
-			while (!is_type_specifier(*str) && STATE != 0)
+			if (*str == '%')
 			{
-				if (*str == '%')
-				{
-					ft_putchar(*str);
-					break;
-				}
-				if (*str == '$')
-					printf("ok");
-					// parse_params(str); //increment str++ after calling the function?
-				// if (is_flag(str))
-				// 	parse_flags(str);
-				str++;
+				state = STATE_FLAGS;
+				initialize_params(&state, &params);
 			}
-			if (STATE != 0)
-			{
-				c = 0;
-				while (c < 10)
-				{
-					if (types[c].id == *str)
-						types[c].func(data);
-					c++;
-				}
-			}
-			
-			
+			else 
+				ft_putchar(*str);
 		}
-		else 
-			ft_putchar(*(str));
+		else if (state == STATE_FLAGS)
+			flags_handler(*str,&state, &params);
+		else if (state == STATE_WIDTH)
+			width_handler(*str,&state, &params);
+		else if (state == STATE_PRECISION)
+			precision_handler(*str,&state, &params);
+		else if (state == STATE_LENGTH)
+			length_handler(*str,&state, &params);
+		else if (state == STATE_CONVERSION)
+			conversion_handler(*str,&state, &params);
+
+		// if (*str == '%')
+		// {
+		// 	str++;
+		// 	while (!is_type_specifier(*str) && STATE != 0)
+		// 	{
+		// 		if (*str == '%')
+		// 		{
+		// 			ft_putchar(*str);
+		// 			break;
+		// 		}
+		// 		if (*str == '$')
+		// 			printf("ok");
+		// 			// parse_params(str); //increment str++ after calling the function?
+		// 		// if (is_flag(str))
+		// 		// 	parse_flags(str);
+		// 		str++;
+		// 	}
+		// 	if (STATE != 0)
+		// 	{
+		// 		c = 0;
+		// 		while (c < 10)
+		// 		{
+		// 			if (types[c].id == *str)
+		// 				types[c].func(data);
+		// 			c++;
+		// 		}
+		// 	}
+			
+			
+		// }
+		// else 
+		// 	ft_putchar(*(str));
 		str++;
 	}
 	va_end(data);
