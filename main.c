@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 17:14:23 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 21:05:29 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ void	ft_printf(const char *str, ...)
 		}
 		else if (is_flag(*str))
 			flags_handler(str, &state, &params);
-		else if (state == STATE_WIDTH)
+		else if (ft_isdigit && state == STATE_WIDTH)
 			width_handler(str, &state, &params);
 		else if (state == STATE_PRECISION)
 			precision_handler(str, &state, &params);
