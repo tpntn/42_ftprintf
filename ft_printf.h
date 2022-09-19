@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 10:19:41 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 10:52:44 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <stdlib.h>
-#include <libft.h>
+#include "libft/libft.h"
 
 void	multiplyer(char **s, int multiplyer, int len);
 float	to_pwr(int exp, int base);
