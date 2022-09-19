@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 10:55:34 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 11:50:59 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,6 @@ void parse_params(const char *str)
 	// }
 }
 
-typedef struct s_params
-{
-	char 	flags;
-	int		width;
-	int		precision;
-	int		length;
-	char	*conversion;
-
-} t_params; 
-
 #define STATE_NORMAL		0
 #define STATE_FLAGS			1
 #define STATE_WIDTH			2
@@ -109,11 +99,10 @@ int		is_flag(char c)
 void	flags_handler(char c, int *state, t_params *params)
 {
 	if (is_flag(c))
-		params->flags = c;
-	*state = STATE_WIDTH;
+		ft_strlcat(params->flags, (char *)c, 4);
+	else
+		*state = STATE_WIDTH;
 }
-
-
 
 void	width_handler(char c, int *state, t_params *params)
 {
@@ -141,8 +130,21 @@ void	conversion_handler(char c, int *state, t_params *params)
 
 void	initialize_params(int *state, t_params *params)
 {
-	//when state == STATE_NORMAL, set start values
-	//if state = STATE_CONVERSION clear all values (free etc)
+	if (*state == STATE_NORMAL)
+	{
+		params->flags = (char *)malloc(sizeof(char) * 8);
+		params->width = 0;
+		params->precision = 0;
+		params->length = (char *)malloc(sizeof(char) * 3);
+		// ft_memset(params->length,0,3);
+		params->conversion = 0;
+		*state = STATE_FLAGS;
+	}
+	if (*state == STATE_CONVERSION)
+	{
+		free(params->length);
+		*state = STATE_NORMAL;
+	}
 }
 
 void	ft_printf(const char *str, ...)
@@ -159,22 +161,19 @@ void	ft_printf(const char *str, ...)
 		if (state == STATE_NORMAL)
 		{
 			if (*str == '%')
-			{
-				state = STATE_FLAGS;
 				initialize_params(&state, &params);
-			}
 			else 
 				ft_putchar(*str);
 		}
-		else if (state == STATE_FLAGS)
+		if (state == STATE_FLAGS)
 			flags_handler(*str,&state, &params);
-		else if (state == STATE_WIDTH)
+		if (state == STATE_WIDTH)
 			width_handler(*str,&state, &params);
-		else if (state == STATE_PRECISION)
+		if (state == STATE_PRECISION)
 			precision_handler(*str,&state, &params);
-		else if (state == STATE_LENGTH)
+		if (state == STATE_LENGTH)
 			length_handler(*str,&state, &params);
-		else if (state == STATE_CONVERSION)
+		if (state == STATE_CONVERSION)
 			conversion_handler(*str,&state, &params);
 
 		// if (*str == '%')

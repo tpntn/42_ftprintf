@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 10:52:44 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 11:32:13 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@
 #include <limits.h>
 #include <stdlib.h>
 #include "libft/libft.h"
+
+typedef struct s_params
+{
+	char 	*flags;
+	int		width;
+	int		precision;
+	char	*length;
+	char	conversion;
+
+} t_params; 
 
 void	multiplyer(char **s, int multiplyer, int len);
 float	to_pwr(int exp, int base);
