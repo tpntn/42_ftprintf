@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 12:01:17 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 13:23:58 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 #include <limits.h>
 #include <stdlib.h>
 #include "libft/libft.h"
+
+#define STATE_NORMAL		0
+#define STATE_FLAGS			1
+#define STATE_WIDTH			2
+#define STATE_PRECISION		3
+#define	STATE_LENGTH		4
+#define	STATE_CONVERSION	5
 
 typedef struct s_params
 {

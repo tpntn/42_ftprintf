@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 12:08:42 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:14:23 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,20 @@
 
 // gcc func_pointers.c -I Libft/ -L libft -lft
 
-// This is a function that takes a function and int as parameters.
-// function pointer format: 
-// 		<return value> (*<name>)(<params>)
-
-/*
-void ft_print(void (*f)(void), int i)
+void	REMOVE_data_printer(t_params *params, int state)
 {
-	printf("%d",i);
-	f(); //This calls the function given as parameter.
+	printf("\n\nflags:\t\t%s\n", params->flags);
+	printf("width:\t\t%d\n", params->width);
+	printf("precision:\t%d\n", params->precision);
+	printf("length:\t\t%s\n", params->length);
+	printf("conversion:\t%c\n", params->conversion);
+
+	printf("state: %d\n\n", state);
 }
-*/
-
-void ft_foo(va_list data)
-{
-	int a = va_arg(data, int);
-	ft_putnbr(a);
-}
-
-void ft_print_str(va_list data)
-{
-	char *str = va_arg(data, char*);
-	ft_putstr(str);
-}
-
-// This creates a type "printer", which is a pointer to functions that takes a va_list and returns nothing.
-typedef void (*printer)(va_list data);
-
-typedef struct s_type
-{
-	char	id;
-	printer func;
-} t_type;
-
-static t_type types[] = {
-			{'d', ft_foo},
-			{'s', ft_print_str}
-	};
 
 int	is_type_specifier(char str)
 {
-	char *types = "csdioxXuFfeEaAgGnp";
+	const char *types = "csdioxXuFfeEaAgGnp";
 	while (*types)
 	{
 		if (*types == str)
@@ -63,23 +36,6 @@ int	is_type_specifier(char str)
 	}
 	return (0);
 }
-
-void parse_params(const char *str)
-{
-	// str++;
-	// while(ft_isdigit(*str))
-	// {
-		printf("ok");
-	// 	str++;
-	// }
-}
-
-#define STATE_NORMAL		0
-#define STATE_FLAGS			1
-#define STATE_WIDTH			2
-#define STATE_PRECISION		3
-#define	STATE_LENGTH		4
-#define	STATE_CONVERSION	5
 
 int		is_flag(char c)
 {
@@ -96,11 +52,41 @@ int		is_flag(char c)
 	return (0);
 }
 
+int		is_length_mod(char c)
+{
+	const char flags[] = "hlqLjzZt";
+	int i;
+
+	i = 0;
+	while (flags[i])
+	{
+		if (flags[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int		is_conv_mod(char c)
+{
+	const char flags[] = "diouxXeEfFgGaAcsCSpnm%";
+	int i;
+
+	i = 0;
+	while (flags[i])
+	{
+		if (flags[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	flags_handler(const char *c, int *state, t_params *params)
 {
 	if (is_flag(*c))
-		ft_strlcat(params->flags, c, 4);
-	if (!is_flag(*(c + 1))) // eli jos seuraava ei ole flag, muuta state
+		ft_strncat(params->flags, c, 1);
+	else
 		*state = STATE_WIDTH;
 }
 
@@ -109,30 +95,42 @@ void	width_handler(const char *c, int *state, t_params *params)
 	if (ft_isdigit(*c))
 	{
 		params->width *= 10;
-		params->width += ft_atoi(c);
+		params->width += *c - 48;
 	}
-	if (*c == '.')
+	else if (*c == '.')
 		*state = STATE_PRECISION;
-	else
+	else if (*c != '.')
 		*state = STATE_LENGTH;
 }
 
 void	precision_handler(const char *c, int *state, t_params *params)
 {
-	//this handles the precision and set the state to next state
-	*state = STATE_LENGTH;
+	if (ft_isdigit(*c))
+	{
+		params->precision *= 10;
+		params->precision += *c - 48;
+	}
+	else
+		*state = STATE_LENGTH;
 }
 
-void	length_handler(char c, int *state, t_params *params)
+void	length_handler(const char *c, int *state, t_params *params)
 {
-	//this handles the length and set the state to next state
-	*state = STATE_CONVERSION;
+	if (is_length_mod(*c))
+		ft_strncat(params->length, c, 1);
+	if (!is_length_mod(*(c + 1))) 
+		*state = STATE_CONVERSION;
+	//mieti miten tsekkaat että hh tai ll ovat ok, mutta ei esim hl
 }
 
-void	conversion_handler(char c, int *state, t_params *params)
+void	conversion_handler(const char *c, int *state, t_params *params)
 {
-	//this handles the length and set the state to next state
-	*state = STATE_CONVERSION;
+	if (is_conv_mod(*c))
+		params->conversion = (char)*c;
+	else
+		exit(0);
+	*state = STATE_NORMAL;
+	REMOVE_data_printer(params, *state);
 }
 
 void	initialize_params(int *state, t_params *params)
@@ -143,9 +141,7 @@ void	initialize_params(int *state, t_params *params)
 		params->width = 0;
 		params->precision = 0;
 		params->length = (char *)malloc(sizeof(char) * 3);
-		// ft_memset(params->length,0,3);
 		params->conversion = 0;
-		*state = STATE_FLAGS;
 	}
 	if (*state == STATE_CONVERSION)
 	{
@@ -163,63 +159,31 @@ void	ft_printf(const char *str, ...)
 	state = STATE_NORMAL;
 	
 	va_start(data, str);
+	initialize_params(&state, &params);
 	while (*str)
 	{
 		if (state == STATE_NORMAL)
 		{
 			if (*str == '%')
-				initialize_params(&state, &params);
+				state = STATE_FLAGS;
 			else 
 				ft_putchar(*str);
 		}
-		else if (state == STATE_FLAGS)
-			flags_handler(str,&state, &params);
+		else if (is_flag(*str))
+			flags_handler(str, &state, &params);
 		else if (state == STATE_WIDTH)
-			width_handler(str,&state, &params);
+			width_handler(str, &state, &params);
 		else if (state == STATE_PRECISION)
-			precision_handler(str,&state, &params);
+			precision_handler(str, &state, &params);
 		else if (state == STATE_LENGTH)
-			length_handler(*str,&state, &params);
+			length_handler(str, &state, &params);
 		else if (state == STATE_CONVERSION)
-			conversion_handler(*str,&state, &params);
-
-		// if (*str == '%')
-		// {
-		// 	str++;
-		// 	while (!is_type_specifier(*str) && STATE != 0)
-		// 	{
-		// 		if (*str == '%')
-		// 		{
-		// 			ft_putchar(*str);
-		// 			break;
-		// 		}
-		// 		if (*str == '$')
-		// 			printf("ok");
-		// 			// parse_params(str); //increment str++ after calling the function?
-		// 		// if (is_flag(str))
-		// 		// 	parse_flags(str);
-		// 		str++;
-		// 	}
-		// 	if (STATE != 0)
-		// 	{
-		// 		c = 0;
-		// 		while (c < 10)
-		// 		{
-		// 			if (types[c].id == *str)
-		// 				types[c].func(data);
-		// 			c++;
-		// 		}
-		// 	}
-			
-			
-		// }
-		// else 
-		// 	ft_putchar(*(str));
+			conversion_handler(str, &state, &params);
 		str++;
 	}
+	REMOVE_data_printer(&params, state);
 	va_end(data);
 }
-
 
 int main()
 {
@@ -231,11 +195,22 @@ int main()
 	// float f = -1.0e-37;
 
 	// printf("%.146f\n",f);
-	ft_ftoa(f);
-	
-	printf("%s %s %d\n","hello world", "again", 1);
-	printf("%d\n",123);
-	printf("%%\n");
+	// ft_ftoa(f);
 
+	ft_printf("This is a string %20.42hl");
+
+	// int state = 0;
+	// t_params params;
+	// initialize_params(&state, &params);
+
+	// const char *s = "200";
+	// while (*s)
+	// {
+	// 	width_handler(s, &state, &params);
+	// 	REMOVE_data_printer(&params, state);
+	// 	s++;
+	// }
+	
+	
 	return (0);
 }
