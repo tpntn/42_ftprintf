@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 12:05:13 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 12:08:42 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int		is_flag(char c)
 	return (0);
 }
 
-void	flags_handler(char *c, int *state, t_params *params)
+void	flags_handler(const char *c, int *state, t_params *params)
 {
 	if (is_flag(*c))
 		ft_strlcat(params->flags, c, 4);
@@ -104,20 +104,20 @@ void	flags_handler(char *c, int *state, t_params *params)
 		*state = STATE_WIDTH;
 }
 
-void	width_handler(char *c, int *state, t_params *params)
+void	width_handler(const char *c, int *state, t_params *params)
 {
 	if (ft_isdigit(*c))
 	{
-		params->width *+ 10;
+		params->width *= 10;
 		params->width += ft_atoi(c);
 	}
-	if (c == '.')
+	if (*c == '.')
 		*state = STATE_PRECISION;
 	else
 		*state = STATE_LENGTH;
 }
 
-void	precision_handler(char c, int *state, t_params *params)
+void	precision_handler(const char *c, int *state, t_params *params)
 {
 	//this handles the precision and set the state to next state
 	*state = STATE_LENGTH;
@@ -175,9 +175,9 @@ void	ft_printf(const char *str, ...)
 		else if (state == STATE_FLAGS)
 			flags_handler(str,&state, &params);
 		else if (state == STATE_WIDTH)
-			width_handler(*str,&state, &params);
+			width_handler(str,&state, &params);
 		else if (state == STATE_PRECISION)
-			precision_handler(*str,&state, &params);
+			precision_handler(str,&state, &params);
 		else if (state == STATE_LENGTH)
 			length_handler(*str,&state, &params);
 		else if (state == STATE_CONVERSION)
