@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 11:50:59 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 12:05:13 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,18 +96,25 @@ int		is_flag(char c)
 	return (0);
 }
 
-void	flags_handler(char c, int *state, t_params *params)
+void	flags_handler(char *c, int *state, t_params *params)
 {
-	if (is_flag(c))
-		ft_strlcat(params->flags, (char *)c, 4);
-	else
+	if (is_flag(*c))
+		ft_strlcat(params->flags, c, 4);
+	if (!is_flag(*(c + 1))) // eli jos seuraava ei ole flag, muuta state
 		*state = STATE_WIDTH;
 }
 
-void	width_handler(char c, int *state, t_params *params)
+void	width_handler(char *c, int *state, t_params *params)
 {
-	//this handles the width and set the state to next state
-	*state = STATE_PRECISION;
+	if (ft_isdigit(*c))
+	{
+		params->width *+ 10;
+		params->width += ft_atoi(c);
+	}
+	if (c == '.')
+		*state = STATE_PRECISION;
+	else
+		*state = STATE_LENGTH;
 }
 
 void	precision_handler(char c, int *state, t_params *params)
@@ -165,15 +172,15 @@ void	ft_printf(const char *str, ...)
 			else 
 				ft_putchar(*str);
 		}
-		if (state == STATE_FLAGS)
-			flags_handler(*str,&state, &params);
-		if (state == STATE_WIDTH)
+		else if (state == STATE_FLAGS)
+			flags_handler(str,&state, &params);
+		else if (state == STATE_WIDTH)
 			width_handler(*str,&state, &params);
-		if (state == STATE_PRECISION)
+		else if (state == STATE_PRECISION)
 			precision_handler(*str,&state, &params);
-		if (state == STATE_LENGTH)
+		else if (state == STATE_LENGTH)
 			length_handler(*str,&state, &params);
-		if (state == STATE_CONVERSION)
+		else if (state == STATE_CONVERSION)
 			conversion_handler(*str,&state, &params);
 
 		// if (*str == '%')
