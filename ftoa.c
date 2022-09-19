@@ -6,17 +6,11 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 10:09:50 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/19 10:18:57 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <libft.h>
+#include "ft_printf.h"
 
 void	multiplyer(char **s, int multiplyer, int len)
 {

@@ -1,16 +1,18 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdarg.h>
-#include <unistd.h>
-#include <limits.h>
-#include <stdlib.h>
-#include <libft.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   func_pointers.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
+/*   Updated: 2022/09/19 10:21:41 by tpontine         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	ft_ftoa(float f);
+#include "ft_printf.h"
 
 // gcc func_pointers.c -I Libft/ -L libft -lft
-
-void	ft_printf(const char *str, ...);
 
 // This is a function that takes a function and int as parameters.
 // function pointer format: 
