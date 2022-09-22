@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/22 15:29:15 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:33:37 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ void	conversion_handler(const char *c, int *state, t_params *params)
 	else
 		exit(0);
 	*state = STATE_NORMAL;
-	REMOVE_data_printer(params, *state);
 }
 
 void	initialize_params(int *state, t_params *params)
@@ -151,6 +150,14 @@ void	initialize_params(int *state, t_params *params)
 	}
 }
 
+void	normal_handler(const char *c, int *state)
+{
+	if (*c == '%')
+		*state = STATE_FLAGS;
+	else 
+		ft_putchar(*c);
+}
+
 void	ft_printf(const char *str, ...)
 {
 	va_list		data;
@@ -163,14 +170,8 @@ void	ft_printf(const char *str, ...)
 	initialize_params(&state, &params);
 	while (*str)
 	{
-		ft_putchar(*str);
 		if (state == STATE_NORMAL)
-		{
-			if (*str == '%')
-				state = STATE_FLAGS;
-			else 
-				ft_putchar(*str);
-		}
+			normal_handler(str, &state);
 		else if (state == STATE_FLAGS)
 			flags_handler(str, &state, &params);
 		else if (state == STATE_WIDTH)
@@ -181,10 +182,10 @@ void	ft_printf(const char *str, ...)
 			length_handler(str, &state, &params);
 		else if (state == STATE_CONVERSION)
 			conversion_handler(str, &state, &params);
-		REMOVE_data_printer(&params, state);
 		str++;
 	}
 	va_end(data);
+	REMOVE_data_printer(&params, state);
 }
 
 int main()
@@ -199,7 +200,7 @@ int main()
 	// printf("%.146f\n",f);
 	// ft_ftoa(f);
 
-	ft_printf("g %.42llu");
+	ft_printf("g %.42d");
 	// ft_printf("g %+42lu");
 
 	// int state = 0;

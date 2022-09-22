@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/22 15:23:20 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:33:21 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ void	width_handler(const char *c, int *state, t_params *params);
 void	precision_handler(const char *c, int *state, t_params *params);
 void	length_handler(const char *c, int *state, t_params *params);
 void	conversion_handler(const char *c, int *state, t_params *params);
-
+void	normal_handler(const char *c, int *state);
 
 #endif
