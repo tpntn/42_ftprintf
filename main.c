@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 21:05:29 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:16:57 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,23 +84,34 @@ int		is_conv_mod(char c)
 
 void	flags_handler(const char *c, int *state, t_params *params)
 {
+	printf("handling: %c", *c);
 	if (is_flag(*c))
 		ft_strncat(params->flags, c, 1);
-	else
+	else if (ft_isdigit(*(c+1)))
 		*state = STATE_WIDTH;
+	else if (*(c+1) == '.')
+		*state = STATE_PRECISION;
+	else if (is_length_mod(*(c + 1)))
+		*state = STATE_LENGTH;
+	else
+		*state = STATE_CONVERSION;
 }
 
 void	width_handler(const char *c, int *state, t_params *params)
 {
+	printf("handling: %c", *c);
 	if (ft_isdigit(*c))
 	{
 		params->width *= 10;
 		params->width += *c - 48;
+		
 	}
-	else if (*c == '.')
+	if (*c == '.')
 		*state = STATE_PRECISION;
-	else if (*c != '.')
+	else if (is_length_mod(*(c + 1)))
 		*state = STATE_LENGTH;
+	else
+		*state = STATE_CONVERSION;
 }
 
 void	precision_handler(const char *c, int *state, t_params *params)
@@ -110,8 +121,10 @@ void	precision_handler(const char *c, int *state, t_params *params)
 		params->precision *= 10;
 		params->precision += *c - 48;
 	}
-	else
+	else if (is_length_mod(*(c+1)))
 		*state = STATE_LENGTH;
+	else if (!is_length_mod(*(c+1)))
+		*state = STATE_CONVERSION;
 }
 
 void	length_handler(const char *c, int *state, t_params *params)
@@ -120,7 +133,6 @@ void	length_handler(const char *c, int *state, t_params *params)
 		ft_strncat(params->length, c, 1);
 	if (!is_length_mod(*(c + 1))) 
 		*state = STATE_CONVERSION;
-	//mieti miten tsekkaat että hh tai ll ovat ok, mutta ei esim hl
 }
 
 void	conversion_handler(const char *c, int *state, t_params *params)
@@ -162,6 +174,7 @@ void	ft_printf(const char *str, ...)
 	initialize_params(&state, &params);
 	while (*str)
 	{
+		ft_putchar(*str);
 		if (state == STATE_NORMAL)
 		{
 			if (*str == '%')
@@ -169,9 +182,9 @@ void	ft_printf(const char *str, ...)
 			else 
 				ft_putchar(*str);
 		}
-		else if (is_flag(*str))
+		else if (state == STATE_FLAGS)
 			flags_handler(str, &state, &params);
-		else if (ft_isdigit && state == STATE_WIDTH)
+		else if (state == STATE_WIDTH)
 			width_handler(str, &state, &params);
 		else if (state == STATE_PRECISION)
 			precision_handler(str, &state, &params);
@@ -179,9 +192,9 @@ void	ft_printf(const char *str, ...)
 			length_handler(str, &state, &params);
 		else if (state == STATE_CONVERSION)
 			conversion_handler(str, &state, &params);
+		REMOVE_data_printer(&params, state);
 		str++;
 	}
-	REMOVE_data_printer(&params, state);
 	va_end(data);
 }
 
@@ -197,7 +210,8 @@ int main()
 	// printf("%.146f\n",f);
 	// ft_ftoa(f);
 
-	ft_printf("This is a string %20.42hl");
+	// ft_printf("g %+-2098.42lu");
+	ft_printf("g %+42lu");
 
 	// int state = 0;
 	// t_params params;
