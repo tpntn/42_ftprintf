@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/22 15:17:15 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:29:15 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,34 +84,25 @@ int		is_conv_mod(char c)
 
 void	flags_handler(const char *c, int *state, t_params *params)
 {
-	printf("handling: %c", *c);
 	if (is_flag(*c))
 		ft_strncat(params->flags, c, 1);
-	else if (ft_isdigit(*(c+1)))
-		*state = STATE_WIDTH;
-	else if (*(c+1) == '.')
-		*state = STATE_PRECISION;
-	else if (is_length_mod(*(c + 1)))
-		*state = STATE_LENGTH;
 	else
-		*state = STATE_CONVERSION;
+	{
+		*state = STATE_WIDTH;
+		width_handler(c, state, params);
+	}
 }
 
 void	width_handler(const char *c, int *state, t_params *params)
 {
-	printf("handling: %c", *c);
 	if (ft_isdigit(*c))
 	{
 		params->width *= 10;
 		params->width += *c - 48;
 		
 	}
-	if (*c == '.')
+	else if (*c == '.')
 		*state = STATE_PRECISION;
-	else if (is_length_mod(*(c + 1)))
-		*state = STATE_LENGTH;
-	else
-		*state = STATE_CONVERSION;
 }
 
 void	precision_handler(const char *c, int *state, t_params *params)
@@ -121,18 +112,16 @@ void	precision_handler(const char *c, int *state, t_params *params)
 		params->precision *= 10;
 		params->precision += *c - 48;
 	}
-	else if (is_length_mod(*(c+1)))
-		*state = STATE_LENGTH;
-	else if (!is_length_mod(*(c+1)))
-		*state = STATE_CONVERSION;
+	else
+		length_handler(c, state, params);
 }
 
 void	length_handler(const char *c, int *state, t_params *params)
 {
 	if (is_length_mod(*c))
 		ft_strncat(params->length, c, 1);
-	if (!is_length_mod(*(c + 1))) 
-		*state = STATE_CONVERSION;
+	else
+		conversion_handler(c,state,params);
 }
 
 void	conversion_handler(const char *c, int *state, t_params *params)
@@ -210,8 +199,8 @@ int main()
 	// printf("%.146f\n",f);
 	// ft_ftoa(f);
 
-	// ft_printf("g %+-2098.42lu");
-	ft_printf("g %+42lu");
+	ft_printf("g %.42llu");
+	// ft_printf("g %+42lu");
 
 	// int state = 0;
 	// t_params params;
