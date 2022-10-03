@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/03 11:40:05 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/03 12:01:17 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_params
 typedef struct s_plist
 {
 	t_params			params;
-	struct t_plist		*next;
+	struct s_plist		*next;
 } t_plist;
 
 void	multiplyer(char **s, int multiplyer, int len);

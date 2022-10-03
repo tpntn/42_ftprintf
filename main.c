@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/03 11:48:01 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/03 12:00:34 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	conversion_handler(const char *c, int *state, t_plist **current)
 		exit(0);
 	*state = STATE_NORMAL;
 	add_t_params(*current);
-	current = &(*current)->next;
+	*current = (*current)->next;
 }
 
 void	normal_handler(const char *c, int *state)
