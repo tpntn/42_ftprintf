@@ -30,7 +30,7 @@ void	REMOVE_data_printer(t_params *params, int state)
 	printf("state: %d\n\n", state);
 }
 
-void    initialize_params(t_params *params)
+void	initialize_params(t_params *params)
 {
 	params->id = 0;
     params->flags = (char *)malloc(sizeof(char) * 8);
@@ -40,7 +40,7 @@ void    initialize_params(t_params *params)
     params->conversion = 0;
 }
 
-t_plist    *init_plist()
+t_plist	*init_plist()
 {
     t_params    params;
     t_plist        *list;
@@ -53,7 +53,7 @@ t_plist    *init_plist()
     return (list);
 }
 
-t_plist    *add_t_params(t_plist *start)
+t_plist	*add_t_params(t_plist *start)
 {
     t_params    params;
     t_plist     *current;
@@ -75,6 +75,17 @@ t_plist    *add_t_params(t_plist *start)
     return (start);
 }
 
+// void	destroy_list(t_plist *start)
+// {
+// 	t_plist *next;
+
+// 	while (next)
+// 	{
+// 		next = start->next;
+// 		free(start);
+// 	}
+// }
+
 int main() {
 
 t_plist *list;
@@ -89,12 +100,15 @@ list = add_t_params(list);
 list = add_t_params(list);
 list = add_t_params(list);
 
-while(list)
+t_plist	*start;
+start = list;
+
+while(start)
 {
-	REMOVE_data_printer(&(list->params),1);
-	list = list->next;
-}
-  
+	REMOVE_data_printer(&(start->params),1);
+	start = start->next;
 }
 
-chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://www.flightsafety.com/wp-content/uploads/2022/06/75-09-01-0002-QRG-CAT1-and-CAT2-TSA-Process-for-Initial-Type-Ratings-ENGLISH-Version-Website-ONLY.pdf
+destroy_list(list);
+
+}

@@ -6,12 +6,12 @@
 #    By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/19 10:24:54 by tpontine          #+#    #+#              #
-#    Updated: 2022/09/22 15:01:06 by tpontine         ###   ########.fr        #
+#    Updated: 2022/10/03 11:00:16 by tpontine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_printf
-SRCS = main ft_ftoa
+SRCS = main ft_ftoa lists
 FILES = $(patsubst %, %.c, $(SRCS))
 OBJECTS = $(patsubst %, %.o, $(SRCS))
 FLAGS = -g
