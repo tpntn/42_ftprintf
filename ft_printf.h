@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/22 15:33:21 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/22 17:03:42 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,20 @@
 
 typedef struct s_params
 {
+	int		id;
 	char 	*flags;
 	int		width;
 	int		precision;
 	char	*length;
 	char	conversion;
 
-} t_params; 
+} t_params;
+
+typedef struct s_plist
+{
+	t_params			params;
+	struct t_plist		*next;
+} t_plist;
 
 void	multiplyer(char **s, int multiplyer, int len);
 float	to_pwr(int exp, int base);

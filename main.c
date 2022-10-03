@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/22 15:33:37 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/09/22 16:46:14 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,21 +133,13 @@ void	conversion_handler(const char *c, int *state, t_params *params)
 	*state = STATE_NORMAL;
 }
 
-void	initialize_params(int *state, t_params *params)
+void	initialize_params(t_params *params)
 {
-	if (*state == STATE_NORMAL)
-	{
-		params->flags = (char *)malloc(sizeof(char) * 8);
-		params->width = 0;
-		params->precision = 0;
-		params->length = (char *)malloc(sizeof(char) * 3);
-		params->conversion = 0;
-	}
-	if (*state == STATE_CONVERSION)
-	{
-		free(params->length);
-		*state = STATE_NORMAL;
-	}
+	params->flags = (char *)malloc(sizeof(char) * 8);
+	params->width = 0;
+	params->precision = 0;
+	params->length = (char *)malloc(sizeof(char) * 3);
+	params->conversion = 0;
 }
 
 void	normal_handler(const char *c, int *state)
@@ -158,16 +150,46 @@ void	normal_handler(const char *c, int *state)
 		ft_putchar(*c);
 }
 
+t_plist	*init_plist()
+{
+	t_params	*params;
+	t_plist		*list;
+		
+	initialize_params(params);
+	list->params = params;
+	list->next = NULL;
+
+	return (list);
+}
+
+t_plist	*add_t_params(t_plist *start)
+{
+	t_params	params;
+	t_plist		*current;
+	t_plist		*new;
+
+	current = start;
+	while(current->next)
+		current = current->next;
+		
+	current->next = &new;
+	initialize_params(&params);
+	new->params = params;
+	new->next = NULL;
+
+	return (start);
+}
+
 void	ft_printf(const char *str, ...)
 {
 	va_list		data;
 	int			state;
-	t_params	params;
+	
 
 	state = STATE_NORMAL;
 	
 	va_start(data, str);
-	initialize_params(&state, &params);
+	
 	while (*str)
 	{
 		if (state == STATE_NORMAL)
@@ -200,7 +222,7 @@ int main()
 	// printf("%.146f\n",f);
 	// ft_ftoa(f);
 
-	ft_printf("g %.42d");
+	ft_printf("This is \n amasing %+- 123.42lld what %30d you \n think?");
 	// ft_printf("g %+42lu");
 
 	// int state = 0;
