@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 10:59:55 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/03 12:03:54 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:41:17 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,49 @@ void	initialize_params(t_params *params)
 	params->conversion = 0;
 }
 
-t_plist	*init_plist()
+void	clear_params(t_params *params)
 {
-	t_params	params;
-	t_plist		*list;
-
-	list = malloc(sizeof(t_plist)); 
-	initialize_params(&params);
-	list->params = params;
-	list->next = NULL;
-
-	return (list);
+	params->id = 0;
+	free(params->flags);
+	params->width = 0;
+	params->precision = 0;
+	free(params->length);
+	params->conversion = 0;
 }
 
-t_plist	*add_t_params(t_plist *start)
-{
-	t_params	params;
-	t_plist		*current;
-	t_plist		*new;
-	int			id;
+// //REMOVE
+// t_plist	*init_plist()
+// {
+// 	t_params	params;
+// 	t_plist		*list;
 
-	current = start;
-	while(current->next)
-		current = current->next;
-	id = current->params.id;
-	id++;
-	new = init_plist();
-	current->next = new;
-	initialize_params(&params);
-	new->params = params;
-	new->next = NULL;
-	new->params.id = id;
+// 	list = malloc(sizeof(t_plist)); 
+// 	initialize_params(&params);
+// 	list->params = params;
+// 	list->next = NULL;
 
-	return (start);
-}
+// 	return (list);
+// }
+
+// //REMOVE
+// t_plist	*add_t_params(t_plist *start)
+// {
+// 	t_params	params;
+// 	t_plist		*current;
+// 	t_plist		*new;
+// 	int			id;
+
+// 	current = start;
+// 	while(current->next)
+// 		current = current->next;
+// 	id = current->params.id;
+// 	id++;
+// 	new = init_plist();
+// 	current->next = new;
+// 	initialize_params(&params);
+// 	new->params = params;
+// 	new->next = NULL;
+// 	new->params.id = id;
+
+// 	return (start);
+// }

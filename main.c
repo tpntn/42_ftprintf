@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/03 21:35:14 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:42:18 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,57 +82,56 @@ int		is_conv_mod(char c)
 	return (0);
 }
 
-void	flags_handler(const char *c, int *state, t_plist **current)
+void	flags_handler(const char *c, int *state, t_params *params)
 {
 	if (is_flag(*c))
-		ft_strncat((*current)->params.flags, c, 1);
+		ft_strncat(params->flags, c, 1);
 	else
 	{
 		*state = STATE_WIDTH;
-		width_handler(c, state, current);
+		width_handler(c, state, params);
 	}
 }
 
-void	width_handler(const char *c, int *state,t_plist **current)
+void	width_handler(const char *c, int *state, t_params *params)
 {
 	if (ft_isdigit(*c))
 	{
-		(*current)->params.width *= 10;
-		(*current)->params.width += *c - 48;
-		
+		params->width *= 10;
+		params->width += *c - 48;
 	}
 	else if (*c == '.')
 		*state = STATE_PRECISION;
 }
 
-void	precision_handler(const char *c, int *state, t_plist **current)
+void	precision_handler(const char *c, int *state, t_params *params)
 {
 	if (ft_isdigit(*c))
 	{
-		(*current)->params.precision *= 10;
-		(*current)->params.precision += *c - 48;
+		params->precision *= 10;
+		params->precision += *c - 48;
 	}
 	else
-		length_handler(c, state, current);
+		length_handler(c, state, params);
 }
 
-void	length_handler(const char *c, int *state, t_plist **current)
+void	length_handler(const char *c, int *state, t_params *params)
 {
 	if (is_length_mod(*c))
-		ft_strncat((*current)->params.length, c, 1);
+		ft_strncat(params->length, c, 1);
 	else
-		conversion_handler(c, state, current);
+		conversion_handler(c, state, params);
 }
 
-void	conversion_handler(const char *c, int *state, t_plist **current)
+void	conversion_handler(const char *c, int *state, t_params *params)
 {
 	if (is_conv_mod(*c))
-		(*current)->params.conversion = (char)*c;
+		params->conversion = (char)*c;
 	// else
 	// 	exit(0);
 	*state = STATE_NORMAL;
-	add_t_params(*current);
-	*current = (*current)->next;
+	REMOVE_data_printer(params, *state);
+	clear_params(params);
 }
 
 void	normal_handler(const char *c, int *state)
@@ -147,39 +146,30 @@ void	ft_printf(const char *str, ...)
 {
 	va_list		data;
 	int			state;
-	t_plist		*param_list;
-	t_plist		*current;
+	t_params	params;
 
-	param_list = init_plist();
+	
 	state = STATE_NORMAL;
-	current = param_list;
 	va_start(data, str);
+	initialize_params(&params);
 	
 	while (*str)
 	{
 		if (state == STATE_NORMAL)
 			normal_handler(str, &state);
 		else if (state == STATE_FLAGS)
-			flags_handler(str, &state, &current);
+			flags_handler(str, &state, &params);
 		else if (state == STATE_WIDTH)
-			width_handler(str, &state, &current);
+			width_handler(str, &state, &params);
 		else if (state == STATE_PRECISION)
-			precision_handler(str, &state, &current);
+			precision_handler(str, &state, &params);
 		else if (state == STATE_LENGTH)
-			length_handler(str, &state, &current);
+			length_handler(str, &state, &params);
 		else if (state == STATE_CONVERSION)
-			conversion_handler(str, &state, &current);
+			conversion_handler(str, &state, &params);
 		str++;
 	}
 	va_end(data);
-
-	current = param_list;
-	while (current)
-	{
-		REMOVE_data_printer(&current->params, state);
-		current = current->next;
-	}
-	
 }
 
 int main()

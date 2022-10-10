@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/03 12:01:17 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:40:55 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,15 @@ char	*count_fraction(int exp);
 char	*count_integer(int exp);
 void	ft_ftoa(float f);
 
-void	flags_handler(const char *c, int *state, t_plist **list);
-void	width_handler(const char *c, int *state, t_plist **list);
-void	precision_handler(const char *c, int *state, t_plist **list);
-void	length_handler(const char *c, int *state, t_plist **list);
-void	conversion_handler(const char *c, int *state, t_plist **list);
+void	flags_handler(const char *c, int *state, t_params *params);
+void	width_handler(const char *c, int *state, t_params *params);
+void	precision_handler(const char *c, int *state, t_params *params);
+void	length_handler(const char *c, int *state, t_params *params);
+void	conversion_handler(const char *c, int *state, t_params *params);
 void	normal_handler(const char *c, int *state);
 
 void	initialize_params(t_params *params);
-t_plist	*init_plist();
-t_plist	*add_t_params(t_plist *start);
+void	clear_params(t_params *params);
 
 
 
