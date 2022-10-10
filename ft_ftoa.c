@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/09/19 12:43:48 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/04 11:17:21 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,32 +132,25 @@ char	*initialize_sequence(int size, int addition) //size + add bytes
 
 char *count_fraction(int exp)
 {
-	char *seq;
 	char *result;
 	int	i;
 	int c = 0;
 
 	if (exp == 0)
-	{
-		// printf("1.0");
 		return ("1.0");
-	}
-		
 	if (exp < 0)
 		exp *= -1;
-
 	i = exp + 1;
 
-	seq = initialize_sequence(exp,2);
-	seq[exp+1] = '1';
+	result = initialize_sequence(exp,2);
+	result[exp+1] = '1';
 	while (c < exp)
 	{
-		multiplyer(&seq, 5, exp+2);
+		multiplyer(&result, 5, exp+2);
 		c++;
 	}
-	seq[1] = '.';
-	// printf("%s\n", seq);
-	return (seq);
+	result[1] = '.';
+	return (result);
 }
 
 char	*count_integer(int exp)

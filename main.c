@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/03 12:00:34 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/03 21:35:14 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ void	conversion_handler(const char *c, int *state, t_plist **current)
 {
 	if (is_conv_mod(*c))
 		(*current)->params.conversion = (char)*c;
-	else
-		exit(0);
+	// else
+	// 	exit(0);
 	*state = STATE_NORMAL;
 	add_t_params(*current);
 	*current = (*current)->next;
@@ -172,7 +172,14 @@ void	ft_printf(const char *str, ...)
 		str++;
 	}
 	va_end(data);
-	REMOVE_data_printer(&current->params, state);
+
+	current = param_list;
+	while (current)
+	{
+		REMOVE_data_printer(&current->params, state);
+		current = current->next;
+	}
+	
 }
 
 int main()
@@ -187,7 +194,8 @@ int main()
 	// printf("%.146f\n",f);
 	// ft_ftoa(f);
 
-	ft_printf("This is \n amasing %+- 123.42lld what %30d you \n think?");
+	ft_printf("This is \n amasing %+- 123.42lld what %30d do you %20d think?");
+	// ft_printf("This is \n amasing %+- 123.42lld asd");
 	// ft_printf("g %+42lu");
 
 	// int state = 0;
