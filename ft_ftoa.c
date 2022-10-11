@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 10:43:27 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 11:13:27 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ char	*count_integer(int exp)
 	}
 	return (result);
 }
-
+/*
 void	ft_ftoa(float f)
 {
 	int	*p;
@@ -229,7 +229,7 @@ void	ft_ftoa(float f)
 			}
 			else
 			{
-				// result_int *= 2;
+				result_int += to_pwr(2,i);
 				// printf("counting with:%d\n",exp-c);
 				// manchar = count_integer(exp - c);
 				// adder(&result_int,manchar);
@@ -282,31 +282,40 @@ void	ft_ftoa(float f)
 		ft_putchar(*(result_frac + c++));
 	
 }
-
+*/
 int	main()
 {
 	//TESTAA TÄMÄ KOULULLA, ETTÄ TULEE OIKEA LOPPUTULOS
 	char	*fraction;
 	char	*total = malloc_and_setzero(151);
+	int	result_int = 1;
 	total[1] = '.';
 
-	for (int i = 0; i <= 149; i++)
+	// for (int i = 0; i <= 149; i++)
+	// {
+	// 	fraction = count_fraction(i);
+	// 	// printf("exp -%d: %s\n",i,fraction);
+	// }
+
+	// char *first = count_fraction(-17);
+	// char *sec = count_fraction(-18);
+
+	// printf("%s\n", first);
+	// printf("%s\n", sec);
+
+	// printf("%s\n", total);
+	// adder(&total, first);
+	// printf("%s\n", total);
+	// adder(&total, sec);
+	// printf("%s\n", total);
+
+	for (int i = 0; i <= 3; i++)
 	{
-		fraction = count_fraction(i);
-		// printf("exp -%d: %s\n",i,fraction);
+		result_int += to_pwr(2,i);
+		printf("%d\n", result_int);
 	}
 
-	char *first = count_fraction(-17);
-	char *sec = count_fraction(-18);
-
-	printf("%s\n", first);
-	printf("%s\n", sec);
-
-	printf("%s\n", total);
-	adder(&total, first);
-	printf("%s\n", total);
-	adder(&total, sec);
-	printf("%s\n", total);
+	
 
 	return (0);
 }
