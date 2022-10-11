@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 12:36:27 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:35:14 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	adder(char **addto, char *num);
 char	*initialize_sequence(int size, int addition);
 char	*count_fraction(int exp);
 char	*count_integer(int exp);
-void	ft_ftoa(float f);
+void	ft_ftoa(float f, int precision);
 
 void	flags_handler(const char *c, int *state, t_params *params);
 void	width_handler(const char *c, int *state, t_params *params);

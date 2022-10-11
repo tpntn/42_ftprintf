@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 13:32:57 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:36:01 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ char	*count_integer(int exp)
 	return (result);
 }
 
-void	ft_ftoa(float f)
+void	ft_ftoa(float f, int precision)
 {
 	int	*p;
 	int	i;
@@ -215,31 +215,37 @@ void	ft_ftoa(float f)
 	int	exp;
 	char *manchar;
 	char *result_frac;
-	int	result_int;
+	char *result_int;
 	
 	exp = ret_exp(f);
 	result_frac = malloc_and_setzero(200);
 	result_frac[1] = '.';
+	result_int = malloc_and_setzero(40);
 
 	p = (int *)&f;
 	i = 22;
-	result_int = 0;
-	printf("exponent: %d\n", exp);
+	// printf("exponent: %d\n", exp);
 	if (exp != -126) //this counts the hidden bit
 	{
 		if (exp < 0)
 		{
-			printf("counting the hidden bit:%d\n", exp);
+			// printf("counting the hidden bit:%d\n", exp);
 			manchar = count_fraction(exp);
 			adder(&result_frac,manchar);
-			printf("adding bit%d:\t%s\n", i+1, manchar);
-			printf("result:\t\t%s\n", result_frac);
+			// printf("adding bit%d:\t%s\n", i+1, manchar);
+			// printf("result:\t\t%s\n", result_frac);
+			// ft_bzero(manchar, ft_strlen(manchar));
+			ft_strdel(&manchar);
 		}
 		else
 		{
-			result_int += to_pwr(exp,2);
-			printf("counting with:%d\n",exp);
-			printf("result_int %d\n",result_int);
+			manchar = count_integer(exp);
+			adder(&result_int, manchar);
+			// printf("counting with:%d\n",exp);
+			// printf("adding bit%d:\t%s\n", i+1, manchar);
+			// printf("result:\t\t%s\n", result_int);
+			// ft_bzero(manchar, ft_strlen(manchar));
+			ft_strdel(&manchar);
 		}
 		exp--;
 	}
@@ -250,19 +256,23 @@ void	ft_ftoa(float f)
 		{
 			if (c < 0)
 			{
-				printf("counting with:%d\n", c);
+				// printf("counting with:%d\n", c);
 				manchar = count_fraction(c);
 				adder(&result_frac,manchar);
-				printf("adding bit%d:\t%s\n", i+1, manchar);
-				printf("result:\t\t%s\n", result_frac);
-				ft_bzero(manchar, ft_strlen(manchar));
+				// printf("adding bit%d:\t%s\n", i+1, manchar);
+				// printf("result:\t\t%s\n", result_frac);
+				// ft_bzero(manchar, ft_strlen(manchar));
 				ft_strdel(&manchar);
 			}
 			else
 			{
-				result_int += to_pwr(c,2);
-				printf("counting with:%d\n",c);
-				printf("result_int %d\n",result_int);
+				// printf("counting with:%d\n",c);
+				manchar = count_integer(c);
+				adder(&result_int, manchar);
+				// printf("adding bit%d:\t%s\n", i+1, manchar);
+				// printf("result:\t\t%s\n", result_int);
+				// ft_bzero(manchar, ft_strlen(manchar));
+				ft_strdel(&manchar);
 			}
 		}	
 		c--;	
@@ -270,13 +280,16 @@ void	ft_ftoa(float f)
 	}
 	if (((*p >> 31) & 1))
 		ft_putchar('-');
-	char	*integer = ft_itoa(result_int);
-	ft_putstr(integer);
+	int a = 0;
+	while (*(result_int + a) == '0' && a < 39)
+		a++;
+	while (*(result_int + a))
+		ft_putchar(*(result_int + a++));
 	i = 0;
 	c = 1;
-	while (*(result_frac + i))
-		i++;
-	while (c < i)
+	// while (*(result_frac + i))
+	// 	i++;
+	while (c < ft_strlen(result_frac) && c <= precision)
 		ft_putchar(*(result_frac + c++));
 	
 }
@@ -288,8 +301,13 @@ int	main()
 	char	*total = malloc_and_setzero(151);
 	int	result_int = 0;
 	total[1] = '.';
-
-	float f = 225.18;
+	
+	// float f = 123.23;
+	// float f = 0.1;
+	// float f = 0.1123123123;
+	float f = -0.1123123123;
+	// float f = __FLT_MIN__; //This does not work
+	// float f = __FLT_MAX__;
 
 	// for (int i = 0; i <= 149; i++)
 	// {
@@ -318,10 +336,11 @@ int	main()
 
 	// printf("%d", to_pwr(8,2));
 
-	ft_ftoa(f);
+	ft_ftoa(f,12);
 
 	return (0);
 }
+
 // exp -14 -15
 //0.000091552734375
 //0.000091552734375
