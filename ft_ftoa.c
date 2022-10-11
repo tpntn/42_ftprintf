@@ -6,16 +6,27 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/10 13:34:25 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 09:28:13 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+
+// #define FLT_MAX 3.402823466e+38F /* max value */
+// #define FLT_MIN 1.175494351e-38F /* min positive value */
+
+/*
+3.4e2 = 340
+1.17e-2 = 0.0117
+3.40282346600000000000000000000000000000
+
+*/
+
+
 void	multiplyer(char **s, int multiplyer, int len)
 {
 	int		i;
-	char	memo = 48;
 	char	digit;
 	char	next = 0;
 
@@ -130,20 +141,34 @@ char	*initialize_sequence(int size, int addition) //size + add bytes
 	return (0);
 }
 
+char	*malloc_and_setzero(int size)
+{
+	char	*s;
+	s = (char *)malloc(sizeof(char) * size + 1);
+	if (!s)
+		return (0);
+	*(s + size) = 0;
+	size--;
+	while(size)
+		*(s+size--) = '0';
+	*s = '0';
+	return (s);
+}
+
 char *count_fraction(int exp)
 {
 	char *result;
 	int	i;
-	int c = 0;
+	int c;
 
 	if (exp == 0)
 		return ("1.0");
 	if (exp < 0)
 		exp *= -1;
 	i = exp + 1;
-
-	result = initialize_sequence(exp,2);
+	result = malloc_and_setzero(exp + 2);
 	result[exp+1] = '1';
+	c = 0;
 	while (c < exp)
 	{
 		multiplyer(&result, 5, exp+2);
@@ -152,6 +177,7 @@ char *count_fraction(int exp)
 	result[1] = '.';
 	return (result);
 }
+
 
 char	*count_integer(int exp)
 {
@@ -181,8 +207,8 @@ void	ft_ftoa(float f)
 	char *result_int;
 	
 	exp = ret_exp(f);
-	result_frac = initialize_sequence(exp - 23,3);
-	result_int = initialize_sequence(40,1);
+	result_frac = malloc_and_setzero(200);
+	result_int = malloc_and_setzero(40);
 	result_frac[1] = '.';
 
 	p = (int *)&f;
@@ -200,6 +226,7 @@ void	ft_ftoa(float f)
 				adder(&result_frac,manchar);
 				// printf("adding bit%d:\t%s\n", i+1, manchar);
 				// printf("result:\t\t%s\n", result_frac);
+				// ft_strdel(&manchar);
 			}
 			else
 			{
@@ -208,6 +235,7 @@ void	ft_ftoa(float f)
 				adder(&result_int,manchar);
 				// printf("adding bit%d:\t%s\n", i+1, manchar);
 				// printf("result:\t\t%s\n", result_int);
+				// ft_strdel(&manchar);
 			}
 			ft_bzero(manchar, ft_strlen(manchar));
 			ft_strdel(&manchar);
@@ -254,3 +282,19 @@ void	ft_ftoa(float f)
 		ft_putchar(*(result_frac + c++));
 	
 }
+
+int	main()
+{
+	//TESTAA TÄMÄ KOULULLA, ETTÄ TULEE OIKEA LOPPUTULOS
+	char *fraction;
+	
+	for (int i = 0; i <= 126; i++)
+	{
+		fraction = count_fraction(i);
+		printf("exp -%d: %s\n",i,fraction);
+	}
+	return (0);
+}
+
+// STATUS
+//count fraction tulostaa nyt oikean aina "loppuun saakka eli -126"
