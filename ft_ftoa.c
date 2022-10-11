@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 09:28:13 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 10:43:27 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,10 @@ void	adder(char **addto, char *num)
 	int	i;
 
 	i = 0;
-	while (*(num + i) && *((*addto + i)))
+	while (*(num + i))
 		i++;
 	i--;
-
-	// while (*(*addto + i) != '.' && *(num + i) != '.')
-	while (i > 1)
+	while (*(num + i) != '.')
 	{
 		if (*(*addto + i) + (*(num + i) - 48) > '9')
 		{
@@ -119,27 +117,27 @@ void	adder(char **addto, char *num)
 	}
 }
 
-char	*initialize_sequence(int size, int addition) //size + add bytes
-{
-	int		i;
-	char	*sequence;
+// char	*initialize_sequence(int size, int addition) //size + add bytes
+// {
+// 	int		i;
+// 	char	*sequence;
 
-	if (size < 0)
-		size *= -1;
-	if (addition < 0)
-		addition *= -1;
-	size += addition;
-	sequence = (char *)malloc(sizeof(char) * (size));
-	if (sequence)
-	{
-		ft_memset(sequence, 0, size);	
-		i = 0;
-		while (i < size - 1)
-			sequence[i++] = '0';
-		return (sequence);
-	}
-	return (0);
-}
+// 	if (size < 0)
+// 		size *= -1;
+// 	if (addition < 0)
+// 		addition *= -1;
+// 	size += addition;
+// 	sequence = (char *)malloc(sizeof(char) * (size));
+// 	if (sequence)
+// 	{
+// 		ft_memset(sequence, 0, size);	
+// 		i = 0;
+// 		while (i < size - 1)
+// 			sequence[i++] = '0';
+// 		return (sequence);
+// 	}
+// 	return (0);
+// }
 
 char	*malloc_and_setzero(int size)
 {
@@ -184,7 +182,7 @@ char	*count_integer(int exp)
 	int		i;
 	char	*result;
 
-	result = initialize_sequence(40,0);
+	result = malloc_and_setzero(40);
 	result[39] = '1';
 
 	i = 0;
@@ -204,17 +202,18 @@ void	ft_ftoa(float f)
 	int	exp;
 	char *manchar;
 	char *result_frac;
-	char *result_int;
+	// char *result_int;
+	int	result_int;
 	
 	exp = ret_exp(f);
 	result_frac = malloc_and_setzero(200);
-	result_int = malloc_and_setzero(40);
+	// result_int = malloc_and_setzero(40);
 	result_frac[1] = '.';
 
 	p = (int *)&f;
 	i = 0;
 	c = 23;
-	
+	result_int = 1;
 	while (i < 23)
 	{
 		if((*p >> i) & 1)
@@ -230,9 +229,10 @@ void	ft_ftoa(float f)
 			}
 			else
 			{
+				// result_int *= 2;
 				// printf("counting with:%d\n",exp-c);
-				manchar = count_integer(exp - c);
-				adder(&result_int,manchar);
+				// manchar = count_integer(exp - c);
+				// adder(&result_int,manchar);
 				// printf("adding bit%d:\t%s\n", i+1, manchar);
 				// printf("result:\t\t%s\n", result_int);
 				// ft_strdel(&manchar);
@@ -286,15 +286,37 @@ void	ft_ftoa(float f)
 int	main()
 {
 	//TESTAA TÄMÄ KOULULLA, ETTÄ TULEE OIKEA LOPPUTULOS
-	char *fraction;
-	
-	for (int i = 0; i <= 126; i++)
+	char	*fraction;
+	char	*total = malloc_and_setzero(151);
+	total[1] = '.';
+
+	for (int i = 0; i <= 149; i++)
 	{
 		fraction = count_fraction(i);
-		printf("exp -%d: %s\n",i,fraction);
+		// printf("exp -%d: %s\n",i,fraction);
 	}
+
+	char *first = count_fraction(-17);
+	char *sec = count_fraction(-18);
+
+	printf("%s\n", first);
+	printf("%s\n", sec);
+
+	printf("%s\n", total);
+	adder(&total, first);
+	printf("%s\n", total);
+	adder(&total, sec);
+	printf("%s\n", total);
+
 	return (0);
 }
+// exp -14 -15
+//0.000091552734375
+//0.000091552734375
+
+// exp -17 -18
+//0.000011444091796875
+//0.000011444091796875
 
 // STATUS
 //count fraction tulostaa nyt oikean aina "loppuun saakka eli -126"
