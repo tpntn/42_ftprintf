@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 13:40:21 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 20:23:12 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	normal_handler(const char *c, int *state);
 
 void	initialize_params(t_params *params);
 void	clear_params(t_params *params);
-char	*decimal_handler(int exp);
+void	decimal_handler(int exp, char **result);
 
 
 

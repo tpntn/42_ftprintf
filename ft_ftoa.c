@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 13:44:46 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 20:33:07 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	decimal_handler(int exp, char **result)
 	char	*manchar;
 	
 	manchar = count_fraction(exp);
-	adder(result_frac,manchar);
+	adder(result,manchar);
 	ft_bzero(manchar, ft_strlen(manchar));
 	ft_strdel(&manchar);
 }
@@ -190,7 +190,12 @@ void	ft_ftoa(float f)
 	if (exp != -126)
 	{
 		if (exp < 0)
-			decimal_handler(exp, %result_frac);	
+		{
+			manchar = count_fraction(exp);
+			adder(&result_frac,manchar);
+			ft_bzero(manchar, ft_strlen(manchar));
+			ft_strdel(&manchar);
+		}
 		else
 			result_int += to_pwr(exp,2);
 		exp--;
@@ -202,10 +207,10 @@ void	ft_ftoa(float f)
 		{
 			if (c < 0)
 			{
-				manchar = count_fraction(c);
-				adder(&result_frac,manchar);
-				ft_bzero(manchar, ft_strlen(manchar));
-				ft_strdel(&manchar);
+			manchar = count_fraction(exp);
+			adder(&result_frac,manchar);
+			ft_bzero(manchar, ft_strlen(manchar));
+			ft_strdel(&manchar);
 			}
 			else
 				result_int += to_pwr(c,2);
@@ -234,7 +239,7 @@ int	main()
 	int	result_int = 0;
 	total[1] = '.';
 
-	float f = 1;
+	float f = 0.1;
 
 	// for (int i = 0; i <= 149; i++)
 	// {
