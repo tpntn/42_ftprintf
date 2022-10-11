@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 13:02:40 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 13:32:57 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,11 +222,29 @@ void	ft_ftoa(float f)
 	result_frac[1] = '.';
 
 	p = (int *)&f;
-	i = 0;
-	c = exp;
+	i = 22;
 	result_int = 0;
 	printf("exponent: %d\n", exp);
-	while (i < 23)
+	if (exp != -126) //this counts the hidden bit
+	{
+		if (exp < 0)
+		{
+			printf("counting the hidden bit:%d\n", exp);
+			manchar = count_fraction(exp);
+			adder(&result_frac,manchar);
+			printf("adding bit%d:\t%s\n", i+1, manchar);
+			printf("result:\t\t%s\n", result_frac);
+		}
+		else
+		{
+			result_int += to_pwr(exp,2);
+			printf("counting with:%d\n",exp);
+			printf("result_int %d\n",result_int);
+		}
+		exp--;
+	}
+	c = exp;
+	while (i >= 0)
 	{
 		if((*p >> i) & 1)
 		{
@@ -237,18 +255,18 @@ void	ft_ftoa(float f)
 				adder(&result_frac,manchar);
 				printf("adding bit%d:\t%s\n", i+1, manchar);
 				printf("result:\t\t%s\n", result_frac);
-				// ft_strdel(&manchar);
+				ft_bzero(manchar, ft_strlen(manchar));
+				ft_strdel(&manchar);
 			}
 			else
 			{
-				result_int += to_pwr(i,2);
+				result_int += to_pwr(c,2);
 				printf("counting with:%d\n",c);
+				printf("result_int %d\n",result_int);
 			}
-			ft_bzero(manchar, ft_strlen(manchar));
-			ft_strdel(&manchar);
 		}	
 		c--;	
-		i++;
+		i--;
 	}
 	if (((*p >> 31) & 1))
 		ft_putchar('-');
@@ -271,7 +289,7 @@ int	main()
 	int	result_int = 0;
 	total[1] = '.';
 
-	float f = 0.1;
+	float f = 225.18;
 
 	// for (int i = 0; i <= 149; i++)
 	// {
