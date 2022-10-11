@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 13:32:57 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 13:44:46 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 3.4e2 = 340
 1.17e-2 = 0.0117
 3.40282346600000000000000000000000000000
-
 */
 
 
@@ -52,30 +51,6 @@ void	multiplyer(char **s, int multiplyer, int len)
 		i--;
 	}
 }
-
-// int	to_pwr(int exp, int base)
-// {
-// 	int		ret;
-// 	int		i;
-// 	int		neg;
-	
-// 	ret = 1;
-// 	i = 0;
-// 	neg = 0;
-// 	if (exp == 0)
-// 		return (1);
-// 	if (exp < 0)
-// 	{
-// 		exp *= -1;
-// 		neg = 1;
-// 	}
-// 	while (i++ < exp)
-// 		ret *= base; 
-
-// 	// if (neg)
-// 	// 	return (1 / ret);
-// 	return (ret);
-// }
 
 int	to_pwr(int exp, int base)
 {
@@ -129,28 +104,6 @@ void	adder(char **addto, char *num)
 		i--;
 	}
 }
-
-// char	*initialize_sequence(int size, int addition) //size + add bytes
-// {
-// 	int		i;
-// 	char	*sequence;
-
-// 	if (size < 0)
-// 		size *= -1;
-// 	if (addition < 0)
-// 		addition *= -1;
-// 	size += addition;
-// 	sequence = (char *)malloc(sizeof(char) * (size));
-// 	if (sequence)
-// 	{
-// 		ft_memset(sequence, 0, size);	
-// 		i = 0;
-// 		while (i < size - 1)
-// 			sequence[i++] = '0';
-// 		return (sequence);
-// 	}
-// 	return (0);
-// }
 
 char	*malloc_and_setzero(int size)
 {
@@ -207,6 +160,16 @@ char	*count_integer(int exp)
 	return (result);
 }
 
+void	decimal_handler(int exp, char **result)
+{
+	char	*manchar;
+	
+	manchar = count_fraction(exp);
+	adder(result_frac,manchar);
+	ft_bzero(manchar, ft_strlen(manchar));
+	ft_strdel(&manchar);
+}
+
 void	ft_ftoa(float f)
 {
 	int	*p;
@@ -224,23 +187,12 @@ void	ft_ftoa(float f)
 	p = (int *)&f;
 	i = 22;
 	result_int = 0;
-	printf("exponent: %d\n", exp);
-	if (exp != -126) //this counts the hidden bit
+	if (exp != -126)
 	{
 		if (exp < 0)
-		{
-			printf("counting the hidden bit:%d\n", exp);
-			manchar = count_fraction(exp);
-			adder(&result_frac,manchar);
-			printf("adding bit%d:\t%s\n", i+1, manchar);
-			printf("result:\t\t%s\n", result_frac);
-		}
+			decimal_handler(exp, %result_frac);	
 		else
-		{
 			result_int += to_pwr(exp,2);
-			printf("counting with:%d\n",exp);
-			printf("result_int %d\n",result_int);
-		}
 		exp--;
 	}
 	c = exp;
@@ -250,20 +202,13 @@ void	ft_ftoa(float f)
 		{
 			if (c < 0)
 			{
-				printf("counting with:%d\n", c);
 				manchar = count_fraction(c);
 				adder(&result_frac,manchar);
-				printf("adding bit%d:\t%s\n", i+1, manchar);
-				printf("result:\t\t%s\n", result_frac);
 				ft_bzero(manchar, ft_strlen(manchar));
 				ft_strdel(&manchar);
 			}
 			else
-			{
 				result_int += to_pwr(c,2);
-				printf("counting with:%d\n",c);
-				printf("result_int %d\n",result_int);
-			}
 		}	
 		c--;	
 		i--;
@@ -289,7 +234,7 @@ int	main()
 	int	result_int = 0;
 	total[1] = '.';
 
-	float f = 225.18;
+	float f = 1;
 
 	// for (int i = 0; i <= 149; i++)
 	// {

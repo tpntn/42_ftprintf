@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 12:36:27 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 13:40:21 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	multiplyer(char **s, int multiplyer, int len);
 int		to_pwr(int exp, int base);
 int		ret_exp(float f);
 void	adder(char **addto, char *num);
-char	*initialize_sequence(int size, int addition);
 char	*count_fraction(int exp);
 char	*count_integer(int exp);
 void	ft_ftoa(float f);
@@ -63,6 +62,7 @@ void	normal_handler(const char *c, int *state);
 
 void	initialize_params(t_params *params);
 void	clear_params(t_params *params);
+char	*decimal_handler(int exp);
 
 
 
