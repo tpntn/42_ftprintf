@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 11:13:27 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 13:02:40 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,40 @@ void	multiplyer(char **s, int multiplyer, int len)
 	}
 }
 
-float	to_pwr(int exp, int base)
-{
-	float	ret;
-	int		i;
-	int		neg;
+// int	to_pwr(int exp, int base)
+// {
+// 	int		ret;
+// 	int		i;
+// 	int		neg;
 	
-	ret = 1.0;
-	i = 0;
-	neg = 0;
-	if (exp == 0)
-		return (1.0);
-	if (exp < 0)
-	{
-		exp *= -1;
-		neg = 1;
-	}
-	while (i++ < exp)
-		ret *= (float)base; 
+// 	ret = 1;
+// 	i = 0;
+// 	neg = 0;
+// 	if (exp == 0)
+// 		return (1);
+// 	if (exp < 0)
+// 	{
+// 		exp *= -1;
+// 		neg = 1;
+// 	}
+// 	while (i++ < exp)
+// 		ret *= base; 
 
-	if (neg)
-		return (1 / ret);
+// 	// if (neg)
+// 	// 	return (1 / ret);
+// 	return (ret);
+// }
+
+int	to_pwr(int exp, int base)
+{
+	int ret;
+	int	i;
+	ret = base;
+	if (exp == 0)
+		return (1);
+	i = exp - 1;
+	while (i--)
+		ret *= base;
 	return (ret);
 }
 
@@ -193,7 +206,7 @@ char	*count_integer(int exp)
 	}
 	return (result);
 }
-/*
+
 void	ft_ftoa(float f)
 {
 	int	*p;
@@ -202,40 +215,34 @@ void	ft_ftoa(float f)
 	int	exp;
 	char *manchar;
 	char *result_frac;
-	// char *result_int;
 	int	result_int;
 	
 	exp = ret_exp(f);
 	result_frac = malloc_and_setzero(200);
-	// result_int = malloc_and_setzero(40);
 	result_frac[1] = '.';
 
 	p = (int *)&f;
 	i = 0;
-	c = 23;
-	result_int = 1;
+	c = exp;
+	result_int = 0;
+	printf("exponent: %d\n", exp);
 	while (i < 23)
 	{
 		if((*p >> i) & 1)
 		{
-			if (exp - c < 0)
+			if (c < 0)
 			{
-				// printf("counting with:%d\n",exp-c);
-				manchar = count_fraction(exp - c);
+				printf("counting with:%d\n", c);
+				manchar = count_fraction(c);
 				adder(&result_frac,manchar);
-				// printf("adding bit%d:\t%s\n", i+1, manchar);
-				// printf("result:\t\t%s\n", result_frac);
+				printf("adding bit%d:\t%s\n", i+1, manchar);
+				printf("result:\t\t%s\n", result_frac);
 				// ft_strdel(&manchar);
 			}
 			else
 			{
-				result_int += to_pwr(2,i);
-				// printf("counting with:%d\n",exp-c);
-				// manchar = count_integer(exp - c);
-				// adder(&result_int,manchar);
-				// printf("adding bit%d:\t%s\n", i+1, manchar);
-				// printf("result:\t\t%s\n", result_int);
-				// ft_strdel(&manchar);
+				result_int += to_pwr(i,2);
+				printf("counting with:%d\n",c);
 			}
 			ft_bzero(manchar, ft_strlen(manchar));
 			ft_strdel(&manchar);
@@ -243,37 +250,10 @@ void	ft_ftoa(float f)
 		c--;	
 		i++;
 	}
-	// printf("%d\n",exp);
-	if (exp != -126)
-	{
-		// printf("counting hidden bit:");
-		if (exp < 0)
-		{	
-			manchar = count_fraction(exp);
-			adder(&result_frac,manchar);
-			// printf("adding bit:\t%s\n", manchar);
-			// printf("result:\t\t%s\n", result_frac);
-		}
-		else
-		{
-			manchar = count_integer(exp);
-			adder(&result_int,manchar);
-			// printf("adding bit:\t%s\n", manchar);
-			// printf("result:\t\t%s\n", result_int);
-		}
-			
-	}
-	
 	if (((*p >> 31) & 1))
 		ft_putchar('-');
-
-	i = 0;
-	while (result_int[i] == '0')
-		i++;
-	if (i != 40)
-		ft_putstr(result_int + i);
-	else
-		ft_putchar('0');
+	char	*integer = ft_itoa(result_int);
+	ft_putstr(integer);
 	i = 0;
 	c = 1;
 	while (*(result_frac + i))
@@ -282,14 +262,16 @@ void	ft_ftoa(float f)
 		ft_putchar(*(result_frac + c++));
 	
 }
-*/
+
 int	main()
 {
 	//TESTAA TÄMÄ KOULULLA, ETTÄ TULEE OIKEA LOPPUTULOS
 	char	*fraction;
 	char	*total = malloc_and_setzero(151);
-	int	result_int = 1;
+	int	result_int = 0;
 	total[1] = '.';
+
+	float f = 0.1;
 
 	// for (int i = 0; i <= 149; i++)
 	// {
@@ -309,13 +291,16 @@ int	main()
 	// adder(&total, sec);
 	// printf("%s\n", total);
 
-	for (int i = 0; i <= 3; i++)
-	{
-		result_int += to_pwr(2,i);
-		printf("%d\n", result_int);
-	}
+	// for (int i = 8; i >= 5; i--)
+	// {
+	// 	printf("exp: %d result: %d\n",i,to_pwr(i,2));
+	// 	result_int += to_pwr(i,2);
+	// 	printf("%d\n", result_int);
+	// }
 
-	
+	// printf("%d", to_pwr(8,2));
+
+	ft_ftoa(f);
 
 	return (0);
 }

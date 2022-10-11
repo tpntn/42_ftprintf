@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/10 13:40:55 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:36:27 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_plist
 } t_plist;
 
 void	multiplyer(char **s, int multiplyer, int len);
-float	to_pwr(int exp, int base);
+int		to_pwr(int exp, int base);
 int		ret_exp(float f);
 void	adder(char **addto, char *num);
 char	*initialize_sequence(int size, int addition);
