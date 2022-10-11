@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 21:40:57 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/11 21:55:08 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,15 +202,15 @@ void	ft_ftoa(float f, int precision)
 		}
 		exp--;
 	}
-	c = exp;
+	// c = exp;
 	while (i >= 0)
 	{
 		if((*p >> i) & 1)
 		{
-			if (c < 0)
+			if (exp < 0)
 			{
 				// printf("counting with:%d\n", c);
-				manchar = count_fraction(c);
+				manchar = count_fraction(exp);
 				adder(&result_frac,manchar);
 				// printf("adding bit%d:\t%s\n", i+1, manchar);
 				// printf("result:\t\t%s\n", result_frac);
@@ -220,7 +220,7 @@ void	ft_ftoa(float f, int precision)
 			else
 			{
 				// printf("counting with:%d\n",c);
-				manchar = count_integer(c);
+				manchar = count_integer(exp);
 				adder(&result_int, manchar);
 				// printf("adding bit%d:\t%s\n", i+1, manchar);
 				// printf("result:\t\t%s\n", result_int);
@@ -228,7 +228,7 @@ void	ft_ftoa(float f, int precision)
 				ft_strdel(&manchar);
 			}
 		}	
-		c--;	
+		exp--;	
 		i--;
 	}
 	if (((*p >> 31) & 1))
