@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/11 21:55:00 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/12 09:45:50 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <stdlib.h>
-#include "libft/libft.h"
+#include "Libft/libft.h"
 
 #define STATE_NORMAL		0
 #define STATE_FLAGS			1
