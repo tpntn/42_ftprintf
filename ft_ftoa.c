@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/12 11:18:42 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:03:45 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ char	*malloc_and_setzero(int size)
 	return (s);
 }
 
+//counts and returns the value of fraction based exponent given
 char *count_fraction(int exp)
 {
 	char *result;
@@ -142,7 +143,7 @@ char *count_fraction(int exp)
 	return (result);
 }
 
-
+//count the integer based on exp
 char	*count_integer(int exp)
 {
 	int		i;
@@ -160,14 +161,37 @@ char	*count_integer(int exp)
 	return (result);
 }
 
-void	handle_fraction(int exp, char **result_frac)
+// [0][.][0][\0]
+
+char	*handle_fraction(int exp, char *result_frac)
 {
+	size_t	len;
+	char	*rev;
+	char	*new;
 	char	*m;
 	
 	m = count_fraction(exp);
-	adder(result_frac, m);
-	printf("result_frac from HANDLE_FRACTION: %s\n",*result_frac);
+	printf("value to add: %s\n",m);
+	printf("incoming value: %s\n",result_frac);
+	rev = ft_strrev(result_frac);
+	printf("reversed income value: %s\n",rev);
+	if (ft_strlen(m) < ft_strlen(result_frac))
+		len = ft_strlen(result_frac);
+	else
+		len = ft_strlen(m);
+	new = (char*)malloc(sizeof(char) * (len + 2));
+	new = ft_memset(new,'0', len + 1);
+	printf("new malloced value: %s\n",new);
+	ft_strcpy(new,rev);
+	printf("after cpy: %s\n",new);
+	new = ft_strrev(new);
+	new[len] = '0';
+	printf("new malloced value efter copy and rev: %s\n", new);
+	exp = 0;
+	adder(&new, m);
+	printf("output value: %s\n", new);
 	ft_strdel(&m);
+	return (new);
 }
 
 void	handle_integer(int exp, char **result_int)
@@ -189,8 +213,11 @@ void	ft_ftoa(float f, int precision)
 	char *result_int;
 	
 	exp = ret_exp(f);
-	result_frac = malloc_and_setzero(100);
+	result_frac = (char *)malloc(sizeof(char) * 4);
+	result_frac[0] = '0';
 	result_frac[1] = '.';
+	result_frac[2] = '0';
+	result_frac[3] = '\0';
 	result_int = malloc_and_setzero(40);
 
 	p = (int *)&f;
@@ -198,7 +225,7 @@ void	ft_ftoa(float f, int precision)
 	printf("exponent: %d\n", exp);
 	printf("result_frac: %s\n",result_frac);
 	if (exp < 0 && exp != -126)
-		handle_fraction(exp, &result_frac);
+		handle_fraction(exp, result_frac);
 	else
 		handle_integer(exp, &result_int);
 	exp--;
@@ -210,7 +237,7 @@ void	ft_ftoa(float f, int precision)
 			if (exp < 0)
 			{
 				printf("exponent: %d\n", exp);
-				handle_fraction(exp, &result_frac);
+				handle_fraction(exp, result_frac);
 				printf("result:\t\t%s\n", result_frac);
 			}
 			else
@@ -247,7 +274,7 @@ int	main()
 	// int	result_int = 0;
 	// total[1] = '.';
 	
-	float f = 123.23;
+	// float f = 123.23;
 	// float f = 0.1;
 	// float f = 0.1123123123;
 	// float f = -0.1123123123;
@@ -281,21 +308,30 @@ int	main()
 
 	// printf("%d", to_pwr(8,2));
 
-	ft_ftoa(f,12);
+	// ft_ftoa(f,12);
 
-	// char *s = malloc_and_setzero(200);
-	// s[1] = '.';
+	char *result_frac;
+	
+	result_frac = (char *)malloc(sizeof(char) * 4);
+	result_frac[0] = '0';
+	result_frac[1] = '.';
+	result_frac[2] = '0';
+	result_frac[3] = '\0';
 
-	// for (int i = -3; i > -12; i--)
-	// {
-	// 	handle_fraction(i,&s);
-	// 	printf("result: %s\n", s);
-	// }
-
+	for (int i = -4; i > -12; i--)
+	{
+		result_frac = handle_fraction(i, result_frac);
+		printf("result: %s\n", result_frac);
+	}
+	
 	// printf("result: %s\n", s);
 	// printf("manchar:%s\n", m);
 	// adder(&s,m);
 	// printf("result: %s\n", s);
+
+
+	
+
 	return (0);
 }
 
@@ -308,4 +344,4 @@ int	main()
 //0.000011444091796875
 
 // STATUS
-//count fraction tulostaa nyt oikean aina "loppuun saakka eli -126"
+//count fraction tulostaa nyt oikean aina "loppuun saakka eli -126"	
