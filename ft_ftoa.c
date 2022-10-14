@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/14 10:44:01 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/14 22:38:58 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,38 +161,34 @@ char	*count_integer(int exp)
 	return (result);
 }
 
-char	*handle_fraction(int exp, char **result_frac)
+char	*handle_fraction(int exp, char *result_frac)
 {
 	size_t	len_f;
 	size_t	len_m;
-	char	*temp;
 	char	*new;
 	char	*m;
 	char	*addition;
-	
-	temp = ft_strdup(*result_frac);
-	ft_strdel(result_frac);
+
 	m = count_fraction(exp);
-	len_f = ft_strlen(temp);
+	len_f = ft_strlen(result_frac);
 	len_m = ft_strlen(m);
-	new = (char*)malloc(sizeof(char) * (len_m + 2));
-	addition = (char*)malloc(sizeof(char) * (len_m - len_f + 1));
-	ft_memset(addition, '0', (size_t)(len_m - len_f));
-	new = ft_strcat(temp, addition);
-	exp = 0;
+	addition = malloc_and_setzero(len_m - len_f + 1);
+	new = ft_strjoin(result_frac, addition);
 	adder(&new, m);
 	ft_strdel(&m);
-	ft_strdel(&temp);
-	return (new);
+	ft_strdel(&addition);
+	ft_strdel(&result_frac);
+	return(new);
 }
 
-void	handle_integer(int exp, char **result_int)
+char	*handle_integer(int exp, char *result_int)
 {
 	char	*m;
 	
 	m = count_integer(exp);
-	adder(result_int, m);
+	adder(&result_int, m);
 	ft_strdel(&m);
+	return (result_int);
 }
 
 void	ft_ftoa(float f, int precision)
@@ -206,25 +202,26 @@ void	ft_ftoa(float f, int precision)
 	
 	exp = ret_exp(f);
 	result_frac = (char *)malloc(sizeof(char) * 4);
-	result_frac = ft_strcpy(result_frac, "0.0");
+	result_frac[0] = '0';
+	result_frac[1] = '.';
+	result_frac[2] = '0';
 	result_frac[3] = '\0';
 	result_int = malloc_and_setzero(40);
-
 	p = (int *)&f;
 	i = 22;
-	if (exp < 0 && exp != -126)
-		handle_fraction(exp, &result_frac);
-	else
-		handle_integer(exp, &result_int);
+	if (exp < 0)
+		result_frac = handle_fraction(exp, result_frac);
+	if (exp >= 0)
+		result_int = handle_integer(exp, result_int);
 	exp--;
 	while (i >= 0)
 	{
 		if((*p >> i) & 1)
 		{
 			if (exp < 0)
-				handle_fraction(exp, &result_frac);
+				result_frac = handle_fraction(exp, result_frac);
 			else
-				handle_integer(exp, &result_int);
+				result_int =  handle_integer(exp, result_int);
 		}	
 		exp--;	
 		i--;
@@ -240,20 +237,63 @@ void	ft_ftoa(float f, int precision)
 	c = 1;
 	while (c < (int)ft_strlen(result_frac) && c <= precision + 1)
 		ft_putchar(*(result_frac + c++));
-	
+	while (c++ <= precision + 1)
+		ft_putchar('0');
+	ft_strdel(&result_frac);
+	ft_strdel(&result_int);
 }
 
 int	main()
 {	
 	// float f = 123.23;
 	// float f = 0.1;
-	float f = 0.1123123123;
+	// float f = 0.1123123123;
 	// float f = -0.1123123123;
-	// float f = __FLT_MIN__; //This does not work
-	// float f = __FLT_MAX__;
+	// float f = __FLT_MIN__;
+	float f = __FLT_MAX__;
+	// float f = 2.20405190779e-38;
 	
-	printf("%.17f\n",f);
-	ft_ftoa(f,17);
+	// printf("%.25f\n",f);
+	// ft_ftoa(f,25);
 	
+	char *result_frac = (char *)malloc(sizeof(char) * 4);
+	result_frac[0] = '0';
+	result_frac[1] = '.';
+	result_frac[2] = '0';
+	result_frac[3] = '\0';
+
+	// printf("%s\n", result_frac);
+	// for (int i = -4; i > -5; i--)
+	// {
+	// 	handle_fraction(i, &result_frac);
+	// 	printf("%s\n", result_frac);
+	// }
+	// handle_fraction(-126, &result_frac);
+	// handle_fraction(-127, &result_frac);
+	// handle_fraction(-128, &result_frac);
+	// handle_fraction(-129, &result_frac);
+	// handle_fraction(-130, &result_frac);
+	// handle_fraction(-131, &result_frac);
+	// handle_fraction(-132, &result_frac);
+	// handle_fraction(-133, &result_frac);
+	// handle_fraction(-134, &result_frac);
+	// handle_fraction(-135, &result_frac);
+	// handle_fraction(-136, &result_frac);
+	// handle_fraction(-137, &result_frac);
+	// handle_fraction(-138, &result_frac);
+	// handle_fraction(-139, &result_frac);
+	// handle_fraction(-140, &result_frac);
+	// handle_fraction(-141, &result_frac);
+	// handle_fraction(-142, &result_frac);
+	// handle_fraction(-143, &result_frac);
+	// handle_fraction(-145, &result_frac);
+	// handle_fraction(-146, &result_frac);
+	// handle_fraction(-147, &result_frac);
+	// handle_fraction(-148, &result_frac);
+	printf("%s\n", result_frac);
+	printf("%.150f\n", f);
+	ft_ftoa(f, 150);
+	ft_strdel(&result_frac);
+
 	return (0);
 }
