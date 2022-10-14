@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/12 13:03:45 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/14 08:36:33 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,31 +162,30 @@ char	*count_integer(int exp)
 }
 
 // [0][.][0][\0]
+/*
+result_frac = "0.25";
+len_frac = 4;
+m = "0.125";
+new = [][][][][][];
+new = [0][.][2][5][0][\0];
+new = [0][.][3][7][5][\0];
+*/
 
 char	*handle_fraction(int exp, char *result_frac)
 {
-	size_t	len;
-	char	*rev;
+	size_t	len_f;
+	size_t	len_m;
 	char	*new;
 	char	*m;
+	char	*addition;
 	
 	m = count_fraction(exp);
-	printf("value to add: %s\n",m);
-	printf("incoming value: %s\n",result_frac);
-	rev = ft_strrev(result_frac);
-	printf("reversed income value: %s\n",rev);
-	if (ft_strlen(m) < ft_strlen(result_frac))
-		len = ft_strlen(result_frac);
-	else
-		len = ft_strlen(m);
-	new = (char*)malloc(sizeof(char) * (len + 2));
-	new = ft_memset(new,'0', len + 1);
-	printf("new malloced value: %s\n",new);
-	ft_strcpy(new,rev);
-	printf("after cpy: %s\n",new);
-	new = ft_strrev(new);
-	new[len] = '0';
-	printf("new malloced value efter copy and rev: %s\n", new);
+	len_f = ft_strlen(result_frac);
+	len_m = ft_strlen(m);
+	new = (char*)malloc(sizeof(char) * (len_m + 2));
+	addition = (char*)malloc(sizeof(char) * (len_m - len_f + 1));
+	ft_memset(addition, '0', (size_t)(len_m - len_f));
+	new = ft_strcat(result_frac, addition);
 	exp = 0;
 	adder(&new, m);
 	printf("output value: %s\n", new);
@@ -311,6 +310,7 @@ int	main()
 	// ft_ftoa(f,12);
 
 	char *result_frac;
+	// char *m;
 	
 	result_frac = (char *)malloc(sizeof(char) * 4);
 	result_frac[0] = '0';
@@ -318,20 +318,33 @@ int	main()
 	result_frac[2] = '0';
 	result_frac[3] = '\0';
 
-	for (int i = -4; i > -12; i--)
-	{
-		result_frac = handle_fraction(i, result_frac);
-		printf("result: %s\n", result_frac);
-	}
+	// for (int i = 0; i > -12; i--)
+	// {
+	// 	// result_frac = handle_fraction(i, result_frac);
+	// 	m = count_fraction(i);
+	// 	printf("result: %s\n", m);
+	// }
 	
 	// printf("result: %s\n", s);
 	// printf("manchar:%s\n", m);
 	// adder(&s,m);
 	// printf("result: %s\n", s);
 
-
+	printf("fraction in the start: %s\n", result_frac);
+	result_frac = handle_fraction(-4, result_frac);
+	result_frac = handle_fraction(-5, result_frac);
+	result_frac = handle_fraction(-8, result_frac);
+	result_frac = handle_fraction(-9, result_frac);
+	result_frac = handle_fraction(-12, result_frac);
+	result_frac = handle_fraction(-13, result_frac);
+	result_frac = handle_fraction(-16, result_frac);
+	result_frac = handle_fraction(-17, result_frac);
+	result_frac = handle_fraction(-20, result_frac);
+	result_frac = handle_fraction(-21, result_frac);
+	result_frac = handle_fraction(-24, result_frac);
+	result_frac = handle_fraction(-25, result_frac);
+	result_frac = handle_fraction(-27, result_frac);
 	
-
 	return (0);
 }
 
