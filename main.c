@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/12 09:45:02 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/15 15:34:23 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,19 +174,8 @@ void	ft_printf(const char *str, ...)
 
 int main()
 {
-	// float f = 104857.601562;
-	// float f = 1.17549435082e-38; //ei toimi
-	// float f = 0.1;
-	// float f = 1.0e38; //lähellä maksia???
-	float f = 1.5e-37; //tämä on viimeinen joka toimii.... -38 ei toimi enää
-	// float f = -1.0e-37;
-
-	// printf("%.146f\n",f);
-	ft_ftoa(f);
-	printf("\n%.146f", f);
-	printf("\n%.146f\n", __FLT_MIN__);
-	ft_ftoa(__FLT_MIN__);
-	// ft_printf("This is \n amasing %+- 123.42lld what do you %82.1llx think?");
+	
+	ft_printf("This is \n amasing %+- 123.42lld what do you %82.1llx think?");
 	// ft_printf("This is \n amasing %+- 123.42lld asd");
 	// ft_printf("g %+42lu");
 

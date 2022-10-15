@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/15 11:19:33 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/15 15:30:41 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,8 +250,8 @@ int	main()
 	// float f = __FLT_MAX__;
 	// float f = 2.20405190779e-38;
 
-	for (int i = 0; i < 20; i++)
-		ft_ftoa(f, 150);
+	// for (int i = 0; i < 20; i++)
+	ft_ftoa(f, 150);
 
 	return (0);
 }
