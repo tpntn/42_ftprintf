@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/12 11:25:13 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 09:30:40 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,27 @@ typedef struct s_plist
 	struct s_plist		*next;
 } t_plist;
 
+typedef void (*func)(t_params *params, va_list data);
+
+typedef struct s_type
+{
+	char	id;
+	func	func;
+} t_type;
+
 void	multiplyer(char **s, int multiplyer, int len);
 int		to_pwr(int exp, int base);
 int		ret_exp(float f);
 void	adder(char **addto, char *num);
 char	*count_fraction(int exp);
 char	*count_integer(int exp);
-void	ft_ftoa(float f, int precision);
+void	ft_ftoa(t_params *params, va_list data);
 
 void	flags_handler(const char *c, int *state, t_params *params);
 void	width_handler(const char *c, int *state, t_params *params);
-void	precision_handler(const char *c, int *state, t_params *params);
-void	length_handler(const char *c, int *state, t_params *params);
-void	conversion_handler(const char *c, int *state, t_params *params);
+void	precision_handler(const char *c, int *state, t_params *params, va_list data);
+void	length_handler(const char *c, int *state, t_params *params, va_list data);
+void	conv_handl(const char *c, int *state, t_params *params, va_list data);
 void	normal_handler(const char *c, int *state);
 
 void	initialize_params(t_params *params);

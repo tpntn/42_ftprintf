@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/15 15:30:41 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 09:41:25 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,13 +209,14 @@ void	handler(int exp, char **result_frac, char **result_int)
 		handle_integer(exp, *result_int);
 }
 
-void	ft_ftoa(float f, int precision)
+void	ft_ftoa(t_params *params, va_list data)
 {
 	int	*p;
 	int	i;
 	int	exp;
 	char *result_frac;
 	char *result_int;
+	float f = (float)va_arg(data, double);
 	
 	exp = ret_exp(f);
 	result_frac = (char *)malloc(sizeof(char) * 4);
@@ -233,25 +234,25 @@ void	ft_ftoa(float f, int precision)
 		i--;
 	}
 	if (((*p >> 31) & 1))
-		printer(precision, result_int, result_frac, 1);
+		printer(params->precision, result_int, result_frac, 1);
 	else
-		printer(precision, result_int, result_frac, 0);
+		printer(params->precision, result_int, result_frac, 0);
 	ft_strdel(&result_frac);
 	ft_strdel(&result_int);
 }
 
-int	main()
-{	
-	// float f = 123.23;
-	float f = 0.1;
-	// float f = 0.1123123123;
-	// float f = -0.1123123123;
-	// float f = __FLT_MIN__;
-	// float f = __FLT_MAX__;
-	// float f = 2.20405190779e-38;
+// int	main()
+// {	
+// 	// float f = 123.23;
+// 	float f = 0.1;
+// 	// float f = 0.1123123123;
+// 	// float f = -0.1123123123;
+// 	// float f = __FLT_MIN__;
+// 	// float f = __FLT_MAX__;
+// 	// float f = 2.20405190779e-38;
 
-	// for (int i = 0; i < 20; i++)
-	ft_ftoa(f, 150);
+// 	// for (int i = 0; i < 20; i++)
+// 	ft_ftoa(f, 150);
 
-	return (0);
-}
+// 	return (0);
+// }

@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/15 15:34:23 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 09:40:41 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	REMOVE_data_printer(t_params *params, int state)
 
 	printf("state: %d\n\n", state);
 }
+
+static t_type types[] = {
+	{'f', ft_ftoa}
+	// {'s', ft_putstr}
+};
 
 int	is_type_specifier(char str)
 {
@@ -84,7 +89,6 @@ int		is_conv_mod(char c)
 
 void	flags_handler(const char *c, int *state, t_params *params)
 {
-	initialize_params(params);
 	if (is_flag(*c))
 		ft_strncat(params->flags, c, 1);
 	else
@@ -105,7 +109,7 @@ void	width_handler(const char *c, int *state, t_params *params)
 		*state = STATE_PRECISION;
 }
 
-void	precision_handler(const char *c, int *state, t_params *params)
+void	precision_handler(const char *c, int *state, t_params *params, va_list data)
 {
 	if (ft_isdigit(*c))
 	{
@@ -113,26 +117,34 @@ void	precision_handler(const char *c, int *state, t_params *params)
 		params->precision += *c - 48;
 	}
 	else
-		length_handler(c, state, params);
+		length_handler(c, state, params, data);
 }
 
-void	length_handler(const char *c, int *state, t_params *params)
+void	length_handler(const char *c, int *state, t_params *params, va_list data)
 {
 	if (is_length_mod(*c))
 		ft_strncat(params->length, c, 1);
 	else
-		conversion_handler(c, state, params);
+		conv_handl(c, state, params, data);
 }
 
-void	conversion_handler(const char *c, int *state, t_params *params)
+void	conv_handl(const char *c, int *state, t_params *params, va_list data)
 {
+	int	i;
 	if (is_conv_mod(*c))
 		params->conversion = (char)*c;
 	// else
-	// 	exit(0);
-	REMOVE_data_printer(params, *state);
+	// 	throw some error and clear all
+	i = 0;
+	while (i < 10)
+	{
+		if (types[i].id == *c)
+			types[i].func(params, data);
+		i++;
+	}
 	*state = STATE_NORMAL;
 	clear_params(params);
+	initialize_params(params);
 }
 
 void	normal_handler(const char *c, int *state)
@@ -149,8 +161,8 @@ void	ft_printf(const char *str, ...)
 	int			state;
 	t_params	params;
 
-	
 	state = STATE_NORMAL;
+	initialize_params(&params);
 	va_start(data, str);
 	
 	while (*str)
@@ -162,35 +174,25 @@ void	ft_printf(const char *str, ...)
 		else if (state == STATE_WIDTH)
 			width_handler(str, &state, &params);
 		else if (state == STATE_PRECISION)
-			precision_handler(str, &state, &params);
+			precision_handler(str, &state, &params, data);
 		else if (state == STATE_LENGTH)
-			length_handler(str, &state, &params);
+			length_handler(str, &state, &params, data);
 		else if (state == STATE_CONVERSION)
-			conversion_handler(str, &state, &params);
+			conv_handl(str, &state, &params, data);
 		str++;
 	}
 	va_end(data);
+	clear_params(&params);
 }
 
 int main()
 {
-	
-	ft_printf("This is \n amasing %+- 123.42lld what do you %82.1llx think?");
+	float f = __FLT_MIN__;
+	ft_printf("ft_printf: __FLT_MIN__:\t%.126f\n",f);
+	printf("printf: __FLT_MIN__:\t%.126f\n",f);
 	// ft_printf("This is \n amasing %+- 123.42lld asd");
 	// ft_printf("g %+42lu");
 
-	// int state = 0;
-	// t_params params;
-	// initialize_params(&state, &params);
-
-	// const char *s = "200";
-	// while (*s)
-	// {
-	// 	width_handler(s, &state, &params);
-	// 	REMOVE_data_printer(&params, state);
-	// 	s++;
-	// }
-	
 	
 	return (0);
 }
