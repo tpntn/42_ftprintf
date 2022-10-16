@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 09:41:25 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 23:22:06 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	adder(char **addto, char *num)
 	while (*(num + i))
 		i++;
 	i--;
-	while (*(num + i) != '.')
+	while (*(num + i) != '.' && i)
 	{
 		if (*(*addto + i) + (*(num + i) - 48) > '9')
 		{
@@ -180,7 +180,34 @@ void	handle_integer(int exp, char *result_int)
 	// return (result_int);
 }
 
-void	printer(int precision, char *integer, char *fraction, int sign)
+int		rounder(char **fraction, int precision, int memo)
+{
+	if ((*fraction)[precision + 2] < '5' && !memo)
+		return (0);
+	if (memo)
+	{
+		if ((*fraction)[precision + 1] + 1 > '9')
+		{
+			(*fraction)[precision + 1] = '0';
+			return (rounder(fraction, precision-1, 1));
+		}
+		else 
+			(*fraction)[precision + 1]++;
+	}
+	if ((*fraction)[precision + 2] >= '5' && !memo)
+	{
+	if((*fraction)[precision + 1] + 1 > '9')
+	{
+		(*fraction)[precision + 1] = '0';
+			return (rounder(fraction, precision-1, 1));
+	}
+	else
+		(*fraction)[precision + 1]++;
+	}
+	return (0);
+}
+
+void	printer(t_params *params, char *integer, char *fraction, int sign)
 {
 	int	a;
 	int	i;
@@ -195,9 +222,10 @@ void	printer(int precision, char *integer, char *fraction, int sign)
 		ft_putchar(*(integer + a++));
 	i = 0;
 	c = 1;
-	while (c < (int)ft_strlen(fraction) && c <= precision + 1)
+	rounder(&fraction, params->precision,0);
+	while (c < (int)ft_strlen(fraction) && c <= params->precision + 1)
 		ft_putchar(*(fraction + c++));
-	while (c++ <= precision + 1)
+	while (c++ <= params->precision + 1)
 		ft_putchar('0');
 }
 
@@ -234,9 +262,9 @@ void	ft_ftoa(t_params *params, va_list data)
 		i--;
 	}
 	if (((*p >> 31) & 1))
-		printer(params->precision, result_int, result_frac, 1);
+		printer(params, result_int, result_frac, 1);
 	else
-		printer(params->precision, result_int, result_frac, 0);
+		printer(params, result_int, result_frac, 0);
 	ft_strdel(&result_frac);
 	ft_strdel(&result_int);
 }

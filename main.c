@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 09:40:41 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 23:21:50 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,18 @@ int		is_conv_mod(char c)
 	return (0);
 }
 
-void	flags_handler(const char *c, int *state, t_params *params)
+void	flags_handler(const char *c, int *state, t_params *params, va_list data)
 {
 	if (is_flag(*c))
 		ft_strncat(params->flags, c, 1);
 	else
 	{
 		*state = STATE_WIDTH;
-		width_handler(c, state, params);
+		width_handler(c, state, params, data);
 	}
 }
 
-void	width_handler(const char *c, int *state, t_params *params)
+void	width_handler(const char *c, int *state, t_params *params, va_list data)
 {
 	if (ft_isdigit(*c))
 	{
@@ -107,6 +107,8 @@ void	width_handler(const char *c, int *state, t_params *params)
 	}
 	else if (*c == '.')
 		*state = STATE_PRECISION;
+	else if (*c != '.')
+		length_handler(c, state, params, data);
 }
 
 void	precision_handler(const char *c, int *state, t_params *params, va_list data)
@@ -128,15 +130,20 @@ void	length_handler(const char *c, int *state, t_params *params, va_list data)
 		conv_handl(c, state, params, data);
 }
 
+void	check_params(t_params **params)
+{
+	if ((*params)->precision == 0)
+		(*params)->precision = 6;
+}
+
 void	conv_handl(const char *c, int *state, t_params *params, va_list data)
 {
 	int	i;
 	if (is_conv_mod(*c))
 		params->conversion = (char)*c;
-	// else
-	// 	throw some error and clear all
+	check_params(&params);
 	i = 0;
-	while (i < 10)
+	while (i < 1)
 	{
 		if (types[i].id == *c)
 			types[i].func(params, data);
@@ -170,9 +177,9 @@ void	ft_printf(const char *str, ...)
 		if (state == STATE_NORMAL)
 			normal_handler(str, &state);
 		else if (state == STATE_FLAGS)
-			flags_handler(str, &state, &params);
+			flags_handler(str, &state, &params, data);
 		else if (state == STATE_WIDTH)
-			width_handler(str, &state, &params);
+			width_handler(str, &state, &params, data);
 		else if (state == STATE_PRECISION)
 			precision_handler(str, &state, &params, data);
 		else if (state == STATE_LENGTH)
@@ -187,9 +194,50 @@ void	ft_printf(const char *str, ...)
 
 int main()
 {
-	float f = __FLT_MIN__;
-	ft_printf("ft_printf: __FLT_MIN__:\t%.126f\n",f);
-	printf("printf: __FLT_MIN__:\t%.126f\n",f);
+	// float f = __FLT_MIN__;
+	// printf("%f\n",f);
+	// printf("%#f\n",f);
+	// printf("%020f\n",f);
+
+	float f = 123.45;
+	printf("%.1f\n",f);
+	ft_printf("%.1f\n",f);
+	
+
+	printf("%.2f\n",f);
+	ft_printf("%.2f\n",f);
+
+	printf("%.3f\n",f);
+	ft_printf("%.3f\n",f);
+
+	printf("%.4f\n",f);
+	ft_printf("%.4f\n",f);
+
+	printf("%.5f\n",f);
+	ft_printf("%.5f\n",f);
+
+	printf("%.6f\n",f);
+	ft_printf("%.6f\n",f);
+
+	printf("%.7f\n",f);
+	ft_printf("%.7f\n",f);
+
+	printf("%.8f\n",f);
+	ft_printf("%.8f\n",f);
+
+	printf("%.9f\n",f);
+	ft_printf("%.9f\n",f);
+
+	printf("%.10f\n",f);
+	ft_printf("%.10f\n",f);
+
+	printf("%.15f\n",f);
+	ft_printf("%.15f\n",f);
+	// float f = __FLT_MIN__;
+	// long double d = __DBL_MIN__;
+	// ft_printf("ft_printf: __FLT_MIN__:\t%.126f\n",f);
+	// printf("printf: __FLT_MIN__:\t%.150lf\n",f);
+	// printf("printf: __DBL_MIN__:\t%Lf\n",d);
 	// ft_printf("This is \n amasing %+- 123.42lld asd");
 	// ft_printf("g %+42lu");
 

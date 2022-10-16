@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 09:30:40 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 11:43:38 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ char	*count_fraction(int exp);
 char	*count_integer(int exp);
 void	ft_ftoa(t_params *params, va_list data);
 
-void	flags_handler(const char *c, int *state, t_params *params);
-void	width_handler(const char *c, int *state, t_params *params);
+void	flags_handler(const char *c, int *state, t_params *params, va_list data);
+void	width_handler(const char *c, int *state, t_params *params, va_list data);
 void	precision_handler(const char *c, int *state, t_params *params, va_list data);
 void	length_handler(const char *c, int *state, t_params *params, va_list data);
 void	conv_handl(const char *c, int *state, t_params *params, va_list data);
