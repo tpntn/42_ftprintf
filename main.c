@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 23:42:24 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 23:43:18 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,11 +201,10 @@ int main()
 	// printf("%020f\n",f);
 
 	// float f = 0.1;
-	// printf("%.1f\n",f);
-	// ft_printf("%.1f\n",f);
+	printf("%.1f\n",f);
+	ft_printf("%.1f\n",f);
 	
-
-	// printf("%.2f\n",f);
+	printf("%.2f\n",f);
 	ft_printf("%.2f\n",f);
 
 	printf("%.3f\n",f);
