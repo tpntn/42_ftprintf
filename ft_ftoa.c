@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 23:22:06 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 23:42:04 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ void	handle_integer(int exp, char *result_int)
 
 int		rounder(char **fraction, int precision, int memo)
 {
+	if ((precision > (int)ft_strlen(*fraction) - 2))
+		return (0);
 	if ((*fraction)[precision + 2] < '5' && !memo)
 		return (0);
 	if (memo)

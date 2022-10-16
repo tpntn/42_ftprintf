@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 23:21:50 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/16 23:42:24 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,17 +194,18 @@ void	ft_printf(const char *str, ...)
 
 int main()
 {
-	// float f = __FLT_MIN__;
+	float f = __FLT_MIN__;
+	// float f = 100.0;
 	// printf("%f\n",f);
 	// printf("%#f\n",f);
 	// printf("%020f\n",f);
 
-	float f = 123.45;
-	printf("%.1f\n",f);
-	ft_printf("%.1f\n",f);
+	// float f = 0.1;
+	// printf("%.1f\n",f);
+	// ft_printf("%.1f\n",f);
 	
 
-	printf("%.2f\n",f);
+	// printf("%.2f\n",f);
 	ft_printf("%.2f\n",f);
 
 	printf("%.3f\n",f);
@@ -231,8 +232,23 @@ int main()
 	printf("%.10f\n",f);
 	ft_printf("%.10f\n",f);
 
-	printf("%.15f\n",f);
-	ft_printf("%.15f\n",f);
+	printf("%.11f\n",f);
+	ft_printf("%.11f\n",f);
+
+	printf("%.25f\n",f);
+	ft_printf("%.25f\n",f);
+
+	printf("%.35f\n",f);
+	ft_printf("%.35f\n",f);
+
+	printf("%.45f\n",f);
+	ft_printf("%.45f\n",f);
+
+	printf("%.46f\n",f);
+	ft_printf("%.46f\n",f);
+
+	printf("%.101f\n",f);
+	ft_printf("%.101f\n",f);
 	// float f = __FLT_MIN__;
 	// long double d = __DBL_MIN__;
 	// ft_printf("ft_printf: __FLT_MIN__:\t%.126f\n",f);
