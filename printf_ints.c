@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/17 11:25:10 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:15:31 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,69 @@ char	*ft_ulltoa(unsigned long long n)
 	return (result);
 }
 
+void	parse_unsigned_bits(void *nb)
+{
+	int	*p;
+	size_t	size;
+
+	p = (int*)&nb;
+	size = sizeof(nb);
+	printf("%zu\n", size);
+	size *= 8;
+	while(size)
+	{
+		printf("%d ", ((*p >> size) & 1));
+		size--;
+	}
+}
+
+void printBits(unsigned long long num)
+{
+   for (unsigned long bit = 0; bit < (sizeof(unsigned long long) * 8); bit++)
+   {
+      printf("%llu ", num & 1);
+      num = num >> 1;
+   }
+   printf("\n");
+}
+
+char	*to_ascii(unsigned long long number, int radix)
+{
+	char *buffer = (char*)malloc(sizeof(char) * 33);
+	ft_memset(buffer,0,33);
+	int pos = 0;
+	const char g_HexChars[] = "0123456789abcdef";
+	do 
+    {
+        uint32_t rem =  number % radix;   
+		number /= radix;    
+        buffer[pos++] = g_HexChars[rem];
+    } while (number > 0);
+
+	buffer = ft_strrev(buffer);
+	return (buffer);
+}
+
 int	main()
 {
-	long long l = 9223372036854775807;
-	unsigned long long int longlong = 18446744073709551614;
+	// long long l = 9223372036854775807;
+	unsigned long long int longlong = __LONG_LONG_MAX__;
+	// unsigned long long int longlong = 512;
+	
 	// int len = ft_nbr_len(l);
-	printf("%s\n", ft_dtoa(l));
-	printf("%s\n", ft_ulltoa(longlong));
+	// printf("%s\n", ft_dtoa(l));
+	// printf("%s\n", ft_ulltoa(longlong * 2));
+	// printf("%llu\n", l * 2);
+	// parse_unsigned_bits(&longlong);
+	// printBits(512);
+	// printBits(longlong);
+	printf("%s\n",to_ascii(522,10));
+	printf("%s\n",to_ascii(522,16));
+	printf("%s\n",to_ascii(longlong*2 ,16));
+	printf("%llx\n", longlong*2);
+
+
+	// printf("%zu\n", sizeof(longlong));
 	
 	
 	return (0);
