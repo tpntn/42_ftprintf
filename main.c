@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/17 23:31:30 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/17 23:38:54 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ void	REMOVE_data_printer(t_params *params, int state)
 static t_type types[] = {
 	{'f', ft_ftoa},
 	{'i', ft_signed_itoa},
-	{'d', ft_signed_itoa}
-	// {'x', ft_unsigned_itoa},
-	// {'X', ft_unsigned_itoa},
-	// {'u', ft_unsigned_itoa},
-	// {'o', ft_unsigned_itoa}
+	{'d', ft_signed_itoa},
+	{'x', ft_unsigned_itoa},
+	{'X', ft_unsigned_itoa},
+	{'u', ft_unsigned_itoa},
+	{'o', ft_unsigned_itoa}
 };
 
 int	is_type_specifier(char str)
@@ -148,7 +148,7 @@ void	conv_handl(const char *c, int *state, t_params *params, va_list data)
 		params->conversion = (char)*c;
 	check_params(&params);
 	i = 0;
-	while (i < 3)
+	while (i < 7)
 	{
 		if (types[i].id == *c)
 			types[i].func(params, data);
@@ -255,7 +255,10 @@ int main()
 	// ft_printf("%.101f\n",f);
 	
 	int a = 52212123;
-	ft_printf("%d\n",a);
+	ft_printf("%d \n",a);
+
+	a = 52212123;
+	ft_printf("%x \n",a);
 	
 	// float f = __FLT_MIN__;
 	// long double d = __DBL_MIN__;

@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/17 23:30:03 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/17 23:36:37 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,36 +52,28 @@ void	ft_signed_itoa(t_params *params, va_list data)
 	printf("%s", buffer);
 }
 
-// char	*ft_unsigned_itoa(t_params *params, va_list data)
-// {
-// 	int		radix;
-// 	char	*buffer; 
-// 	int		pos;
-// 	static char g_HexChars[] = "0123456789abcdef";
-// 	int		add_sign;
+void	ft_unsigned_itoa(t_params *params, va_list data)
+{
+	int		radix;
+	char	*buffer; 
+	int		pos;
+	static char g_HexChars[] = "0123456789abcdef";
+	unsigned long long num;
 
-// 	buffer= (char*)malloc(sizeof(char) * 33);
-// 	ft_memset(buffer,0,33);
-// 	pos = 0;
-// 	radix = set_radix(params);
-// 	add_sign = 0;
-// 	if (*num < 0)
-// 	{
-// 		*num *= -1;
-// 		add_sign = 1;
-// 	}
-		
-// 	while (num > 0)
-// 	{
-// 		uint32_t rem =  *num % radix;
-// 		*num  /= radix;
-// 		buffer[pos++] = g_HexChars[rem];
-// 	}
-// 	if (add_sign)
-// 		buffer[pos] = '-';
-// 	buffer = ft_strrev(buffer);
-// 	return (buffer);
-// }
+	buffer= (char*)malloc(sizeof(char) * 33);
+	ft_memset(buffer,0,33);
+	num = (unsigned long long)va_arg(data, unsigned long long);
+	pos = 0;
+	radix = set_radix(params);
+	while (num > 0)
+	{
+		uint32_t rem =  num % radix;
+		num  /= radix;
+		buffer[pos++] = g_HexChars[rem];
+	}
+	buffer = ft_strrev(buffer);
+	printf("%s", buffer);
+}
 
 // int	main()
 // {
