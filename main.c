@@ -6,13 +6,13 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/17 09:56:09 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:59:14 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-// gcc func_pointers.c -I Libft/ -L libft -lft
+// gcc -Wall -Werror -Wextra -g -fsanitize=address ft_ftoa.c main.c ftoa_params.c -I Libft/ -L libft -lft
 
 void	REMOVE_data_printer(t_params *params, int state)
 {
