@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 23:43:18 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/17 09:56:09 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,13 +194,13 @@ void	ft_printf(const char *str, ...)
 
 int main()
 {
-	float f = __FLT_MIN__;
+	// float f = __FLT_MAX__;
 	// float f = 100.0;
 	// printf("%f\n",f);
 	// printf("%#f\n",f);
 	// printf("%020f\n",f);
 
-	// float f = 0.1;
+	float f = 0.1;
 	printf("%.1f\n",f);
 	ft_printf("%.1f\n",f);
 	
