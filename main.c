@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/17 11:54:34 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/17 23:31:30 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,13 @@ void	REMOVE_data_printer(t_params *params, int state)
 }
 
 static t_type types[] = {
-	{'f', ft_ftoa}
-	// {'s', ft_putstr}
+	{'f', ft_ftoa},
+	{'i', ft_signed_itoa},
+	{'d', ft_signed_itoa}
+	// {'x', ft_unsigned_itoa},
+	// {'X', ft_unsigned_itoa},
+	// {'u', ft_unsigned_itoa},
+	// {'o', ft_unsigned_itoa}
 };
 
 int	is_type_specifier(char str)
@@ -143,7 +148,7 @@ void	conv_handl(const char *c, int *state, t_params *params, va_list data)
 		params->conversion = (char)*c;
 	check_params(&params);
 	i = 0;
-	while (i < 1)
+	while (i < 3)
 	{
 		if (types[i].id == *c)
 			types[i].func(params, data);
@@ -200,54 +205,58 @@ int main()
 	// printf("%#f\n",f);
 	// printf("%020f\n",f);
 
-	float f = 0.1;
-	printf("%.1f\n",f);
-	ft_printf("%.1f\n",f);
+	// float f = 0.1;
+	// printf("%.1f\n",f);
+	// ft_printf("%.1f\n",f);
 	
-	printf("%.2f\n",f);
-	ft_printf("%.2f\n",f);
+	// printf("%.2f\n",f);
+	// ft_printf("%.2f\n",f);
 
-	printf("%.3f\n",f);
-	ft_printf("%.3f\n",f);
+	// printf("%.3f\n",f);
+	// ft_printf("%.3f\n",f);
 
-	printf("%.4f\n",f);
-	ft_printf("%.4f\n",f);
+	// printf("%.4f\n",f);
+	// ft_printf("%.4f\n",f);
 
-	printf("%.5f\n",f);
-	ft_printf("%.5f\n",f);
+	// printf("%.5f\n",f);
+	// ft_printf("%.5f\n",f);
 
-	printf("%.6f\n",f);
-	ft_printf("%.6f\n",f);
+	// printf("%.6f\n",f);
+	// ft_printf("%.6f\n",f);
 
-	printf("%.7f\n",f);
-	ft_printf("%.7f\n",f);
+	// printf("%.7f\n",f);
+	// ft_printf("%.7f\n",f);
 
-	printf("%.8f\n",f);
-	ft_printf("%.8f\n",f);
+	// printf("%.8f\n",f);
+	// ft_printf("%.8f\n",f);
 
-	printf("%.9f\n",f);
-	ft_printf("%.9f\n",f);
+	// printf("%.9f\n",f);
+	// ft_printf("%.9f\n",f);
 
-	printf("%.10f\n",f);
-	ft_printf("%.10f\n",f);
+	// printf("%.10f\n",f);
+	// ft_printf("%.10f\n",f);
 
-	printf("%.11f\n",f);
-	ft_printf("%.11f\n",f);
+	// printf("%.11f\n",f);
+	// ft_printf("%.11f\n",f);
 
-	printf("%.25f\n",f);
-	ft_printf("%.25f\n",f);
+	// printf("%.25f\n",f);
+	// ft_printf("%.25f\n",f);
 
-	printf("%.35f\n",f);
-	ft_printf("%.35f\n",f);
+	// printf("%.35f\n",f);
+	// ft_printf("%.35f\n",f);
 
-	printf("%.45f\n",f);
-	ft_printf("%.45f\n",f);
+	// printf("%.45f\n",f);
+	// ft_printf("%.45f\n",f);
 
-	printf("%.46f\n",f);
-	ft_printf("%.46f\n",f);
+	// printf("%.46f\n",f);
+	// ft_printf("%.46f\n",f);
 
-	printf("%.101f\n",f);
-	ft_printf("%.101f\n",f);
+	// printf("%.101f\n",f);
+	// ft_printf("%.101f\n",f);
+	
+	int a = 52212123;
+	ft_printf("%d\n",a);
+	
 	// float f = __FLT_MIN__;
 	// long double d = __DBL_MIN__;
 	// ft_printf("ft_printf: __FLT_MIN__:\t%.126f\n",f);
