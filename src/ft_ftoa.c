@@ -6,29 +6,38 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 00:42:52 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 02:10:14 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	trim_zeros(char *integer)
+static int	trim_zeros(char *s, int i)
 {
-	int	i;
-
-	i = 0;
-	while (integer[i] == '0')
+	while (s[i] == '0')
 		i++;
 	return (i);
 }
+
+// 00000123.123
+// prec = 3;
+// len = 7;
+// if width = 12; => nollia tulostuu 12 - 7
 
 void	ftoa_output(t_params *params, char *integer, char *fraction, int sign)
 {
 	char	*flo;
 	int		start;
 	
-	start = trim_zeros(integer);
+	
+	
+	rounder(&fraction, params->precision, 0);
+	ft_memset((fraction + params->precision + 2), 0, \
+	ft_strlen(fraction) - params->precision);
+	start = trim_zeros(integer, 0);
 	flo = ft_strjoin(integer + start, fraction + 1);
+	if (params->width)
+		flo = apply_width(&flo, params);
 	ft_putstr(flo);
 
 	params->id = 0;

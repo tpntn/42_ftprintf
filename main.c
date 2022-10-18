@@ -119,22 +119,22 @@ int main()
 	// ft_printf("this is string %s inside a string\n", s);
 	// printf("this is string %s inside a string\n\n", s);
 
-	char x = 'c';
-	ft_printf("char in %c string\n", x);
-	printf("char in %c string\n\n", x);
+	// char x = 'c';
+	// ft_printf("char in %c string\n", x);
+	// printf("char in %c string\n\n", x);
 
-	ft_printf("address of x: %p\n", &x);
-	printf("address of x: %p\n\n", &x);
+	// ft_printf("address of x: %p\n", &x);
+	// printf("address of x: %p\n\n", &x);
 	
-	int a = 52212123;
-	ft_printf("%x \n",a);
-	printf("%x \n",a);
-	ft_printf("%p \n", &a);
-	printf("%p \n", &a);
+	// int a = 52212123;
+	// ft_printf("%x \n",a);
+	// printf("%x \n",a);
+	// ft_printf("%p \n", &a);
+	// printf("%p \n", &a);
 	
 	float f = 12.15;
-	ft_printf("ft_printf:\t%.0f\n",f);
-	printf("printf:\t%05.2f\n",f);
+	ft_printf("%07.3f\n",f);
+	printf("%07.3f\n",f);
 	// printf("printf: __FLT_MIN__:\t%.150lf\n",f);
 	// printf("printf: __DBL_MIN__:\t%Lf\n",d);
 	// ft_printf("This is \n amasing %+- 123.42lld asd");
