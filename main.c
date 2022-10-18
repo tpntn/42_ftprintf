@@ -120,8 +120,8 @@ int main()
 	// printf("this is string %s inside a string\n\n", s);
 
 	char x = 'c';
-	// ft_printf("char in %c string\n", x);
-	// printf("char in %c string\n\n", x);
+	ft_printf("char in %c string\n", x);
+	printf("char in %c string\n\n", x);
 
 	ft_printf("address of x: %p\n", &x);
 	printf("address of x: %p\n\n", &x);

@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 14:57:46 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 15:39:45 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:59:19 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_puts(t_params *params, va_list data)
 {
 	if (params->conversion == 's')
-		ft_putstr(va_arg(data, char *));		
+		ft_putstr(va_arg(data, char *));
 }
 
 void	ft_putc(t_params *params, va_list data)
@@ -34,5 +34,4 @@ void	ft_ptr(t_params *params, va_list data)
 		ft_putstr("0x");
 		__ft_itoa_unsigned(params, data);
 	}
-		
 }

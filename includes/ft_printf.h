@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 22:50:40 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 00:16:45 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,15 @@ int		rounder(char **fraction, int precision, int memo);
 
 void	flags_handler(const char *c, int *state, t_params *params, va_list data);
 void	width_handler(const char *c, int *state, t_params *params, va_list data);
-void	precision_handler(const char *c, int *state, t_params *params, va_list data);
-void	length_handler(const char *c, int *state, t_params *params, va_list data);
+void	prec_handler(const char *c, int *state, t_params *params, va_list data);
+void	len_handler(const char *c, int *state, t_params *params, va_list data);
 void	conv_handl(const char *c, int *state, t_params *params, va_list data);
 void	normal_handler(const char *c, int *state);
+void	check_params(t_params **params);
+int		is_conv_mod(char c);
+int		is_length_mod(char c);
+int		is_flag(char c);
+
 
 void	initialize_params(t_params *params);
 void	clear_params(t_params *params);
@@ -85,6 +90,9 @@ void	ft_ptr(t_params *params, va_list data);
 
 void	__ft_itoa_unsigned(t_params *params, va_list data);
 int		__ft_itoa(t_params *params, va_list data);
+
+int	set_radix(t_params *params);
+long long	set_number(t_params *params, va_list data);
 
 
 

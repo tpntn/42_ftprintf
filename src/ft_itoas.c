@@ -6,77 +6,51 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 19:04:39 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 23:58:13 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	set_radix(t_params *params)
+static int	if_zero(long long *num)
 {
-	if (params->conversion == 'u' || params->conversion == 'd')
-		return (10);
-	if (params->conversion == 'x' || params->conversion == 'X')
-		return (16);
-	if (params->conversion == 'o' || params->conversion == 'O')
-		return (8);
+	if (*num < 0)
+	{
+		*num *= -1;
+		return (1);
+	}
 	return (0);
 }
 
-static long long	set_number(t_params *params, va_list data)
+static int	fill_buffer(char **buffer, unsigned long long num, int radix)
 {
-	if (params->conversion == 'u' || params->conversion == 'd')
+	uint32_t	rem;
+	static char	hexchars[] = "0123456789abcdef";
+	int			pos;
+
+	pos = 0;
+	while (num > 0)
 	{
-		if (params->length == 1)
-			return (va_arg(data, long int));
-		if (params->length == 2)
-			return (va_arg(data, long long int));
-		else
-			return (va_arg(data, int));
+		rem = num % radix;
+		num /= radix;
+		*(*buffer + pos++) = hexchars[rem];
 	}
-	else
-	{
-		if (params->length == 1)
-			return (va_arg(data, unsigned long int));
-		if (params->length == 2)
-			return (va_arg(data, unsigned long long int));
-		else
-			return (va_arg(data, unsigned int));
-	}
-	
+	return (pos);
 }
 
 int	__ft_itoa(t_params *params, va_list data)
 {
 	int						radix;
-	char					*buffer; 
-	int						pos;
-	static char 			g_HexChars[] = "0123456789abcdef";
 	long long				num;
 	int						sign;
-	
+	int						pos;
+	char					*buffer;
+
+	buffer = ft_strnew(33);
 	num = set_number(params, data);
-	if (num == LLONG_MIN)
-	{
-		ft_putstr("-19823123");
-		return (0);
-	}
-	buffer = (char*)malloc(sizeof(char) * 33);
-	ft_memset(buffer,0,33);
-	sign = 0;
-	if (num < 0)
-	{
-		num *= -1;
-		sign = 1;
-	}
-	pos = 0;
+	sign = if_zero(&num);
 	radix = set_radix(params);
-	while (num > 0)
-	{
-		uint32_t rem =  num % radix;
-		num /= radix;
-		buffer[pos++] = g_HexChars[rem];
-	}
+	pos = fill_buffer(&buffer, (unsigned long long)num, radix);
 	if (sign)
 		buffer[pos] = '-';
 	buffer = ft_strrev(buffer);
@@ -86,24 +60,15 @@ int	__ft_itoa(t_params *params, va_list data)
 
 void	__ft_itoa_unsigned(t_params *params, va_list data)
 {
-	int		radix;
-	char	*buffer; 
-	int		pos;
-	static char g_HexChars[] = "0123456789abcdef";
-	unsigned long long num;
+	int					radix;
+	int					pos;
+	unsigned long long	num;
+	char				*buffer;
 
-	buffer = (char*)malloc(sizeof(char) * 33);
-	ft_memset(buffer,0,33);
+	buffer = ft_strnew(33);
 	num = set_number(params, data);
-	pos = 0;
 	radix = set_radix(params);
-	//HOW TO HANDLE ZERO
-	while (num > 0)
-	{
-		uint32_t rem =  num % radix;
-		num  /= radix;
-		buffer[pos++] = g_HexChars[rem];
-	}
+	pos = fill_buffer(&buffer, num, radix);
 	buffer = ft_strrev(buffer);
 	ft_putstr(buffer);
 }

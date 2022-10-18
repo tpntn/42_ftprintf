@@ -6,7 +6,7 @@
 #    By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/19 10:24:54 by tpontine          #+#    #+#              #
-#    Updated: 2022/10/18 22:53:00 by tpontine         ###   ########.fr        #
+#    Updated: 2022/10/19 00:15:56 by tpontine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,10 @@ SRCS := ./src/$(EXE).c \
 	./src/ftoa_params.c \
 	./src/utils.c \
 	./src/ft_ftoa_helpers.c \
-	./src/rounder.c
+	./src/rounder.c \
+	./src/ft_itoas_helpers.c \
+	./src/printf_handlers.c \
+	./src/ft_printf_mods.c
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 LIB_DIR := Libft
