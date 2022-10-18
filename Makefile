@@ -6,7 +6,7 @@
 #    By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/19 10:24:54 by tpontine          #+#    #+#              #
-#    Updated: 2022/10/18 17:48:41 by tpontine         ###   ########.fr        #
+#    Updated: 2022/10/18 19:08:42 by tpontine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,13 @@ INCLUDES := -I./Libft -I./includes
 SRC_DIR := ./src
 OBJ_DIR := ./obj
 SRCS := ./src/$(EXE).c \
-	./src/ft_fto.c \
+	./src/ft_ftoa.c \
 	./src/ft_itoas.c \
 	./src/ft_puts.c \
 	./src/ftoa_params.c
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-LIB_DIR := libft
+LIB_DIR := Libft
 LIBFT := $(addprefix $(LIB_DIR), libft.a)
 LIB_OBJS = $(shell find $(LIB_DIR) -type f | grep -E "\.o$$")
 
