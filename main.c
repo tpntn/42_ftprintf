@@ -128,10 +128,14 @@ int main()
 	
 	int a = 52212123;
 	ft_printf("%x \n",a);
+	printf("%x \n",a);
+	ft_printf("%p \n", &a);
+	printf("%p \n", &a);
 	
-	// float f = __FLT_MIN__;
+	float f = 0.1;
 	// long double d = __DBL_MIN__;
-	// ft_printf("ft_printf: __FLT_MIN__:\t%.126f\n",f);
+	ft_printf("ft_printf:\t%.25f\n",f);
+	printf("ft_printf:\t%.25f\n",f);
 	// printf("printf: __FLT_MIN__:\t%.150lf\n",f);
 	// printf("printf: __DBL_MIN__:\t%Lf\n",d);
 	// ft_printf("This is \n amasing %+- 123.42lld asd");
