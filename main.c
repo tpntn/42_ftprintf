@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 14:52:13 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:56:34 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,12 @@ void	flags_handler(const char *c, int *state, t_params *params, va_list data)
 {
 	if (is_flag(*c))
 		ft_strncat(params->flags, c, 1);
+	if (*c == '%')
+	{
+		ft_putchar(*c);
+		*state = STATE_NORMAL;
+	}
+		
 	else
 	{
 		*state = STATE_WIDTH;
@@ -310,6 +316,8 @@ int main()
 	unsigned long long g = LLONG_MAX;
 	ft_printf("ft:\t%llx\n", g);
 	printf("lib:\t%llx\n\n", g);
+
+	ft_printf("This is %% random\n\n");
 
 	// a = 52212123;
 	// ft_printf("%x \n",a);
