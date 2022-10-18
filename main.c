@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 14:01:06 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:18:06 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void	conv_handl(const char *c, int *state, t_params *params, va_list data)
 	if (is_conv_mod(*c))
 		params->conversion = (char)*c;
 	check_params(&params);
+	// REMOVE_data_printer(params, *state);
 	i = 0;
 	while (i < 7)
 	{
@@ -262,9 +263,33 @@ int main()
 	
 	// int a = 52212123;
 	// ft_printf("%d \n",a);
-	int a = -2;
+	int a = INT_MAX;
 	ft_printf("%d\n", a);
+	printf("%d\n\n", a);
 
+	a = INT_MIN;
+	ft_printf("%d\n", a);
+	printf("%d\n\n", a);
+
+	a = INT_MAX;
+	ft_printf("%d\n", a);
+	printf("%d\n\n", a);
+
+	long b = LONG_MAX;
+	ft_printf("%ld\n", b);
+	printf("%ld\n\n", b);
+
+	b = LONG_MIN;
+	ft_printf("%ld\n", b);
+	printf("%ld\n\n", b);
+
+	long long c = __LONG_LONG_MAX__;
+	ft_printf("%lld\n", c);
+	printf("%lld\n\n", c);
+
+	c = LLONG_MIN;
+	ft_printf("%lld\n", c);
+	printf("%lld\n\n", c);
 	// a = 52212123;
 	// ft_printf("%x \n",a);
 	

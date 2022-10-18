@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 14:01:18 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:17:51 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	set_radix(t_params *params)
 
 static long long	set_number(t_params *params, va_list data)
 {
-	if (params->precision == 1)
+	if (params->length == 1)
 		return (va_arg(data, long int));
-	if (params->precision == 2)
+	if (params->length == 2)
 		return (va_arg(data, long long int));
 	else
 		return (va_arg(data, int));
@@ -43,9 +43,9 @@ void	__ft_itoa(t_params *params, va_list data)
 	static char 			g_HexChars[] = "0123456789abcdef";
 	long long				num;
 	int						sign;
-
+	
 	num = set_number(params, data);
-	buffer= (char*)malloc(sizeof(char) * 33);
+	buffer = (char*)malloc(sizeof(char) * 33);
 	ft_memset(buffer,0,33);
 	sign = 0;
 	if (num < 0)
@@ -70,7 +70,7 @@ void	__ft_itoa(t_params *params, va_list data)
 void	ft_printf_itoa(t_params *params, va_list data)
 {
 	if (params->conversion == 'u' || params->conversion == 'd')
-					__ft_itoa(params, data);	
+		__ft_itoa(params, data);	
 	if (params->conversion == 'x' || params->conversion == 'X')
 	{
 		;
