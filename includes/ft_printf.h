@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 11:43:38 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 19:15:52 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <stdlib.h>
-#include "Libft/libft.h"
+#include "libft.h"
 
 #define STATE_NORMAL		0
 #define STATE_FLAGS			1
@@ -34,7 +34,7 @@ typedef struct s_params
 	char 	*flags;
 	int		width;
 	int		precision;
-	char	*length;
+	int		length;
 	char	conversion;
 
 } t_params;
@@ -53,6 +53,7 @@ typedef struct s_type
 	func	func;
 } t_type;
 
+void	ft_printf(const char *str, ...);
 void	multiplyer(char **s, int multiplyer, int len);
 int		to_pwr(int exp, int base);
 int		ret_exp(float f);
@@ -71,6 +72,15 @@ void	normal_handler(const char *c, int *state);
 void	initialize_params(t_params *params);
 void	clear_params(t_params *params);
 void	decimal_handler(int exp, char **result);
+
+void	ft_printf_itoa(t_params *params, va_list data);
+
+void	ft_puts(t_params *params, va_list data);
+void	ft_putc(t_params *params, va_list data);
+void	ft_ptr(t_params *params, va_list data);
+
+void	__ft_itoa_unsigned(t_params *params, va_list data);
+int		__ft_itoa(t_params *params, va_list data);
 
 
 
