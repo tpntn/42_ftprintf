@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 14:17:51 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:47:06 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,25 @@ int	set_radix(t_params *params)
 
 static long long	set_number(t_params *params, va_list data)
 {
-	if (params->length == 1)
-		return (va_arg(data, long int));
-	if (params->length == 2)
-		return (va_arg(data, long long int));
+	if (params->conversion == 'u' || params->conversion == 'd')
+	{
+		if (params->length == 1)
+			return (va_arg(data, long int));
+		if (params->length == 2)
+			return (va_arg(data, long long int));
+		else
+			return (va_arg(data, int));
+	}
 	else
-		return (va_arg(data, int));
+	{
+		if (params->length == 1)
+			return (va_arg(data, unsigned long int));
+		if (params->length == 2)
+			return (va_arg(data, unsigned long long int));
+		else
+			return (va_arg(data, unsigned int));
+	}
+	
 }
 
 void	__ft_itoa(t_params *params, va_list data)
@@ -67,21 +80,7 @@ void	__ft_itoa(t_params *params, va_list data)
 	ft_putstr(buffer);
 }
 
-void	ft_printf_itoa(t_params *params, va_list data)
-{
-	if (params->conversion == 'u' || params->conversion == 'd')
-		__ft_itoa(params, data);	
-	if (params->conversion == 'x' || params->conversion == 'X')
-	{
-		;
-	}	
-	if (params->conversion == 'o' || params->conversion == 'O')
-	{
-		;
-	}
-}
-
-void	ft_unsigned_itoa(t_params *params, va_list data)
+void	__ft_itoa_unsigned(t_params *params, va_list data)
 {
 	int		radix;
 	char	*buffer; 
@@ -89,11 +88,12 @@ void	ft_unsigned_itoa(t_params *params, va_list data)
 	static char g_HexChars[] = "0123456789abcdef";
 	unsigned long long num;
 
-	buffer= (char*)malloc(sizeof(char) * 33);
+	buffer = (char*)malloc(sizeof(char) * 33);
 	ft_memset(buffer,0,33);
-	num = (unsigned long long)va_arg(data, unsigned long long);
+	num = set_number(params, data);
 	pos = 0;
 	radix = set_radix(params);
+	//HOW TO HANDLE ZERO
 	while (num > 0)
 	{
 		uint32_t rem =  num % radix;
@@ -102,4 +102,12 @@ void	ft_unsigned_itoa(t_params *params, va_list data)
 	}
 	buffer = ft_strrev(buffer);
 	ft_putstr(buffer);
+}
+
+void	ft_printf_itoa(t_params *params, va_list data)
+{
+	if (params->conversion == 'u' || params->conversion == 'd')
+		__ft_itoa(params, data);
+	else
+		__ft_itoa_unsigned(params, data);
 }
