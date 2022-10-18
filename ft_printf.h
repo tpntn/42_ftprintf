@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 13:53:27 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:33:15 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,13 @@ void	clear_params(t_params *params);
 void	decimal_handler(int exp, char **result);
 
 void	ft_printf_itoa(t_params *params, va_list data);
+
+void	ft_puts(t_params *params, va_list data);
+void	ft_putc(t_params *params, va_list data);
+void	ft_ptr(t_params *params, va_list data);
+
+void	__ft_itoa_unsigned(t_params *params, va_list data);
+void	__ft_itoa(t_params *params, va_list data);
 
 
 

@@ -6,11 +6,9 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 14:47:06 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:34:57 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// #include "ft_printf.h"
 
 #include "ft_printf.h"
 

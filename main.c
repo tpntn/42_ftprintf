@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 14:56:34 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 15:38:37 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static t_type types[] = {
 	{'x', ft_printf_itoa},
 	{'X', ft_printf_itoa},
 	{'u', ft_printf_itoa},
-	{'o', ft_printf_itoa}
+	{'o', ft_printf_itoa},
+	{'s', ft_puts},
+	{'c', ft_putc},
+	{'p', ft_ptr}
 };
 
 int	is_type_specifier(char str)
@@ -161,7 +164,7 @@ void	conv_handl(const char *c, int *state, t_params *params, va_list data)
 	check_params(&params);
 	// REMOVE_data_printer(params, *state);
 	i = 0;
-	while (i < 7)
+	while (i < 10)
 	{
 		if (types[i].id == *c)
 			types[i].func(params, data);
@@ -269,55 +272,69 @@ int main()
 	
 	// int a = 52212123;
 	// ft_printf("%d \n",a);
-	int a = 0;
-	ft_printf("ft:\t%d\n", a);
-	printf("lib:\t%d\n\n", a);
 
-	a = INT_MIN;
-	ft_printf("ft:\t%d\n", a);
-	printf("lib:\t%d\n\n", a);
 
-	a = INT_MAX;
-	ft_printf("ft:\t%d\n", a);
-	printf("lib:\t%d\n\n", a);
+	
+	// int a = 0;
+	// ft_printf("ft:\t%d\n", a);
+	// printf("lib:\t%d\n\n", a);
 
-	long b = LONG_MAX;
-	ft_printf("ft:\t%ld\n", b);
-	printf("lib:\t%ld\n\n", b);
+	// a = INT_MIN;
+	// ft_printf("ft:\t%d\n", a);
+	// printf("lib:\t%d\n\n", a);
 
-	b = LONG_MIN;
-	ft_printf("ft:\t%ld\n", b);
-	printf("lib:\t%ld\n\n", b);
+	// a = INT_MAX;
+	// ft_printf("ft:\t%d\n", a);
+	// printf("lib:\t%d\n\n", a);
 
-	long long c = __LONG_LONG_MAX__;
-	ft_printf("%lld\n", c);
-	printf("%lld\n\n", c);
+	// long b = LONG_MAX;
+	// ft_printf("ft:\t%ld\n", b);
+	// printf("lib:\t%ld\n\n", b);
 
-	c = LLONG_MIN;
-	ft_printf("%lld\n", c);
-	printf("%lld\n\n", c);
+	// b = LONG_MIN;
+	// ft_printf("ft:\t%ld\n", b);
+	// printf("lib:\t%ld\n\n", b);
 
-	unsigned int d = UINT16_MAX;
-	ft_printf("%u\n", d);
-	printf("%u\n\n", d);
+	// long long c = __LONG_LONG_MAX__;
+	// ft_printf("%lld\n", c);
+	// printf("%lld\n\n", c);
 
-	d = 0;
-	ft_printf("ft:\t%u\n", d);
-	printf("lib:\t%u\n\n", d);
+	// c = LLONG_MIN;
+	// ft_printf("%lld\n", c);
+	// printf("%lld\n\n", c);
 
-	int e = 522;
-	ft_printf("ft:\t%x\n", e);
-	printf("lib:\t%x\n\n", e);
+	// unsigned int d = UINT16_MAX;
+	// ft_printf("%u\n", d);
+	// printf("%u\n\n", d);
 
-	int f = -522;
-	ft_printf("ft:\t%x\n", f);
-	printf("lib:\t%x\n\n", f);
+	// d = 0;
+	// ft_printf("ft:\t%u\n", d);
+	// printf("lib:\t%u\n\n", d);
 
-	unsigned long long g = LLONG_MAX;
-	ft_printf("ft:\t%llx\n", g);
-	printf("lib:\t%llx\n\n", g);
+	// int e = 522;
+	// ft_printf("ft:\t%x\n", e);
+	// printf("lib:\t%x\n\n", e);
 
-	ft_printf("This is %% random\n\n");
+	// int f = -522;
+	// ft_printf("ft:\t%x\n", f);
+	// printf("lib:\t%x\n\n", f);
+
+	// unsigned long long g = LLONG_MAX;
+	// ft_printf("ft:\t%llx\n", g);
+	// printf("lib:\t%llx\n\n", g);
+
+	// ft_printf("This is %% random\n\n");
+
+	// char *s = "123";
+	// ft_printf("this is string %s inside a string\n", s);
+	// printf("this is string %s inside a string\n\n", s);
+
+	char x = 'c';
+	// ft_printf("char in %c string\n", x);
+	// printf("char in %c string\n\n", x);
+
+	ft_printf("address of x: %p\n", &x);
+	printf("address of x: %p\n\n", &x);
 
 	// a = 52212123;
 	// ft_printf("%x \n",a);
