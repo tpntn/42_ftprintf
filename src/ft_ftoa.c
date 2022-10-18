@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 17:52:56 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 22:08:09 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	multiplyer(char **s, int multiplyer, int len)
 {
 	int		i;
 	char	digit;
-	char	next = 0;
+	char	next;
 
+	next = 0;
 	i = len - 1;
 	while (i >= 0)
 	{
@@ -43,8 +44,9 @@ void	multiplyer(char **s, int multiplyer, int len)
 
 int	to_pwr(int exp, int base)
 {
-	int ret;
+	int	ret;
 	int	i;
+
 	ret = base;
 	if (exp == 0)
 		return (1);
@@ -54,11 +56,11 @@ int	to_pwr(int exp, int base)
 	return (ret);
 }
 
-int		ret_exp(float f)
+int	ret_exp(float f)
 {
 	int	exp;
 	int	e;
-	int i;
+	int	i;
 	int	*p;
 
 	p = (int *)&f;
@@ -66,10 +68,8 @@ int		ret_exp(float f)
 	exp = 0;
 	e = 0;
 	while (i < 31)
-		exp += ((*p >> i++) & 1) * to_pwr(e++,2);
-	
+		exp += ((*p >> i++) & 1) * to_pwr(e++, 2);
 	exp += -127;
-
 	return (exp);
 }
 
@@ -86,10 +86,10 @@ void	adder(char **addto, char *num)
 		if (*(*addto + i) + (*(num + i) - 48) > '9')
 		{
 			*(*addto + i - 1) += 1;
-			*(*addto + i) += *(num + i) - 10 - 48;	
+			*(*addto + i) += *(num + i) - 10 - 48;
 		}
 		else
-			*(*addto + i) += *(num + i) - 48;	
+			*(*addto + i) += *(num + i) - 48;
 		i--;
 	}
 }
@@ -98,30 +98,30 @@ void	adder(char **addto, char *num)
 char	*malloc_and_setzero(int size)
 {
 	char	*s;
+
 	s = (char *)malloc(sizeof(char) * size + 1);
 	if (!s)
 		return (0);
 	*(s + size) = 0;
 	size--;
-	while(size)
-		*(s+size--) = '0';
+	while (size)
+		*(s + size--) = '0';
 	*s = '0';
 	return (s);
 }
 
 //counts and returns the value of fraction based exponent given
-char *count_fraction(int exp)
+char	*count_fraction(int exp)
 {
-	char *result;
-	int c;
+	char	*result;
+	int		c;
 
 	if (exp == 0)
 		return ("1.0");
-	
 	if (exp < 0)
 		exp *= -1;
 	result = malloc_and_setzero(exp + 2);
-	result[exp+1] = '1';
+	result[exp + 1] = '1';
 	c = 0;
 	while (c < exp)
 	{
@@ -140,11 +140,10 @@ char	*count_integer(int exp)
 
 	result = malloc_and_setzero(40);
 	result[39] = '1';
-
 	i = 0;
 	while (i < exp)
 	{
-		multiplyer(&result,2,40);
+		multiplyer(&result, 2, 40);
 		i++;
 	}
 	return (result);
@@ -167,20 +166,19 @@ char	*handle_fraction(int exp, char *result_frac)
 	ft_strdel(&m);
 	ft_strdel(&addition);
 	ft_strdel(&result_frac);
-	return(new);
+	return (new);
 }
 
 void	handle_integer(int exp, char *result_int)
 {
 	char	*m;
-	
+
 	m = count_integer(exp);
 	adder(&result_int, m);
 	ft_strdel(&m);
-	// return (result_int);
 }
 
-int		rounder(char **fraction, int precision, int memo)
+int	rounder(char **fraction, int precision, int memo)
 {
 	if ((precision > (int)ft_strlen(*fraction) - 2))
 		return (0);
@@ -191,20 +189,20 @@ int		rounder(char **fraction, int precision, int memo)
 		if ((*fraction)[precision + 1] + 1 > '9')
 		{
 			(*fraction)[precision + 1] = '0';
-			return (rounder(fraction, precision-1, 1));
+			return (rounder(fraction, precision - 1, 1));
 		}
-		else 
+		else
 			(*fraction)[precision + 1]++;
 	}
 	if ((*fraction)[precision + 2] >= '5' && !memo)
 	{
-	if((*fraction)[precision + 1] + 1 > '9')
-	{
-		(*fraction)[precision + 1] = '0';
-			return (rounder(fraction, precision-1, 1));
-	}
-	else
-		(*fraction)[precision + 1]++;
+		if ((*fraction)[precision + 1] + 1 > '9')
+		{
+			(*fraction)[precision + 1] = '0';
+			return (rounder(fraction, precision - 1, 1));
+		}
+		else
+			(*fraction)[precision + 1]++;
 	}
 	return (0);
 }
@@ -214,7 +212,7 @@ void	printer(t_params *params, char *integer, char *fraction, int sign)
 	int	a;
 	int	i;
 	int	c;
-	 
+
 	a = 0;
 	if (sign == 1)
 		ft_putchar('-');
@@ -224,7 +222,7 @@ void	printer(t_params *params, char *integer, char *fraction, int sign)
 		ft_putchar(*(integer + a++));
 	i = 0;
 	c = 1;
-	rounder(&fraction, params->precision,0);
+	rounder(&fraction, params->precision, 0);
 	while (c < (int)ft_strlen(fraction) && c <= params->precision + 1)
 		ft_putchar(*(fraction + c++));
 	while (c++ <= params->precision + 1)
@@ -241,13 +239,13 @@ void	handler(int exp, char **result_frac, char **result_int)
 
 void	ft_ftoa(t_params *params, va_list data)
 {
-	int	*p;
-	int	i;
-	int	exp;
-	char *result_frac;
-	char *result_int;
+	int		*p;
+	int		i;
+	int		exp;
+	char	*result_frac;
+	char	*result_int;
+
 	float f = (float)va_arg(data, double);
-	
 	exp = ret_exp(f);
 	result_frac = (char *)malloc(sizeof(char) * 4);
 	result_frac = ft_strcpy(result_frac, "0.0");
@@ -258,9 +256,9 @@ void	ft_ftoa(t_params *params, va_list data)
 	exp--;
 	while (i >= 0)
 	{
-		if((*p >> i) & 1)
-			handler(exp,&result_frac, &result_int);
-		exp--;	
+		if ((*p >> i) & 1)
+			handler(exp, &result_frac, &result_int);
+		exp--;
 		i--;
 	}
 	if (((*p >> 31) & 1))
@@ -270,19 +268,3 @@ void	ft_ftoa(t_params *params, va_list data)
 	ft_strdel(&result_frac);
 	ft_strdel(&result_int);
 }
-
-// int	main()
-// {	
-// 	// float f = 123.23;
-// 	float f = 0.1;
-// 	// float f = 0.1123123123;
-// 	// float f = -0.1123123123;
-// 	// float f = __FLT_MIN__;
-// 	// float f = __FLT_MAX__;
-// 	// float f = 2.20405190779e-38;
-
-// 	// for (int i = 0; i < 20; i++)
-// 	ft_ftoa(f, 150);
-
-// 	return (0);
-// }
