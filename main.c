@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 13:50:32 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:01:06 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	REMOVE_data_printer(t_params *params, int state)
 	printf("\n\nflags:\t\t%s\n", params->flags);
 	printf("width:\t\t%d\n", params->width);
 	printf("precision:\t%d\n", params->precision);
-	printf("length:\t\t%s\n", params->length);
+	printf("length:\t\t%d\n", params->length);
 	printf("conversion:\t%c\n", params->conversion);
 
 	printf("state: %d\n\n", state);
@@ -131,7 +131,12 @@ void	precision_handler(const char *c, int *state, t_params *params, va_list data
 void	length_handler(const char *c, int *state, t_params *params, va_list data)
 {
 	if (is_length_mod(*c))
-		ft_strncat(params->length, c, 1);
+	{
+		if (*c == 'l')
+			params->length++;
+		if (*c == 's')
+			params->length--;
+	}
 	else
 		conv_handl(c, state, params, data);
 }
@@ -200,7 +205,7 @@ void	ft_printf(const char *str, ...)
 
 int main()
 {
-	float f = __FLT_MAX__;
+	// float f = __FLT_MAX__;
 	// float f = 100.0;
 	// printf("%f\n",f);
 	// printf("%#f\n",f);
@@ -208,7 +213,7 @@ int main()
 
 	// float f = 0.1;
 	// printf("%.1f\n",f);
-	ft_printf("%.1f\n",f);
+	// ft_printf("%.1f\n",f);
 	
 	// printf("%.2f\n",f);
 	// ft_printf("%.2f\n",f);

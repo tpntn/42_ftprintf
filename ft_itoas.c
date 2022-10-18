@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 13:50:10 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:01:18 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ int	set_radix(t_params *params)
 
 static long long	set_number(t_params *params, va_list data)
 {
-	if (params->precision == "l")
+	if (params->precision == 1)
 		return (va_arg(data, long int));
-	if (params->precision == "ll")
+	if (params->precision == 2)
 		return (va_arg(data, long long int));
+	else
+		return (va_arg(data, int));
 }
 
 void	__ft_itoa(t_params *params, va_list data)
@@ -40,22 +42,26 @@ void	__ft_itoa(t_params *params, va_list data)
 	int						pos;
 	static char 			g_HexChars[] = "0123456789abcdef";
 	long long				num;
+	int						sign;
 
-	ft_putstr("ft_signed_itoa called");
-	num = set_type(t_params *params, va_list data);
+	num = set_number(params, data);
 	buffer= (char*)malloc(sizeof(char) * 33);
 	ft_memset(buffer,0,33);
+	sign = 0;
 	if (num < 0)
+	{
 		num *= -1;
+		sign = 1;
+	}
 	pos = 0;
 	radix = set_radix(params);
 	while (num > 0)
 	{
 		uint32_t rem =  num % radix;
-		num  /= radix;
+		num /= radix;
 		buffer[pos++] = g_HexChars[rem];
 	}
-	if ((long)va_arg(data, long) < 0)
+	if (sign)
 		buffer[pos] = '-';
 	buffer = ft_strrev(buffer);
 	ft_putstr(buffer);
@@ -97,19 +103,3 @@ void	ft_unsigned_itoa(t_params *params, va_list data)
 	buffer = ft_strrev(buffer);
 	ft_putstr(buffer);
 }
-
-// int	main()
-// {
-// 	t_params params = {0,"",3,0,"ll",'u'};
-
-// 	unsigned long long i = ULLONG_MAX;
-// 	printf("%s\n",ft_unsig(&i, &params));
-// 	printf("%llu\n", ULLONG_MAX);
-	
-// 	int a = -123;
-// 	params.conversion = 'd';
-// 	printf("%s\n",ft_printf_print_int(&a, &params));
-// 	printf("%d\n", a);
-
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 12:55:28 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:53:27 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_params
 	char 	*flags;
 	int		width;
 	int		precision;
-	char	*length;
+	int		length;
 	char	conversion;
 
 } t_params;

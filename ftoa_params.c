@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 10:59:55 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/16 11:29:40 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 14:00:21 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	initialize_params(t_params *params)
 	params->flags = (char *)malloc(sizeof(char) * 8);
 	params->width = 0;
 	params->precision = 0;
-	params->length = (char *)malloc(sizeof(char) * 3);
+	params->length = 0;
 	params->conversion = 0;
 }
 
@@ -28,6 +28,6 @@ void	clear_params(t_params *params)
 	free(params->flags);
 	params->width = 0;
 	params->precision = 0;
-	free(params->length);
+	params->length = 0;
 	params->conversion = 0;
 }
