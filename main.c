@@ -132,10 +132,9 @@ int main()
 	ft_printf("%p \n", &a);
 	printf("%p \n", &a);
 	
-	float f = 0.1;
-	// long double d = __DBL_MIN__;
-	ft_printf("ft_printf:\t%.25f\n",f);
-	printf("ft_printf:\t%.25f\n",f);
+	float f = 12.15;
+	ft_printf("ft_printf:\t%.0f\n",f);
+	printf("printf:\t%05.2f\n",f);
 	// printf("printf: __FLT_MIN__:\t%.150lf\n",f);
 	// printf("printf: __DBL_MIN__:\t%Lf\n",d);
 	// ft_printf("This is \n amasing %+- 123.42lld asd");

@@ -6,32 +6,51 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/18 22:50:31 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 00:42:52 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	printer(t_params *params, char *integer, char *fraction, int sign)
+static int	trim_zeros(char *integer)
 {
-	int	a;
 	int	i;
-	int	c;
 
-	a = 0;
-	if (sign == 1)
-		ft_putchar('-');
-	while (*(integer + a) == '0' && a < 39)
-		a++;
-	while (*(integer + a))
-		ft_putchar(*(integer + a++));
 	i = 0;
-	c = 1;
-	rounder(&fraction, params->precision, 0);
-	while (c < (int)ft_strlen(fraction) && c <= params->precision + 1)
-		ft_putchar(*(fraction + c++));
-	while (c++ <= params->precision + 1)
-		ft_putchar('0');
+	while (integer[i] == '0')
+		i++;
+	return (i);
+}
+
+void	ftoa_output(t_params *params, char *integer, char *fraction, int sign)
+{
+	char	*flo;
+	int		start;
+	
+	start = trim_zeros(integer);
+	flo = ft_strjoin(integer + start, fraction + 1);
+	ft_putstr(flo);
+
+	params->id = 0;
+	sign = 0;
+	// int	a;
+	// int	i;
+	// int	c;
+
+	// a = 0;
+	// if (sign == 1)
+	// 	ft_putchar('-');
+	// while (*(integer + a) == '0' && a < 39)
+	// 	a++;
+	// while (*(integer + a))
+	// 	ft_putchar(*(integer + a++));
+	// i = 0;
+	// c = 1;
+	// rounder(&fraction, params->precision, 0);
+	// while (c < (int)ft_strlen(fraction) && c <= params->precision + 1)
+	// 	ft_putchar(*(fraction + c++));
+	// while (c++ <= params->precision + 1)
+	// 	ft_putchar('0');
 }
 
 void	handler(int exp, char **result_frac, char **result_int)
@@ -79,8 +98,8 @@ void	ft_ftoa(t_params *params, va_list data)
 		exp--;
 	}
 	if (((*((int *)&f) >> 31) & 1))
-		printer(params, result_int, result_frac, 1);
+		ftoa_output(params, result_int, result_frac, 1);
 	else
-		printer(params, result_int, result_frac, 0);
+		ftoa_output(params, result_int, result_frac, 0);
 	clear_results(&result_frac, &result_int);
 }
