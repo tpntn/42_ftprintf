@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/17 23:36:37 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:50:10 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,24 @@ int	set_radix(t_params *params)
 	return (0);
 }
 
-void	ft_signed_itoa(t_params *params, va_list data)
+static long long	set_number(t_params *params, va_list data)
 {
-	int		radix;
-	char	*buffer; 
-	int		pos;
-	static char g_HexChars[] = "0123456789abcdef";
-	long long num;
+	if (params->precision == "l")
+		return (va_arg(data, long int));
+	if (params->precision == "ll")
+		return (va_arg(data, long long int));
+}
 
-	num = (long long)va_arg(data, long long);
+void	__ft_itoa(t_params *params, va_list data)
+{
+	int						radix;
+	char					*buffer; 
+	int						pos;
+	static char 			g_HexChars[] = "0123456789abcdef";
+	long long				num;
+
+	ft_putstr("ft_signed_itoa called");
+	num = set_type(t_params *params, va_list data);
 	buffer= (char*)malloc(sizeof(char) * 33);
 	ft_memset(buffer,0,33);
 	if (num < 0)
@@ -46,10 +55,24 @@ void	ft_signed_itoa(t_params *params, va_list data)
 		num  /= radix;
 		buffer[pos++] = g_HexChars[rem];
 	}
-	if ((long long)va_arg(data, long long) < 0)
+	if ((long)va_arg(data, long) < 0)
 		buffer[pos] = '-';
 	buffer = ft_strrev(buffer);
-	printf("%s", buffer);
+	ft_putstr(buffer);
+}
+
+void	ft_printf_itoa(t_params *params, va_list data)
+{
+	if (params->conversion == 'u' || params->conversion == 'd')
+					__ft_itoa(params, data);	
+	if (params->conversion == 'x' || params->conversion == 'X')
+	{
+		;
+	}	
+	if (params->conversion == 'o' || params->conversion == 'O')
+	{
+		;
+	}
 }
 
 void	ft_unsigned_itoa(t_params *params, va_list data)
@@ -72,7 +95,7 @@ void	ft_unsigned_itoa(t_params *params, va_list data)
 		buffer[pos++] = g_HexChars[rem];
 	}
 	buffer = ft_strrev(buffer);
-	printf("%s", buffer);
+	ft_putstr(buffer);
 }
 
 // int	main()

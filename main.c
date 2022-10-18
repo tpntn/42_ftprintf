@@ -6,13 +6,14 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/17 23:38:54 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/18 13:50:32 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-// gcc -Wall -Werror -Wextra -g -fsanitize=address ft_ftoa.c main.c ftoa_params.c -I Libft/ -L libft -lft
+// gcc -Wall -Wextra -Werror -g -fsanitize=address ftoa_params.c main.c ft_ftoa.c ft_itoas.c -I Libft/ -L libft -lft
+// gcc -Wall -Wextra -Werror -g ftoa_params.c main.c ft_ftoa.c ft_itoas.c -I Libft/ -L libft -lft
 
 void	REMOVE_data_printer(t_params *params, int state)
 {
@@ -27,12 +28,12 @@ void	REMOVE_data_printer(t_params *params, int state)
 
 static t_type types[] = {
 	{'f', ft_ftoa},
-	{'i', ft_signed_itoa},
-	{'d', ft_signed_itoa},
-	{'x', ft_unsigned_itoa},
-	{'X', ft_unsigned_itoa},
-	{'u', ft_unsigned_itoa},
-	{'o', ft_unsigned_itoa}
+	{'i', ft_printf_itoa},
+	{'d', ft_printf_itoa},
+	{'x', ft_printf_itoa},
+	{'X', ft_printf_itoa},
+	{'u', ft_printf_itoa},
+	{'o', ft_printf_itoa}
 };
 
 int	is_type_specifier(char str)
@@ -199,7 +200,7 @@ void	ft_printf(const char *str, ...)
 
 int main()
 {
-	// float f = __FLT_MAX__;
+	float f = __FLT_MAX__;
 	// float f = 100.0;
 	// printf("%f\n",f);
 	// printf("%#f\n",f);
@@ -207,7 +208,7 @@ int main()
 
 	// float f = 0.1;
 	// printf("%.1f\n",f);
-	// ft_printf("%.1f\n",f);
+	ft_printf("%.1f\n",f);
 	
 	// printf("%.2f\n",f);
 	// ft_printf("%.2f\n",f);
@@ -254,11 +255,13 @@ int main()
 	// printf("%.101f\n",f);
 	// ft_printf("%.101f\n",f);
 	
-	int a = 52212123;
-	ft_printf("%d \n",a);
+	// int a = 52212123;
+	// ft_printf("%d \n",a);
+	int a = -2;
+	ft_printf("%d\n", a);
 
-	a = 52212123;
-	ft_printf("%x \n",a);
+	// a = 52212123;
+	// ft_printf("%x \n",a);
 	
 	// float f = __FLT_MIN__;
 	// long double d = __DBL_MIN__;
