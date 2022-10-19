@@ -6,20 +6,20 @@
 void	float_tests()
 {
 	float f = 12.15;
-	printf("%%07.2f\n");
 	ft_printf("%07.2f\n",f);
 	printf("%07.2f\n\n",f);
 
-	printf("%%7.2f\n");
 	ft_printf("%7.2f\n",f);
 	printf("%7.2f\n\n",f);
 
-	printf("%%+7.2f\n");
 	ft_printf("%+7.2f\n",f);
 	printf("%+7.2f\n\n",f);
 
-	ft_printf("%+7.2f\n",f);
-	printf("%+7.2f\n\n",f);
+	ft_printf("%+.5f\n",f);
+	printf("%+.5f\n\n",f);
+
+	ft_printf("% 20.9f\n",f);
+	printf("% 20.9f\n",f);
 
 	f = -12.15;
 	ft_printf("%07.2f\n",f);
@@ -33,6 +33,22 @@ void	float_tests()
 
 	ft_printf("%+.5f\n",f);
 	printf("%+.5f\n\n",f);
+
+	ft_printf("% 20.9f\n",f);
+	printf("% 20.9f\n",f);
+
+	//THIS WILL CRASH THE ROUNDER, CHECK ROUNDER
+	// f = __FLT_MAX__;
+	// ft_printf("%f\n",f);
+	// printf("%f\n",f);
+
+	f = 12.1;
+	ft_printf("%f\n",f);
+	printf("%f\n",f);
+
+	f = 12.0;
+	ft_printf("%.0f\n",f);
+	printf("%#.0f\n",f);
 }
 
 int main()
@@ -166,6 +182,10 @@ int main()
 	
 	float_tests();
 
+	// float f = 12.15;
+	// printf("%%07.2f\n");
+	// ft_printf("%f\n",f);
+	// printf("%f\n\n",f);
 
 	// printf("printf: __FLT_MIN__:\t%.150lf\n",f);
 	// printf("printf: __DBL_MIN__:\t%Lf\n",d);

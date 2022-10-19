@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 00:10:12 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 08:40:31 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:20:28 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int	is_conv_mod(char c)
 
 void	check_params(t_params **params)
 {
-	if ((*params)->precision == 0)
+	if ((*params)->precision == -1)
 		(*params)->precision = 6;
 }

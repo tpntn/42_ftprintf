@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 11:34:14 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:46:52 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_type
 	func	func;
 } t_type;
 
-void	ft_printf(const char *str, ...);
+int		ft_printf(const char *str, ...);
 void	multiplyer(char **s, int multiplyer, int len);
 int		to_pwr(int exp, int base);
 int		ret_exp(float f);
@@ -78,6 +78,7 @@ int		is_length_mod(char c);
 int		is_flag(char c);
 void	apply_width(char **s, t_params *params);
 void	apply_sign(char **s, int sign, t_params *params);
+void	apply_hash(char **s, int sign, t_params *params);
 
 
 void	initialize_params(t_params *params);

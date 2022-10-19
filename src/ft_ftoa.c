@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 11:37:12 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:41:25 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	trim_zeros(char *s, int i)
 {
-	while (s[i] == '0')
+	while (s[i] == '0' && s[i + 1] != 0)
 		i++;
 	return (i);
 }
@@ -28,21 +28,22 @@ void	ftoa_output(t_params *params, char *integer, char *fraction, int sign)
 {
 	char	*flo;
 	int		start;
-	
-	rounder(&fraction, params->precision, 0);
-	ft_memset((fraction + params->precision + 2), 0, \
-	ft_strlen(fraction) - params->precision);
+	int		precision;
+
+	if (params->precision == -1)
+		precision = 6;
+	else
+		precision = params->precision;
+	rounder(&fraction, precision, 0);
+	ft_memset((fraction + params->precision + 2), 0, ft_strlen(fraction) - params->precision);
 	start = trim_zeros(integer, 0);
 	flo = ft_strjoin(integer + start, fraction + 1);
-	if (params->width)
-		apply_width(&flo, params);	
+	apply_width(&flo, params);	
 	apply_sign(&flo, sign, params);
-	// if (ft_strstr(params->flags, "-"))
+	apply_hash(&flo, sign, params);
+	apply_minus(&flo, sign, params);
 	ft_putstr(flo);
 	ft_strdel(&flo);
-	params->id = 0;
-	sign = 0;
-	
 }
 
 void	handler(int exp, char **result_frac, char **result_int)
