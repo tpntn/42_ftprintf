@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 00:08:05 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 00:12:09 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 09:35:39 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 void	flags_handler(const char *c, int *state, t_params *params, va_list data)
 {
-	if (is_flag(*c))
-		ft_strncat(params->flags, c, 1);
 	if (*c == '%')
 	{
 		ft_putchar(*c);
 		*state = STATE_NORMAL;
 	}
+	else if (is_flag(*c))
+		ft_strncat(params->flags, c, 1);
 	else
 	{
 		*state = STATE_WIDTH;

@@ -3,6 +3,38 @@
 #include "libft.h"
 #include "ft_printf.h"
 
+void	float_tests()
+{
+	float f = 12.15;
+	printf("%%07.2f\n");
+	ft_printf("%07.2f\n",f);
+	printf("%07.2f\n\n",f);
+
+	printf("%%7.2f\n");
+	ft_printf("%7.2f\n",f);
+	printf("%7.2f\n\n",f);
+
+	printf("%%+7.2f\n");
+	ft_printf("%+7.2f\n",f);
+	printf("%+7.2f\n\n",f);
+
+	ft_printf("%+7.2f\n",f);
+	printf("%+7.2f\n\n",f);
+
+	f = -12.15;
+	ft_printf("%07.2f\n",f);
+	printf("%07.2f\n\n",f);
+
+	ft_printf("%7.2f\n",f);
+	printf("%7.2f\n\n",f);
+
+	ft_printf("%+7.2f\n",f);
+	printf("%+7.2f\n\n",f);
+
+	ft_printf("%+.5f\n",f);
+	printf("%+.5f\n\n",f);
+}
+
 int main()
 {
 	// float f = __FLT_MAX__;
@@ -132,12 +164,13 @@ int main()
 	// ft_printf("%p \n", &a);
 	// printf("%p \n", &a);
 	
-	float f = 12.15;
-	ft_printf("%07.3f\n",f);
-	printf("%07.3f\n",f);
+	float_tests();
+
+
 	// printf("printf: __FLT_MIN__:\t%.150lf\n",f);
 	// printf("printf: __DBL_MIN__:\t%Lf\n",d);
-	// ft_printf("This is \n amasing %+- 123.42lld asd");
+	// ft_printf("This is \n amasing %+- #123.42f asd\n",1.0);
+	// printf("This is \n amasing %- #123.42f asd\n",1.0);
 	// ft_printf("g %+42lu");
 
 	

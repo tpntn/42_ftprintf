@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 01:56:46 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:34:14 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	check_params(t_params **params);
 int		is_conv_mod(char c);
 int		is_length_mod(char c);
 int		is_flag(char c);
-char	*apply_width(char **flo, t_params *params);
+void	apply_width(char **s, t_params *params);
+void	apply_sign(char **s, int sign, t_params *params);
 
 
 void	initialize_params(t_params *params);

@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 00:10:55 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 09:36:59 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ static t_type	g_types[] = {
 void	conv_handl(const char *c, int *state, t_params *params, va_list data)
 {
 	int	i;
+
+	// ft_putnbr(params->id);
+	// ft_putchar('\n');
+	// ft_putstr(params->flags);
+	// ft_putchar('\n');
+	// ft_putnbr(params->width);
+	// ft_putchar('\n');
+	// ft_putnbr(params->precision);
+	// ft_putchar('\n');
+	// ft_putnbr(params->length);
+	// ft_putchar('\n');
+	// ft_putchar(params->conversion);
+	// ft_putchar('\n');
 
 	if (is_conv_mod(*c))
 		params->conversion = (char)*c;

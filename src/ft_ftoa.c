@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 02:10:14 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 11:37:12 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,37 +29,20 @@ void	ftoa_output(t_params *params, char *integer, char *fraction, int sign)
 	char	*flo;
 	int		start;
 	
-	
-	
 	rounder(&fraction, params->precision, 0);
 	ft_memset((fraction + params->precision + 2), 0, \
 	ft_strlen(fraction) - params->precision);
 	start = trim_zeros(integer, 0);
 	flo = ft_strjoin(integer + start, fraction + 1);
 	if (params->width)
-		flo = apply_width(&flo, params);
+		apply_width(&flo, params);	
+	apply_sign(&flo, sign, params);
+	// if (ft_strstr(params->flags, "-"))
 	ft_putstr(flo);
-
+	ft_strdel(&flo);
 	params->id = 0;
 	sign = 0;
-	// int	a;
-	// int	i;
-	// int	c;
-
-	// a = 0;
-	// if (sign == 1)
-	// 	ft_putchar('-');
-	// while (*(integer + a) == '0' && a < 39)
-	// 	a++;
-	// while (*(integer + a))
-	// 	ft_putchar(*(integer + a++));
-	// i = 0;
-	// c = 1;
-	// rounder(&fraction, params->precision, 0);
-	// while (c < (int)ft_strlen(fraction) && c <= params->precision + 1)
-	// 	ft_putchar(*(fraction + c++));
-	// while (c++ <= params->precision + 1)
-	// 	ft_putchar('0');
+	
 }
 
 void	handler(int exp, char **result_frac, char **result_int)
