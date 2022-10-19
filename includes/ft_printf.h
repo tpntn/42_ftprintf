@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 16:46:52 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:54:11 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		is_flag(char c);
 void	apply_width(char **s, t_params *params);
 void	apply_sign(char **s, int sign, t_params *params);
 void	apply_hash(char **s, int sign, t_params *params);
-
+void	apply_minus(char **s, int sign, t_params *params);
 
 void	initialize_params(t_params *params);
 void	clear_params(t_params *params);

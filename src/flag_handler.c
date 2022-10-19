@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 01:46:24 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 16:44:54 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 19:03:34 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,17 @@ void	apply_width(char **s, t_params *params)
 	}
 }
 
-void	append_string(char **s1, char *s2)
+void	append_string(char **s1, char *s2, int end)
 {
-	char	*temp;
-
-	temp = ft_strdup(*s1);
+	char	*s;
+	
+	s = ft_strdup(*s1);
 	ft_strdel(s1);
-	*s1 = ft_strjoin(s2, temp);
-	ft_strdel(&temp);
+	if (end)
+		*s1 = ft_strjoin(s2, s);
+	else
+		*s1 = ft_strjoin(s, s2);
+	ft_strdel(&s);	
 }
 
 void	apply_sign(char **s, int sign, t_params *params)
@@ -65,7 +68,7 @@ void	apply_sign(char **s, int sign, t_params *params)
 			*(*s + --i) = '-';
 		}
 		else
-			append_string(s, "-");
+			append_string(s, "-", 1);
 	}
 	else if (ft_strstr(params->flags, "+"))
 	{
@@ -79,14 +82,24 @@ void	apply_sign(char **s, int sign, t_params *params)
 			*(*s + --i) = '+';
 		}
 		else
-			append_string(s, "+");
+			append_string(s, "+", 1);
 	}
 }
 
 void	apply_hash(char **s, int sign, t_params *params)
 {
-	if (ft_strstr(params->flags, "#") && params->precision == 0)
-		append_string(s, ".");
+	if (params->conversion == 'f')
+		if (ft_strstr(params->flags, "#") && params->precision == 0)
+			append_string(s, ".",1);
+	if (params->conversion == 'o')
+		if (ft_strstr(params->flags, "#"))
+			append_string(s, "0",0);
+	if (params->conversion == 'x')
+		if (ft_strstr(params->flags, "#"))
+			append_string(s, "0x",0);
+	if (params->conversion == 'X')
+		if (ft_strstr(params->flags, "#"))
+			append_string(s, "0X",0);
 }
 
 void	apply_minus(char **s, int sign, t_params *params)
@@ -101,7 +114,7 @@ void	apply_minus(char **s, int sign, t_params *params)
 			i++;
 		temp = ft_strdup(*s);
 		ft_strdel(s);
-		s* = ft_strdup(temp + i);
+		*s = ft_strdup(temp + i);
 		ft_strdel(&temp);
 	}
 }

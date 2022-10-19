@@ -51,6 +51,58 @@ void	float_tests()
 	printf("%#.0f\n",f);
 }
 
+void	int_test()
+{
+	int a = 0;
+	ft_printf("ft:\t%d\n", a);
+	printf("lib:\t%d\n\n", a);
+
+	a = INT_MIN;
+	ft_printf("ft:\t%d\n", a);
+	printf("lib:\t%d\n\n", a);
+
+	a = INT_MAX;
+	ft_printf("ft:\t%d\n", a);
+	printf("lib:\t%d\n\n", a);
+
+	long b = LONG_MAX;
+	ft_printf("ft:\t%ld\n", b);
+	printf("lib:\t%ld\n\n", b);
+
+	b = LONG_MIN;
+	ft_printf("ft:\t%ld\n", b);
+	printf("lib:\t%ld\n\n", b);
+
+	long long c = __LONG_LONG_MAX__;
+	ft_printf("%lld\n", c);
+	printf("%lld\n\n", c);
+
+	c = LLONG_MIN;
+	ft_printf("%lld\n", c);
+	printf("%lld\n\n", c);
+
+	unsigned int d = UINT16_MAX;
+	ft_printf("%u\n", d);
+	printf("%u\n\n", d);
+
+	d = 0;
+	ft_printf("ft:\t%u\n", d);
+	printf("lib:\t%u\n\n", d);
+
+	int e = 522;
+	ft_printf("ft:\t%x\n", e);
+	printf("lib:\t%x\n\n", e);
+
+	int f = -522;
+	ft_printf("ft:\t%x\n", f);
+	printf("lib:\t%x\n\n", f);
+
+	unsigned long long g = LLONG_MAX;
+	ft_printf("ft:\t%llx\n", g);
+	printf("lib:\t%llx\n\n", g);
+
+}
+
 int main()
 {
 	// float f = __FLT_MAX__;
@@ -113,54 +165,7 @@ int main()
 
 
 	
-	// int a = 0;
-	// ft_printf("ft:\t%d\n", a);
-	// printf("lib:\t%d\n\n", a);
-
-	// a = INT_MIN;
-	// ft_printf("ft:\t%d\n", a);
-	// printf("lib:\t%d\n\n", a);
-
-	// a = INT_MAX;
-	// ft_printf("ft:\t%d\n", a);
-	// printf("lib:\t%d\n\n", a);
-
-	// long b = LONG_MAX;
-	// ft_printf("ft:\t%ld\n", b);
-	// printf("lib:\t%ld\n\n", b);
-
-	// b = LONG_MIN;
-	// ft_printf("ft:\t%ld\n", b);
-	// printf("lib:\t%ld\n\n", b);
-
-	// long long c = __LONG_LONG_MAX__;
-	// ft_printf("%lld\n", c);
-	// printf("%lld\n\n", c);
-
-	// c = LLONG_MIN;
-	// ft_printf("%lld\n", c);
-	// printf("%lld\n\n", c);
-
-	// unsigned int d = UINT16_MAX;
-	// ft_printf("%u\n", d);
-	// printf("%u\n\n", d);
-
-	// d = 0;
-	// ft_printf("ft:\t%u\n", d);
-	// printf("lib:\t%u\n\n", d);
-
-	// int e = 522;
-	// ft_printf("ft:\t%x\n", e);
-	// printf("lib:\t%x\n\n", e);
-
-	// int f = -522;
-	// ft_printf("ft:\t%x\n", f);
-	// printf("lib:\t%x\n\n", f);
-
-	// unsigned long long g = LLONG_MAX;
-	// ft_printf("ft:\t%llx\n", g);
-	// printf("lib:\t%llx\n\n", g);
-
+	
 	// ft_printf("This is %% random\n\n");
 
 	// char *s = "123";
@@ -181,14 +186,15 @@ int main()
 	// printf("%p \n", &a);
 	
 	float_tests();
+	int_test();
 
 	// float f = 12.15;
 	// printf("%%07.2f\n");
 	// ft_printf("%f\n",f);
 	// printf("%f\n\n",f);
 
-	// printf("printf: __FLT_MIN__:\t%.150lf\n",f);
-	// printf("printf: __DBL_MIN__:\t%Lf\n",d);
+	// ft_printf("printf: __FLT_MIN__:\t%.150lf\n",__FLT_MIN__);
+	// ft_printf("printf: __DBL_MIN__:\t%Lf\n",__DBL_MIN__);
 	// ft_printf("This is \n amasing %+- #123.42f asd\n",1.0);
 	// printf("This is \n amasing %- #123.42f asd\n",1.0);
 	// ft_printf("g %+42lu");
