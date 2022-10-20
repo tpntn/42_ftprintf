@@ -5,68 +5,72 @@
 
 void	float_tests()
 {
-	float f = 12.15;
-	ft_printf("%.18f\n",f);
-	printf("%.18f\n\n",f);
 
-	ft_printf("% 7.2f\n",f);
-	printf("% 7.2f\n\n",f);
+	char 	*array[] = {"%14.18f\n","% 7.2f\n", "% 7.2f\n", "%+7.2f\n","%0+f\n","%f\n"};
+	float	floats[] = {12.15, 12.1, 12.5, 11.12, 0.0, __FLT_MAX__, __FLT_MIN__};
+	
+	int c = 0;
+	while (c < 7)
+	{
+		int	i = 0;
+		while (i < 6)
+		{
+			printf("STRING:  %s", array[i]);
+			printf("INPUT VALUE:  %f\n", floats[c]);
+			printf(array[i],floats[c]);
+			ft_printf(array[i],floats[c]);
+			printf("\n\n");
+			i++;
+		}
+		c++;
+	}
 
-	ft_printf("%+7.2f\n",f);
-	printf("%+7.2f\n\n",f);
+	// f = -12.15;
+	// ft_printf("%07.2f\n",f);
+	// printf("%07.2f\n",f);
 
-	ft_printf("%0+f\n",f);
-	printf("%0+f\n\n",f);
+	// ft_printf("%7.2f\n",f);
+	// printf("%7.2f\n",f);
 
-	ft_printf("%f\n",f);
-	printf("%f\n",f);
+	// ft_printf("%+7.2f\n",f);
+	// printf("%+7.2f\n",f);
 
-	f = -12.15;
-	ft_printf("%07.2f\n",f);
-	printf("%07.2f\n\n",f);
+	// ft_printf("%+.5f\n",f);
+	// printf("%+.5f\n",f);
 
-	ft_printf("%7.2f\n",f);
-	printf("%7.2f\n\n",f);
-
-	ft_printf("%+7.2f\n",f);
-	printf("%+7.2f\n\n",f);
-
-	ft_printf("%+.5f\n",f);
-	printf("%+.5f\n\n",f);
-
-	ft_printf("% 20.9f\n",f);
-	printf("% 20.9f\n",f);
+	// ft_printf("% 20.9f\n",f);
+	// printf("% 20.9f\n",f);
 
 	//THIS WILL CRASH THE ROUNDER, CHECK ROUNDER
 	// f = __FLT_MAX__;
 	// ft_printf("%f\n",f);
 	// printf("%f\n",f);
 
-	f = 12.1;
-	ft_printf("%f\n",f);
-	printf("%f\n",f);
+	// f = 12.1;
+	// ft_printf("%f\n",f);
+	// printf("%f\n",f);
 
-	f = 12.0;
-	ft_printf("%.0f\n",f);
-	printf("%.0f\n",f);
+	// f = 12.0;
+	// ft_printf("%.0f\n",f);
+	// printf("%.0f\n",f);
 
-	f = 0.0;
-	ft_printf("%7.3f\n",f);
-	printf("%7.3f\n",f);
+	// f = 0.0;
+	// ft_printf("%7.3f\n",f);
+	// printf("%7.3f\n",f);
 
-	f = 11.12;
-	ft_printf("%.3f\n",f);
-	printf("%.3f\n",f);
+	// f = 11.12;
+	// ft_printf("%.3f\n",f);
+	// printf("%.3f\n",f);
 
-	ft_printf("%-12.3f\n",f);
-	printf("%-12.3f\n",f);
+	// ft_printf("%-12.3f\n",f);
+	// printf("%-12.3f\n",f);
 
-	f = -11.12;
-	ft_printf("%.3f\n",f);
-	printf("%.3f\n",f);
+	// f = -11.12;
+	// ft_printf("%.3f\n",f);
+	// printf("%.3f\n",f);
 
-	ft_printf("%-12.3f\n",f);
-	printf("%-12.3f\n",f);
+	// ft_printf("%-12.3f\n",f);
+	// printf("%-12.3f\n",f);
 
 	
 }

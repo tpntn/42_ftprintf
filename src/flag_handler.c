@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 01:46:24 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 23:21:17 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/20 11:51:23 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	append_string(char **s1, char *s2, int end)
 		*s1 = ft_strjoin(s2, s);
 	else
 		*s1 = ft_strjoin(s, s2);
-	ft_strdel(&s);	
+	ft_strdel(&s);
 }
 
 int	apply_width(char **s, t_params *params)
