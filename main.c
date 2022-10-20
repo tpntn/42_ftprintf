@@ -6,8 +6,8 @@
 void	float_tests()
 {
 
-	char 	*array[] = {"%14.18f\n","% 7.2f\n", "% 7.2f\n", "%+7.2f\n","%0+f\n","%f\n"};
-	float	floats[] = {12.15, 12.1, 12.5, 11.12, 0.0, __FLT_MAX__, __FLT_MIN__};
+	char 	*array[] = {"% -14.5f\n","% 7.2f\n", "% 7.2f\n", "%+7.2f\n","%0+f\n","%f\n"};
+	float	floats[] = {12.1512, -4.123123, 0.1, -12412.1234123, 0.0, __FLT_MAX__, __FLT_MIN__};
 	
 	int c = 0;
 	while (c < 7)

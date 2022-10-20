@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 01:46:24 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/20 11:51:23 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:11:58 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	apply_width(char **s, t_params *params)
 	char	end;
 
 	s_len = ft_strlen(*s);
-	if (params->width < s_len)
+	if (params->width < (int)s_len)
 		return (0);
 	pad = ft_strnew((size_t)params->width - s_len + 1);
 	if (ft_strstr(params->flags, "0"))
@@ -97,6 +97,7 @@ void	apply_hash(char **s, int sign, t_params *params)
 	if (params->conversion == 'X')
 		if (ft_strstr(params->flags, "#"))
 			append_string(s, "0X",0);
+	sign = 0;
 }
 
 // void	apply_minus(char **s, int sign, t_params *params)
@@ -108,6 +109,10 @@ void	apply_hash(char **s, int sign, t_params *params)
 // 	{
 // 		pad_size = params->width - (int)ft_strlen(*s);
 // 		if (pad_size > 0)
+// 		{
+			
+// 			append_string(s,)
+// 		}
 			
 // 	}
 // }
