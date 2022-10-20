@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 01:46:24 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/20 15:11:58 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:02:25 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	apply_sign(char **s, int sign, t_params *params)
 	
 	if (sign)
 	{
-		if (*(*s) == '0')
+		if (*(*s) == '0' && *(*s + 1) != '.')
 			*(*s) = '-';
 		else if (*(*s) == ' ')
 		{
@@ -69,7 +69,7 @@ void	apply_sign(char **s, int sign, t_params *params)
 	}
 	else if (ft_strstr(params->flags, "+"))
 	{
-		if (*(*s) == '0')
+		if (*(*s) == '0' && *(*s + 1) != '.')
 			*(*s) = '+';
 		else if (*(*s) == ' ')
 		{

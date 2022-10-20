@@ -6,17 +6,18 @@
 void	float_tests()
 {
 
-	char 	*array[] = {"% -14.5f\n","% 7.2f\n", "% 7.2f\n", "%+7.2f\n","%0+f\n","%f\n"};
+	char 	*array[] = {"%-024.5f\n","% 7.2f\n", "%7.2f\n", "%+7.2f\n","%0+f\n","%f\n"};
 	float	floats[] = {12.1512, -4.123123, 0.1, -12412.1234123, 0.0, __FLT_MAX__, __FLT_MIN__};
 	
 	int c = 0;
 	while (c < 7)
 	{
 		int	i = 0;
+		printf("INPUT VALUE:  %f\n", floats[c]);
 		while (i < 6)
 		{
 			printf("STRING:  %s", array[i]);
-			printf("INPUT VALUE:  %f\n", floats[c]);
+			// printf("INPUT VALUE:  %f\n", floats[c]);
 			printf(array[i],floats[c]);
 			ft_printf(array[i],floats[c]);
 			printf("\n\n");

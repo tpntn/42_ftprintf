@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/20 15:11:26 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:59:47 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,27 @@ void	ftoa_output(t_params *params, char *integer, char *fraction, int sign)
 	char	*flo;
 	int		start;
 	int		precision;
-	int		pt_len;
+
+	// ft_putstr("precision: ");
+	// ft_putnbr(params->precision);
+	// ft_putchar('\n');
 	
 	if (params->precision == -1)
 		precision = 6;
 	else
 		precision = params->precision;
+	while (ft_strlen(fraction) < precision + 2)
+		append_string(&fraction, "0", 0);
 	apply_rounding(&fraction, precision);
-
-	
-
 	start = trim_zeros(integer, 0);
 	flo = ft_strjoin(integer + start, fraction + 1);
-	pt_len = print_len(flo, params, sign);
+	
+	// ft_putnbr(ft_strlen(flo));
+	// ft_putchar('\n');
+	
 	apply_width(&flo, params);
 	apply_sign(&flo, sign, params);
+	
 	ft_putstr(flo);
 	ft_strdel(&flo);
 }
