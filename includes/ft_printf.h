@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 18:54:11 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 22:07:33 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_plist
 	struct s_plist		*next;
 } t_plist;
 
-typedef void (*func)(t_params *params, va_list data);
+typedef int (*func)(t_params *params, va_list data);
 
 typedef struct s_type
 {
@@ -60,7 +60,6 @@ int		ret_exp(float f);
 void	adder(char **addto, char *num);
 char	*count_fraction(int exp);
 char	*count_integer(int exp);
-void	ft_ftoa(t_params *params, va_list data);
 char	*malloc_and_setzero(int size);
 char	*handle_fraction(int exp, char *result_frac);
 void	handle_integer(int exp, char *result_int);
@@ -76,20 +75,22 @@ void	check_params(t_params **params);
 int		is_conv_mod(char c);
 int		is_length_mod(char c);
 int		is_flag(char c);
-void	apply_width(char **s, t_params *params);
+int		apply_width(char **s, t_params *params);
 void	apply_sign(char **s, int sign, t_params *params);
 void	apply_hash(char **s, int sign, t_params *params);
 void	apply_minus(char **s, int sign, t_params *params);
+void	append_string(char **s1, char *s2, int end);
 
 void	initialize_params(t_params *params);
 void	clear_params(t_params *params);
 void	decimal_handler(int exp, char **result);
 
-void	ft_printf_itoa(t_params *params, va_list data);
+int		ft_printf_itoa(t_params *params, va_list data);
+int		ft_puts(t_params *params, va_list data);
+int		ft_putc(t_params *params, va_list data);
+int		ft_ptr(t_params *params, va_list data);
+int		ft_ftoa(t_params *params, va_list data);
 
-void	ft_puts(t_params *params, va_list data);
-void	ft_putc(t_params *params, va_list data);
-void	ft_ptr(t_params *params, va_list data);
 
 void	__ft_itoa_unsigned(t_params *params, va_list data);
 int		__ft_itoa(t_params *params, va_list data);

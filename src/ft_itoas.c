@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 10:59:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 10:09:35 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 22:07:08 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ void	__ft_itoa_unsigned(t_params *params, va_list data)
 	ft_putstr(buffer);
 }
 
-void	ft_printf_itoa(t_params *params, va_list data)
+int	ft_printf_itoa(t_params *params, va_list data)
 {
 	if (params->conversion == 'u' || params->conversion == 'd')
 		__ft_itoa(params, data);
 	else
 		__ft_itoa_unsigned(params, data);
+	return (0);
 }

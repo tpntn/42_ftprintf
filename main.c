@@ -6,20 +6,20 @@
 void	float_tests()
 {
 	float f = 12.15;
-	ft_printf("%07.2f\n",f);
-	printf("%07.2f\n\n",f);
+	ft_printf("%.18f\n",f);
+	printf("%.18f\n\n",f);
 
-	ft_printf("%7.2f\n",f);
-	printf("%7.2f\n\n",f);
+	ft_printf("% 7.2f\n",f);
+	printf("% 7.2f\n\n",f);
 
 	ft_printf("%+7.2f\n",f);
 	printf("%+7.2f\n\n",f);
 
-	ft_printf("%+.5f\n",f);
-	printf("%+.5f\n\n",f);
+	ft_printf("%0+f\n",f);
+	printf("%0+f\n\n",f);
 
-	ft_printf("% 20.9f\n",f);
-	printf("% 20.9f\n",f);
+	ft_printf("%f\n",f);
+	printf("%f\n",f);
 
 	f = -12.15;
 	ft_printf("%07.2f\n",f);
@@ -48,7 +48,27 @@ void	float_tests()
 
 	f = 12.0;
 	ft_printf("%.0f\n",f);
-	printf("%#.0f\n",f);
+	printf("%.0f\n",f);
+
+	f = 0.0;
+	ft_printf("%7.3f\n",f);
+	printf("%7.3f\n",f);
+
+	f = 11.12;
+	ft_printf("%.3f\n",f);
+	printf("%.3f\n",f);
+
+	ft_printf("%-12.3f\n",f);
+	printf("%-12.3f\n",f);
+
+	f = -11.12;
+	ft_printf("%.3f\n",f);
+	printf("%.3f\n",f);
+
+	ft_printf("%-12.3f\n",f);
+	printf("%-12.3f\n",f);
+
+	
 }
 
 void	int_test()
@@ -166,7 +186,7 @@ int main()
 
 	
 	
-	// ft_printf("This is %% random\n\n");
+	
 
 	// char *s = "123";
 	// ft_printf("this is string %s inside a string\n", s);
@@ -186,7 +206,9 @@ int main()
 	// printf("%p \n", &a);
 	
 	float_tests();
-	int_test();
+	// int_test();
+
+	// ft_printf("This is %% random\n\n");
 
 	// float f = 12.15;
 	// printf("%%07.2f\n");
@@ -195,7 +217,8 @@ int main()
 
 	// ft_printf("printf: __FLT_MIN__:\t%.150lf\n",__FLT_MIN__);
 	// ft_printf("printf: __DBL_MIN__:\t%Lf\n",__DBL_MIN__);
-	// ft_printf("This is \n amasing %+- #123.42f asd\n",1.0);
+	// ft_printf("This is amasing %.40f asd\n", __FLT_MIN__);
+	// printf("This is amasing %.40f asd\n", __FLT_MIN__);
 	// printf("This is \n amasing %- #123.42f asd\n",1.0);
 	// ft_printf("g %+42lu");
 

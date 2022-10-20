@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 00:10:12 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 18:50:58 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 20:24:06 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,18 @@ void	check_params(t_params **params)
 {
 	if ((*params)->precision == -1)
 		(*params)->precision = 6;
+
+	// ft_putstr("\n=================\n");
+	// ft_putstr("flags:\t");
+	// ft_putstr((*params)->flags);
+	// ft_putstr("\nwidth:\t");
+	// ft_putnbr((*params)->width);
+	// ft_putstr("\nprecision:\t");
+	// ft_putnbr((*params)->precision);
+	// ft_putstr("\nlength:\t");
+	// ft_putnbr((*params)->length);
+	// ft_putstr("\nconversion:\t");
+	// ft_putchar((*params)->conversion);
+	// ft_putchar('\n');
+	
 }

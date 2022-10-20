@@ -6,7 +6,7 @@
 #    By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/19 10:24:54 by tpontine          #+#    #+#              #
-#    Updated: 2022/10/19 12:41:08 by tpontine         ###   ########.fr        #
+#    Updated: 2022/10/19 20:28:29 by tpontine         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRCS := ./src/$(EXE).c \
 	./src/ft_itoas_helpers.c \
 	./src/printf_handlers.c \
 	./src/ft_printf_mods.c \
-	./src/flag_handler.c
+	./src/flag_handler.c \
+	.src/handle_flags.c
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 LIB_DIR := Libft

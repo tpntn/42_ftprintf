@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:47:37 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 00:25:30 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/19 23:45:13 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,10 @@ char	*handle_fraction(int exp, char *result_frac)
 	len_m = ft_strlen(m);
 	addition = malloc_and_setzero(len_m - len_f + 1);
 	new = ft_strjoin(result_frac, addition);
+	ft_putstr(new);
+	ft_putchar('\n');
 	adder(&new, m);
+	ft_putstr(new);
 	ft_strdel(&m);
 	ft_strdel(&addition);
 	ft_strdel(&result_frac);
@@ -92,6 +95,14 @@ void	handle_integer(int exp, char *result_int)
 	char	*m;
 
 	m = count_integer(exp);
+	ft_putstr("m based on exp: ");
+	ft_putstr(m);
+	ft_putstr("result int: ");
+	ft_putstr(result_int);
+	ft_putchar('\n');
 	adder(&result_int, m);
+	ft_putstr("result int aft adder: ");
+	ft_putstr(result_int);
+	ft_putchar('\n');
 	ft_strdel(&m);
 }
