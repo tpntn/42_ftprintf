@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:18:25 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/19 22:08:26 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:21:22 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	conv_handl(const char *c, int *state, t_params *params, va_list data)
 		}
 	}
 	
-	*state = STATE_NORMAL;	
+	*state = STATE_NORMAL;
 	clear_params(params);
 	initialize_params(params);
 }

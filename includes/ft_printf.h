@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:15:42 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/20 14:39:28 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/20 21:30:47 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	adder(char **addto, char *num);
 char	*count_fraction(int exp);
 char	*count_integer(int exp);
 char	*malloc_and_setzero(int size);
-char	*handle_fraction(int exp, char *result_frac);
-void	handle_integer(int exp, char *result_int);
+void	handle_fraction(int exp, char **result_frac);
+void	handle_integer(int exp, char **result_int);
 int		rounder(char **fraction, int precision, int memo);
 
 void	flags_handler(const char *c, int *state, t_params *params, va_list data);

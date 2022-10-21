@@ -6,7 +6,7 @@
 /*   By: tpontine <tpontine@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/19 10:02:54 by tpontine          #+#    #+#             */
-/*   Updated: 2022/10/20 16:59:47 by tpontine         ###   ########.fr       */
+/*   Updated: 2022/10/20 21:37:13 by tpontine         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	apply_rounding(char **s, int precision)
 
 	if (precision == 0)
 	{
-		ft_strdel(s);
-		*s = ft_strdup("");
+		free(*s);
+		*s = ft_strdup("0.0");
 	}
 	else
 	{
@@ -58,10 +58,6 @@ void	ftoa_output(t_params *params, char *integer, char *fraction, int sign)
 	int		start;
 	int		precision;
 
-	// ft_putstr("precision: ");
-	// ft_putnbr(params->precision);
-	// ft_putchar('\n');
-	
 	if (params->precision == -1)
 		precision = 6;
 	else
@@ -70,41 +66,43 @@ void	ftoa_output(t_params *params, char *integer, char *fraction, int sign)
 		append_string(&fraction, "0", 0);
 	apply_rounding(&fraction, precision);
 	start = trim_zeros(integer, 0);
-	flo = ft_strjoin(integer + start, fraction + 1);
-	
-	// ft_putnbr(ft_strlen(flo));
-	// ft_putchar('\n');
+	if (fraction != NULL)
+		flo = ft_strjoin(integer + start, fraction + 1);
+	else
+		flo = ft_strdup(integer);
 	
 	apply_width(&flo, params);
 	apply_sign(&flo, sign, params);
 	
 	ft_putstr(flo);
-	ft_strdel(&flo);
+	free(flo);
 }
 
 void	handler(int exp, char **result_frac, char **result_int)
 {
 	if (exp < 0)
-		*result_frac = handle_fraction(exp, *result_frac);
+		handle_fraction(exp, result_frac);
 	if (exp >= 0)
-		handle_integer(exp, *result_int);
+		handle_integer(exp, result_int);
 }
 
 static char	*init_frac()
 {
 	char	*result_frac;
 
-	result_frac = (char *)malloc(sizeof(char) * (4));
+	result_frac = malloc(sizeof(char) * 4);
 	result_frac = ft_strcpy(result_frac, "0.0");
 	result_frac[3] = 0;
+	
 	return (result_frac);
 }
 
-static	void	clear_results(char **result_frac, char **result_int)
-{
-	ft_strdel(result_frac);
-	ft_strdel(result_int);
-}	
+// static	void	*clear_results(char **result_frac, char **result_int)
+// {
+// 	free(*result_frac);
+// 	free(*result_int);
+// 	// ft_strdel(result_int);
+// }	
 
 int	ft_ftoa(t_params *params, va_list data)
 {
@@ -121,7 +119,8 @@ int	ft_ftoa(t_params *params, va_list data)
 	if (f == 0)
 	{
 		ftoa_output(params, result_int, result_frac, 0);
-		clear_results(&result_frac, &result_int);
+		ft_strdel(&result_int);
+		ft_strdel(&result_frac);
 		return (0);
 	}
 	i = 22;
@@ -137,6 +136,7 @@ int	ft_ftoa(t_params *params, va_list data)
 		ftoa_output(params, result_int, result_frac, 1);
 	else
 		ftoa_output(params, result_int, result_frac, 0);
-	clear_results(&result_frac, &result_int);
+	free(result_frac);
+	free(result_int);
 	return (0);
 }

@@ -6,25 +6,30 @@
 void	float_tests()
 {
 
-	char 	*array[] = {"%-024.5f\n","% 7.2f\n", "%7.2f\n", "%+7.2f\n","%0+f\n","%f\n"};
-	float	floats[] = {12.1512, -4.123123, 0.1, -12412.1234123, 0.0, __FLT_MAX__, __FLT_MIN__};
+	// char 	*array[] = {"%-024.0f\n","% 7.2f\n", "%7.2f\n", "%+7.0f\n","%0+f\n","%f\n"};
+	// float	floats[] = {12.1512, -4.123123, 0.1, -12412.1234123, 0.0, __FLT_MAX__, __FLT_MIN__};
 	
-	int c = 0;
-	while (c < 7)
-	{
-		int	i = 0;
-		printf("INPUT VALUE:  %f\n", floats[c]);
-		while (i < 6)
-		{
-			printf("STRING:  %s", array[i]);
-			// printf("INPUT VALUE:  %f\n", floats[c]);
-			printf(array[i],floats[c]);
-			ft_printf(array[i],floats[c]);
-			printf("\n\n");
-			i++;
-		}
-		c++;
-	}
+	// int c = 0;
+	// while (c < 7)
+	// {
+	// 	int	i = 0;
+	// 	printf("INPUT VALUE:  %f\n", floats[c]);
+	// 	while (i < 6)
+	// 	{
+	// 		printf("STRING:  %s", array[i]);
+	// 		// printf("INPUT VALUE:  %f\n", floats[c]);
+	// 		printf("ORIG:\n");
+	// 		printf(array[i],floats[c]);
+	// 		printf("FT-:\n");
+	// 		ft_printf(array[i],floats[c]);
+	// 		printf("\n\n");
+	// 		i++;
+	// 	}
+	// 	c++;
+	// }
+
+	float f = 1.1;
+	ft_printf("%f", f);
 
 	// f = -12.15;
 	// ft_printf("%07.2f\n",f);
